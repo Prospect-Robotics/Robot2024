@@ -1,0 +1,15 @@
+{
+  "filename": "vendordep.json",
+  "uuid": "ebacde04-6dd2-46ce-bb83-16b69efddf27",
+  "frcYear": "2024",
+  "version": "0.1.1",
+  "mavenUrls": [
+    "https://3015rangerrobotics.github.io/pathplannerlib/repo",
+    "https://maven.ctr-electronics.com/release/",
+    "https://maven.revrobotics.com/",
+    "https://jitpack.io"
+  ],
+  "javaDependencies": [],
+  "jniDependencies": [],
+  "cppDependencies": []
+}
