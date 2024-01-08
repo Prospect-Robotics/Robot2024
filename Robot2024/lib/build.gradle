@@ -31,7 +31,7 @@ repositories {
 
 dependencies {
     implementation wpi.java.deps.wpilib()
-    api wpi.java.vendor.java()
+    implementation wpi.java.vendor.java()
 
     nativeDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.desktop)
     nativeDebug wpi.java.vendor.jniDebug(wpi.platforms.desktop)
