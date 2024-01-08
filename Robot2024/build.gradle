@@ -93,6 +93,8 @@ jar {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
+downloadDepsPreemptively.dependsOn "lib:jar"
+
 // Configure jar and deploy tasks
 deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
