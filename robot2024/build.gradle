@@ -8,11 +8,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-repositories {
-	mavenCentral()
-	mavenLocal()
-}
-
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
