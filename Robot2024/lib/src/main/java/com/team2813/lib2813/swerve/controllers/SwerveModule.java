@@ -1,7 +1,7 @@
-package com.team2813.lib.swerve.controllers;
+package com.team2813.lib2813.swerve.controllers;
 
 import com.swervedrivespecialties.swervelib.SteerController;
-import com.team2813.lib.swerve.controllers.drive.DriveController;
+import com.team2813.lib2813.swerve.controllers.drive.DriveController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;

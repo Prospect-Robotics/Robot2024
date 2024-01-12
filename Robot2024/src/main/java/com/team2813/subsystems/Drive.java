@@ -1,6 +1,10 @@
 package com.team2813.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
@@ -12,6 +16,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -127,7 +133,33 @@ public class Drive extends SubsystemBase {
         );
 
         pigeon.configMountPose(Pigeon2.AxisDirection.PositiveY, Pigeon2.AxisDirection.PositiveZ);
+
+		AutoBuilder.configureHolonomic(
+			this::getPose,
+			this::resetOdometry,
+			this::getChassisSpeeds,
+			this::drive,
+			new HolonomicPathFollowerConfig(
+				new PIDConstants(0),
+				new PIDConstants(0),
+				MAX_VELOCITY,
+				0.4,
+				new ReplanningConfig()
+				),
+			Drive::onRed,
+			this);
     }
+
+	/**
+	 * A method that gets whether you are on red alliance. If there is not an alliance,
+	 * returns false
+	 * @return {@code true} if you are on the red alliance
+	 */
+	private static boolean onRed() {
+		return DriverStation.getAlliance()
+			.<Boolean>map((j) -> j == Alliance.Red)
+			.orElse(false);
+	}
 
     public Rotation2d getRotation() {
         return Rotation2d.fromDegrees(pigeon.getHeading());
