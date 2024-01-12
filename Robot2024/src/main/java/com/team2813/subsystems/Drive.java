@@ -4,9 +4,9 @@ import com.ctre.phoenix.sensors.Pigeon2;
 import com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
-/* import com.team2813.lib.imu.Pigeon2Wrapper;
-import com.team2813.lib.swerve.controllers.SwerveModule;
-import com.team2813.lib.swerve.helpers.Mk4iSwerveModuleHelper; */
+import com.team2813.lib2813.control.imu.Pigeon2Wrapper;
+import com.team2813.lib2813.swerve.controllers.SwerveModule;
+import com.team2813.lib2813.swerve.helpers.Mk4iSwerveModuleHelper;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -21,11 +21,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static com.team2813.Constants.*;
 
 public class Drive extends SubsystemBase {
+	private static final double TRACKWIDTH = 1e-8;
+	private static final double WHEELBASE = 1e-8;
 
     public static final double MAX_VELOCITY = 6380.0 / 60.0 *
             SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
             SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI; // m/s
     public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / Math.hypot(TRACKWIDTH / 2, WHEELBASE / 2); // radians per second
+
+
+	
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             // Front Left
@@ -53,7 +58,6 @@ public class Drive extends SubsystemBase {
 
     public Drive() {
         String canbus = "swerve";
-        boolean licensed = true;
 
         double frontLeftSteerOffset = -Math.toRadians(0);
         double frontRightSteerOffset = -Math.toRadians(0);
@@ -77,8 +81,7 @@ public class Drive extends SubsystemBase {
                 kP,
                 kI,
                 kD,
-                frontLeftSteerOffset,
-                licensed
+                frontLeftSteerOffset
         );
 
         frontRightModule = Mk4iSwerveModuleHelper.createFalcon500(
@@ -92,10 +95,9 @@ public class Drive extends SubsystemBase {
                 kP,
                 kI,
                 kD,
-                frontRightSteerOffset,
-                licensed
+                frontRightSteerOffset
         );
-
+		
         backLeftModule = Mk4iSwerveModuleHelper.createFalcon500(
                 tab.getLayout("Back Left Module", BuiltInLayouts.kList)
                         .withSize(2, 4).withPosition(4, 0),
@@ -107,8 +109,7 @@ public class Drive extends SubsystemBase {
                 kP,
                 kI,
                 kD,
-                backLeftSteerOffset,
-                licensed
+                backLeftSteerOffset
         );
 
         backRightModule = Mk4iSwerveModuleHelper.createFalcon500(
@@ -122,8 +123,7 @@ public class Drive extends SubsystemBase {
                 kP,
                 kI,
                 kD,
-                backRightSteerOffset,
-                licensed
+                backRightSteerOffset
         );
 
         pigeon.configMountPose(Pigeon2.AxisDirection.PositiveY, Pigeon2.AxisDirection.PositiveZ);
