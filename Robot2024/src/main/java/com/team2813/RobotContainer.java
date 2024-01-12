@@ -4,18 +4,24 @@
 
 package com.team2813;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 
 public class RobotContainer {
-  public RobotContainer() {
-    configureBindings();
-  }
+	private final SendableChooser<Command> autoChooser;
+	public RobotContainer() {
+		configureBindings();
+		autoChooser = AutoBuilder.buildAutoChooser();
+		SmartDashboard.putData("Auto", autoChooser);
+	}
 
-  private void configureBindings() {}
+	private void configureBindings() {}
 
-  public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
-  }
+	public Command getAutonomousCommand() {
+		return autoChooser.getSelected();
+	}
 }
