@@ -70,6 +70,7 @@ public class Drive extends SubsystemBase {
         double backLeftSteerOffset = -Math.toRadians(0);
         double backRightSteerOffset = -Math.toRadians(0);
 
+		// Module PID
         double kP = 1.8;
         double kI = 0;
         double kD = 0;
@@ -140,8 +141,8 @@ public class Drive extends SubsystemBase {
 			this::getChassisSpeeds,
 			this::drive,
 			new HolonomicPathFollowerConfig(
-				new PIDConstants(0, 0, 0),
-				new PIDConstants(0, 0, 0),
+				new PIDConstants(0, 0, 0), // Translation PID
+				new PIDConstants(0, 0, 0), // Rotation PID
 				MAX_VELOCITY,
 				0.4,
 				new ReplanningConfig()
