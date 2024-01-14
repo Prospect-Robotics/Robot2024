@@ -4,8 +4,8 @@
   "holonomicMode": true,
   "pathFolders": [
     "B1 2A1SL",
-    "B2 2SL",
-    "B1 3SL"
+    "B1 4SL",
+    "B2 2SL"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,

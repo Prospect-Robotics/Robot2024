@@ -8,36 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5440849631699267,
-        "y": 4.687624648397445
+        "x": 1.4880854946895081,
+        "y": 5.738787523871345
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.9005100000940744,
-        "y": 4.0845169051449215
+        "x": 1.7462887703553187,
+        "y": 5.825963790816471
       },
       "prevControl": {
-        "x": 1.4614812933329573,
-        "y": 4.094612249409684
+        "x": 1.5823878869979966,
+        "y": 5.8877829283436345
       },
       "nextControl": {
-        "x": 2.081717268619165,
-        "y": 4.080350093884369
+        "x": 2.017948627985687,
+        "y": 5.723500779297191
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.495303930422676,
-        "y": 4.08
+        "x": 2.65,
+        "y": 5.55
       },
       "prevControl": {
-        "x": 2.3198824777279192,
-        "y": 4.005710143086953
+        "x": 2.1955909745152824,
+        "y": 5.39150768116351
       },
       "nextControl": null,
       "isLocked": false,
@@ -65,7 +65,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "B1 3SL",
+  "folder": "B1 4SL",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
