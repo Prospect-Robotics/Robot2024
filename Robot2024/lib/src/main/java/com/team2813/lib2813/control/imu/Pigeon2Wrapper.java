@@ -4,6 +4,7 @@ import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.Pigeon2Configuration;
 import com.ctre.phoenix.sensors.PigeonIMU_StatusFrame;
 import com.team2813.lib2813.util.ConfigUtils;
+import com.team2813.lib2813.util.Port;
 
 public class Pigeon2Wrapper extends Pigeon2 {
 
@@ -13,12 +14,12 @@ public class Pigeon2Wrapper extends Pigeon2 {
 
     /**
      * Constructor
-     * @param deviceNumber [0,62]
+     * @param port The port to configure.
      * @param canbus Name of the CANbus; can be a SocketCAN interface (on Linux),
      *               or a CANivore device name or serial number
      */
-    public Pigeon2Wrapper(int deviceNumber, String canbus) {
-        super(deviceNumber, canbus);
+    public Pigeon2Wrapper(Port port, String canbus) {
+        super(port.getCanId(), canbus);
         canivore = true;
 
         ConfigUtils.ctreConfig(() -> configAllSettings(new Pigeon2Configuration()));
@@ -26,10 +27,10 @@ public class Pigeon2Wrapper extends Pigeon2 {
 
     /**
      * Constructor
-     * @param deviceNumber [0,62]
+     * @param The port to configure.
      */
-    public Pigeon2Wrapper(int deviceNumber) {
-        super(deviceNumber);
+    public Pigeon2Wrapper(Port port) {
+        super(port.getCanId());
         canivore = false;
 
         ConfigUtils.ctreConfig(() -> configAllSettings(new Pigeon2Configuration()));

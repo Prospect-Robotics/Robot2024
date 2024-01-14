@@ -3,6 +3,7 @@ package com.team2813.lib2813.swerve.helpers;
 import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio;
 import com.swervedrivespecialties.swervelib.ctre.CanCoderAbsoluteConfiguration;
+import com.team2813.lib2813.util.Port;
 import com.team2813.lib2813.swerve.controllers.SwerveModule;
 import com.team2813.lib2813.swerve.controllers.drive.Falcon500DriveController;
 import com.team2813.lib2813.swerve.controllers.drive.NeoDriveController;
@@ -34,9 +35,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, gearRatio.getConfiguration(), configuration);
@@ -45,7 +46,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -76,9 +77,9 @@ public class Mk4iSwerveModuleHelper {
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, canbus, gearRatio.getConfiguration(), configuration);
@@ -88,7 +89,7 @@ public class Mk4iSwerveModuleHelper {
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         canbus,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -114,9 +115,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createFalcon500(
@@ -149,9 +150,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createFalcon500(
@@ -181,9 +182,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, gearRatio.getConfiguration(), configuration);
@@ -191,7 +192,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -218,9 +219,9 @@ public class Mk4iSwerveModuleHelper {
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, canbus, gearRatio.getConfiguration(), configuration);
@@ -229,7 +230,7 @@ public class Mk4iSwerveModuleHelper {
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         canbus,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -251,9 +252,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createFalcon500(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createFalcon500(
@@ -282,9 +283,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500(
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createFalcon500(
@@ -319,9 +320,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -334,7 +335,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -368,9 +369,9 @@ public class Mk4iSwerveModuleHelper {
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -384,7 +385,7 @@ public class Mk4iSwerveModuleHelper {
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         canbus,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -413,9 +414,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -457,9 +458,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -498,9 +499,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -512,7 +513,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -542,9 +543,9 @@ public class Mk4iSwerveModuleHelper {
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -557,7 +558,7 @@ public class Mk4iSwerveModuleHelper {
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         canbus,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -582,9 +583,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createFalcon500(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -622,9 +623,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500(
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -666,9 +667,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -683,7 +684,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -718,9 +719,9 @@ public class Mk4iSwerveModuleHelper {
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -736,7 +737,7 @@ public class Mk4iSwerveModuleHelper {
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         canbus,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -766,9 +767,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -813,9 +814,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -857,9 +858,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -873,7 +874,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -904,9 +905,9 @@ public class Mk4iSwerveModuleHelper {
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -921,7 +922,7 @@ public class Mk4iSwerveModuleHelper {
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
                         canbus,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -947,9 +948,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createFalcon500(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -990,9 +991,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500(
             GearRatio gearRatio,
             String canbus,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1031,9 +1032,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         NeoDriveController driveController = new NeoDriveController(driveMotorPort, gearRatio.getConfiguration(), configuration);
@@ -1042,7 +1043,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1067,9 +1068,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeo(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createNeo(
@@ -1097,9 +1098,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeo(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         NeoDriveController driveController = new NeoDriveController(driveMotorPort, gearRatio.getConfiguration(), configuration);
@@ -1107,7 +1108,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1128,9 +1129,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createNeo(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createNeo(
@@ -1163,9 +1164,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1178,7 +1179,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1206,9 +1207,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeo(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1245,9 +1246,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeo(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1259,7 +1260,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1283,9 +1284,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createNeo(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1325,9 +1326,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1342,7 +1343,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1371,9 +1372,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeo(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1413,9 +1414,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeo(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1429,7 +1430,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1454,9 +1455,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createNeo(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1495,9 +1496,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, gearRatio.getConfiguration(), configuration);
@@ -1506,7 +1507,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1532,9 +1533,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500Neo(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createFalcon500Neo(
@@ -1563,9 +1564,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500Neo(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         Falcon500DriveController driveController = new Falcon500DriveController(driveMotorPort, gearRatio.getConfiguration(), configuration);
@@ -1573,7 +1574,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1595,9 +1596,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createFalcon500Neo(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createFalcon500Neo(
@@ -1631,9 +1632,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1646,7 +1647,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1675,9 +1676,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500Neo(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1715,9 +1716,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500Neo(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1729,7 +1730,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1754,9 +1755,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createFalcon500Neo(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1797,9 +1798,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1814,7 +1815,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1844,9 +1845,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500Neo(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1887,9 +1888,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createFalcon500Neo(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1903,7 +1904,7 @@ public class Mk4iSwerveModuleHelper {
         NeoSteerController steerController = new NeoSteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -1929,9 +1930,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createFalcon500Neo(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -1969,9 +1970,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         NeoDriveController driveController = new NeoDriveController(driveMotorPort, gearRatio.getConfiguration(), configuration);
@@ -1980,7 +1981,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -2005,9 +2006,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeoFalcon500(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createNeoFalcon500(
@@ -2035,9 +2036,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeoFalcon500(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         NeoDriveController driveController = new NeoDriveController(driveMotorPort, gearRatio.getConfiguration(), configuration);
@@ -2045,7 +2046,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -2066,9 +2067,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createNeoFalcon500(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double steerOffset
     ) {
         return createNeoFalcon500(
@@ -2101,9 +2102,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -2116,7 +2117,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -2144,9 +2145,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeoFalcon500(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -2183,9 +2184,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeoFalcon500(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -2197,7 +2198,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -2221,9 +2222,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createNeoFalcon500(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -2263,9 +2264,9 @@ public class Mk4iSwerveModuleHelper {
             ShuffleboardLayout container,
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -2280,7 +2281,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -2309,9 +2310,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeoFalcon500(
             ShuffleboardLayout container,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -2351,9 +2352,9 @@ public class Mk4iSwerveModuleHelper {
     public static SwerveModule createNeoFalcon500(
             Mk4ModuleConfiguration configuration,
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,
@@ -2367,7 +2368,7 @@ public class Mk4iSwerveModuleHelper {
         Falcon500SteerController steerController = new Falcon500SteerController(
                 new com.team2813.lib2813.swerve.controllers.steer.Falcon500SteerConfiguration(
                         steerMotorPort,
-                        new CanCoderAbsoluteConfiguration(steerEncoderPort, steerOffset)
+                        new CanCoderAbsoluteConfiguration(steerEncoderPort.getCanId(), steerOffset)
                 ),
                 gearRatio.getConfiguration(),
                 configuration
@@ -2392,9 +2393,9 @@ public class Mk4iSwerveModuleHelper {
      */
     public static SwerveModule createNeoFalcon500(
             GearRatio gearRatio,
-            int driveMotorPort,
-            int steerMotorPort,
-            int steerEncoderPort,
+            Port driveMotorPort,
+            Port steerMotorPort,
+            Port steerEncoderPort,
             double drive_kP,
             double drive_kI,
             double drive_kD,

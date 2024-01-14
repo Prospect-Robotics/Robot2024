@@ -7,6 +7,8 @@ package com.team2813;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+import com.team2813.lib2813.util.Port;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -26,27 +28,27 @@ public final class Constants {
 	}
 
 	// front right swerve module
-	public static final int FRONT_RIGHT_DRIVE_ID = 1;
-	public static final int FRONT_RIGHT_ENCODER_ID = 2;
-	public static final int FRONT_RIGHT_STEER_ID = 3;
+	public static final Port FRONT_RIGHT_DRIVE_PORT = new Port(1);
+	public static final Port FRONT_RIGHT_ENCODER_PORT = new Port(2);
+	public static final Port FRONT_RIGHT_STEER_PORT = new Port(3);
 
 	// front left swerve module
-	public static final int FRONT_LEFT_DRIVE_ID = 4;
-	public static final int FRONT_LEFT_ENCODER_ID = 5;
-	public static final int FRONT_LEFT_STEER_ID = 6;
+	public static final Port FRONT_LEFT_DRIVE_PORT = new Port(4);
+	public static final Port FRONT_LEFT_ENCODER_PORT = new Port(5);
+	public static final Port FRONT_LEFT_STEER_PORT = new Port(6);
 
 	// back right swerve module
-	public static final int BACK_RIGHT_DRIVE_ID = 7;
-	public static final int BACK_RIGHT_ENCODER_ID = 8;
-	public static final int BACK_RIGHT_STEER_ID = 9;
+	public static final Port BACK_RIGHT_DRIVE_PORT = new Port(7);;
+	public static final Port BACK_RIGHT_ENCODER_PORT = new Port(8);
+	public static final Port BACK_RIGHT_STEER_PORT = new Port(9);
 
 	// back left swerve module
-	public static final int BACK_LEFT_DRIVE_ID = 10;
-	public static final int BACK_LEFT_ENCODER_ID = 11;
-	public static final int BACK_LEFT_STEER_ID = 12;	
+	public static final Port BACK_LEFT_DRIVE_PORT = new Port(10);;
+	public static final Port BACK_LEFT_ENCODER_PORT = new Port(11);
+	public static final Port BACK_LEFT_STEER_PORT = new Port(12);
 
 	// pigeon 
-	public static final int PIGEON_ID = 13;
+	public static final Port PIGEON_PORT = new Port(13);
 
     //Mechanism CAN IDs
     public static final int INTAKE = 14;

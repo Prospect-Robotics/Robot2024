@@ -9,10 +9,10 @@ public class InputValidation {
 	}
 
 	/**
-	 * Check if a given value is between the bounds
+	 * Check if a given value is between the bounds.
 	 * @param <T> the type to compare
-	 * @param lower an object that {@code actual} should be comparativly less than or equal to
-	 * @param upper an object that {@code actual} should be comparativly greater than or equal to
+	 * @param lower an object that {@code actual} should be comparatively less than or equal to
+	 * @param upper an object that {@code actual} should be comparatively greater than or equal to
 	 * @param actual the actual value
 	 * @param throwable a function that takes the actual value and returns an unchecked exception
 	 * @throws RuntimeException when actual is not between lower and upper, based on natural ordering.
@@ -25,22 +25,22 @@ public class InputValidation {
 		}
 	}
 	/**
-	 * Check if the given value is in the bounds
-	 * @param lower the lower bound
-	 * @param upper the upper bound
+	 * Checks if the given value is in the bounds.
+	 * @param lower the lower bound (inclusive)
+	 * @param upper the upper bound (inclusive)
 	 * @param actual the actual value
 	 * @param throwable a function that takes the actual value and returns an unchecked exception
-	 * @throws RuntimeException when the actual is not inbetween the bounds.
+	 * @throws IllegalArgumentException when the actual is not in between the bounds.
 	 * exception is provided by {@code throwable}
 	 */
-	static void checkBounds(int lower, int upper, int actual, IntFunction<RuntimeException> throwable) {
+	static void checkBounds(int lower, int upper, int actual, IntFunction<IllegalArgumentException> throwable) {
 		assert lower <= upper;
 		if (!(lower <= actual && actual <= upper)) {
 			throw throwable.apply(actual);
 		}
 	}
 	/**
-	 * Checks if the input is a valid {@index CAN} Id, and throws an exception if it isn't
+	 * Checks if the input is a valid {@index CAN} Id, and throws an exception if it isn't.
 	 * @param id the can id, between 0 and 62, inclusive
 	 * @return the {@code id}
 	 * @throws InvalidCanIdException if the id is invalid

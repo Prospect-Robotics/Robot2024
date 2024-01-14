@@ -1,19 +1,20 @@
 package com.team2813.lib2813.swerve.controllers.steer;
 
 import com.swervedrivespecialties.swervelib.ctre.CanCoderAbsoluteConfiguration;
+import com.team2813.lib2813.util.Port;
 
 public class SteerConfiguration {
 
-    private final int motorPort;
+    private final Port motorPort;
 
     private final CanCoderAbsoluteConfiguration encoderConfiguration;
 
-    public SteerConfiguration(int motorPort, CanCoderAbsoluteConfiguration encoderConfiguration) {
+    public SteerConfiguration(Port motorPort, CanCoderAbsoluteConfiguration encoderConfiguration) {
         this.motorPort = motorPort;
         this.encoderConfiguration = encoderConfiguration;
     }
 
-    public int getMotorPort() {
+    public Port getMotorPort() {
         return motorPort;
     }
 

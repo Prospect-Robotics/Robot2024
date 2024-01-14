@@ -7,11 +7,9 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
-
 import com.team2813.lib2813.control.imu.Pigeon2Wrapper;
 import com.team2813.lib2813.swerve.controllers.SwerveModule;
 import com.team2813.lib2813.swerve.helpers.Mk4iSwerveModuleHelper;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -56,7 +54,7 @@ public class Drive extends SubsystemBase {
     private final SwerveModule backLeftModule;
     private final SwerveModule backRightModule;
 
-    private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_ID);
+    private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_PORT);
 
     private ChassisSpeeds chassisSpeedDemand = new ChassisSpeeds(0, 0, 0);
 
@@ -82,9 +80,9 @@ public class Drive extends SubsystemBase {
                         .withSize(2, 4).withPosition(0, 0),
                 GearRatio.L2,
                 canbus,
-                FRONT_LEFT_DRIVE_ID,
-                FRONT_LEFT_STEER_ID,
-                FRONT_LEFT_ENCODER_ID,
+                FRONT_LEFT_DRIVE_PORT,
+                FRONT_LEFT_STEER_PORT,
+                FRONT_LEFT_ENCODER_PORT,
                 kP,
                 kI,
                 kD,
@@ -96,9 +94,9 @@ public class Drive extends SubsystemBase {
                         .withSize(2, 4).withPosition(2, 0),
                 GearRatio.L2,
                 canbus,
-                FRONT_RIGHT_DRIVE_ID,
-                FRONT_RIGHT_STEER_ID,
-                FRONT_RIGHT_ENCODER_ID,
+                FRONT_RIGHT_DRIVE_PORT,
+                FRONT_RIGHT_STEER_PORT,
+                FRONT_RIGHT_ENCODER_PORT,
                 kP,
                 kI,
                 kD,
@@ -110,9 +108,9 @@ public class Drive extends SubsystemBase {
                         .withSize(2, 4).withPosition(4, 0),
                 GearRatio.L2,
                 canbus,
-                BACK_LEFT_DRIVE_ID,
-                BACK_LEFT_STEER_ID,
-                BACK_LEFT_ENCODER_ID,
+                BACK_LEFT_DRIVE_PORT,
+                BACK_LEFT_STEER_PORT,
+                BACK_LEFT_ENCODER_PORT,
                 kP,
                 kI,
                 kD,
@@ -124,9 +122,9 @@ public class Drive extends SubsystemBase {
                         .withSize(2, 4).withPosition(6, 0),
                 GearRatio.L2,
                 canbus,
-                BACK_RIGHT_DRIVE_ID,
-                BACK_RIGHT_STEER_ID,
-                BACK_RIGHT_ENCODER_ID,
+                BACK_RIGHT_DRIVE_PORT,
+                BACK_RIGHT_STEER_PORT,
+                BACK_RIGHT_ENCODER_PORT,
                 kP,
                 kI,
                 kD,

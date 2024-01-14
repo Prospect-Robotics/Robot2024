@@ -55,7 +55,7 @@ public class Falcon500SteerController implements SteerController {
 		motorConfiguration.supplyCurrLimit.currentLimit = mk4Configuration.getSteerCurrentLimit();
 		motorConfiguration.supplyCurrLimit.enable = true;
 
-		motor = new TalonFX(steerConfiguration.getMotorPort(), steerConfiguration.getCanbus());
+		motor = new TalonFX(steerConfiguration.getMotorPort().getCanId(), steerConfiguration.getCanbus());
 		ConfigUtils.ctreConfig(() -> motor.configAllSettings(motorConfiguration, 250));
 
 		motor.enableVoltageCompensation(true);

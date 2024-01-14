@@ -44,7 +44,7 @@ public class NeoSteerController implements SteerController {
 
         absoluteEncoder = new SteerEncoder(cancoder);
 
-        motor = new CANSparkMax(steerConfiguration.getMotorPort(), CANSparkLowLevel.MotorType.kBrushless);
+        motor = new CANSparkMax(steerConfiguration.getMotorPort().getCanId(), CANSparkLowLevel.MotorType.kBrushless);
         ConfigUtils.revConfig(() -> motor.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus0, 100));
         ConfigUtils.revConfig(() -> motor.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus1, 20));
         ConfigUtils.revConfig(() -> motor.setPeriodicFramePeriod(CANSparkLowLevel.PeriodicFrame.kStatus2, 20));

@@ -13,6 +13,11 @@ plugins {
 	id 'maven-publish'
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 tasks.withType(JavaCompile) {
     // Configure string concat to always inline compile
     options.compilerArgs.add '-XDstringConcat=inline'
@@ -43,7 +48,7 @@ dependencies {
 
 	implementation 'edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:2023.4.3'
 
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 // the magic line that makes tests work :)

@@ -4,6 +4,7 @@ import com.revrobotics.*;
 import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
 import com.team2813.lib2813.util.ConfigUtils;
+import com.team2813.lib2813.util.Port;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
@@ -16,10 +17,10 @@ public class NeoDriveController implements DriveController {
     private SimpleMotorFeedforward feedforward;
     private boolean hasPidConstants = false;
 
-    public NeoDriveController(int id, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
+    public NeoDriveController(Port port, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
         maxVelocity = 5676.0 / 60.0 * moduleConfiguration.getDriveReduction() * moduleConfiguration.getWheelDiameter();
 
-        motor = new CANSparkMax(id, CANSparkLowLevel.MotorType.kBrushless);
+        motor = new CANSparkMax(port.getCanId(), CANSparkLowLevel.MotorType.kBrushless);
         motor.setInverted(moduleConfiguration.isDriveInverted());
 
         ConfigUtils.revConfig(() -> motor.enableVoltageCompensation(mk4Configuration.getNominalVoltage()));

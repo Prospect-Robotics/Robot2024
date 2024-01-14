@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
 import com.team2813.lib2813.util.ConfigUtils;
+import com.team2813.lib2813.util.Port;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
@@ -18,7 +19,7 @@ public class Falcon500DriveController implements DriveController {
     private SimpleMotorFeedforward feedforward;
     private boolean hasPidConstants = false;
 
-    public Falcon500DriveController(int id, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
+    public Falcon500DriveController(Port port, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
         maxVelocity = 6380.0 / 60.0 * moduleConfiguration.getDriveReduction() * moduleConfiguration.getWheelDiameter() * Math.PI;
 		TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
 
@@ -30,7 +31,7 @@ public class Falcon500DriveController implements DriveController {
 		motorConfiguration.supplyCurrLimit.currentLimit = mk4Configuration.getDriveCurrentLimit();
 		motorConfiguration.supplyCurrLimit.enable = true;
 
-		motor = new TalonFX(id);
+		motor = new TalonFX(port.getCanId());
 		ConfigUtils.ctreConfig(() -> motor.configAllSettings(motorConfiguration));
 
 		motor.enableVoltageCompensation(true);
@@ -48,7 +49,7 @@ public class Falcon500DriveController implements DriveController {
 		);
     }
 
-    public Falcon500DriveController(int id, String canbus, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
+    public Falcon500DriveController(Port port, String canbus, ModuleConfiguration moduleConfiguration, Mk4ModuleConfiguration mk4Configuration) {
         maxVelocity = 6380.0 / 60.0 * moduleConfiguration.getDriveReduction() * moduleConfiguration.getWheelDiameter() * Math.PI;
 		TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
 
@@ -60,7 +61,7 @@ public class Falcon500DriveController implements DriveController {
 		motorConfiguration.supplyCurrLimit.currentLimit = mk4Configuration.getDriveCurrentLimit();
 		motorConfiguration.supplyCurrLimit.enable = true;
 
-		motor = new TalonFX(id, canbus);
+		motor = new TalonFX(port.getCanId(), canbus);
 		ConfigUtils.ctreConfig(() -> motor.configAllSettings(motorConfiguration));
 
 		motor.enableVoltageCompensation(true);
