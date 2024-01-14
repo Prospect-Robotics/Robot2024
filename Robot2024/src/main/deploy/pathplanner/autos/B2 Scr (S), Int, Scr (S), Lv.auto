@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.0,
+      "y": 4.0
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b2-speaker1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b2-intake1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b2-speaker2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b2-leave"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
