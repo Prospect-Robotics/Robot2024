@@ -14,37 +14,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "amp1"
+            "pathName": "b1-amp1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "intake1"
+            "pathName": "b1-intake1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "amp2"
+            "pathName": "b1-amp2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "intake2"
+            "pathName": "b1-intake2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "speaker"
+            "pathName": "b1-speaker"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "leave"
+            "pathName": "b1-leave"
           }
         }
       ]
