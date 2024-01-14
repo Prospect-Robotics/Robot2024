@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.0,
+      "y": 7.0
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-speaker (11.)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-intake1 (11.)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-speaker2 (11.)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-intake2 (11.)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-speaker1 (11.)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-intake3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-speaker3 (11.)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-leave (11.)"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
