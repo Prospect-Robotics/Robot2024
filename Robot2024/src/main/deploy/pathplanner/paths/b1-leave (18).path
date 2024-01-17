@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.45,
-        "y": 5.55
+        "x": 1.55,
+        "y": 5.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7415380201090624,
-        "y": 4.906574850194055
+        "x": 1.9315086454246984,
+        "y": 4.816666901852322
       },
       "isLocked": false,
       "linkedName": null
@@ -40,7 +40,7 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "B1 4SL",

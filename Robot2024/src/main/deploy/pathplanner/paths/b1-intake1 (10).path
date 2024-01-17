@@ -16,22 +16,6 @@
     },
     {
       "anchor": {
-        "x": 2.1356721370850154,
-        "y": 6.993698200359365
-      },
-      "prevControl": {
-        "x": 1.7799283906209837,
-        "y": 6.999697466984342
-      },
-      "nextControl": {
-        "x": 2.301176398649094,
-        "y": 6.990907134592048
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 2.65,
         "y": 7.0
       },
@@ -44,13 +28,7 @@
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 0.0,
-      "rotateFast": true
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -62,7 +40,7 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "B1 2A1SL",
