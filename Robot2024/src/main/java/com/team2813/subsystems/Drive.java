@@ -71,7 +71,7 @@ public class Drive extends SubsystemBase {
         double backRightSteerOffset = -Math.toRadians(0);
 
 		// Module PID
-        double kP = 1.8;
+        double kP = 0.2;
         double kI = 0;
         double kD = 0;
 

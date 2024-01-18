@@ -4,6 +4,9 @@
 
 package com.team2813;
 
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -18,6 +21,8 @@ public final class Constants {
 	}
 	public static class DriverConstants {
 		public static final int driverControllerPort = 0;
+		public static final CommandPS4Controller DRIVER_CONTROLLER = new CommandPS4Controller(driverControllerPort);
+		public static final Trigger SLOWMODE_BUTTON = DRIVER_CONTROLLER.L1();
 	}
 
 	// front right swerve module
