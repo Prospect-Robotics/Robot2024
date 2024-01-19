@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.6428360804855293,
+        "y": 5.504139432902709
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.7433742964274124,
+        "y": 5.0509401289346565
+      },
+      "isLocked": false,
+      "linkedName": "15. Src(S) to Int(R)"
+    },
+    {
+      "anchor": {
+        "x": 2.0453545293302975,
+        "y": 4.10880233211566
+      },
+      "prevControl": {
+        "x": 1.7580144013731318,
+        "y": 5.009092700043039
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "15. Int(R) to Scr(S)"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "15. B3 Scr (S), Int furthest right, Scr (S), Lv",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}

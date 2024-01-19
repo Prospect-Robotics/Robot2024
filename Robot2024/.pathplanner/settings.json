@@ -1,0 +1,16 @@
+{
+  "robotWidth": 0.9,
+  "robotLength": 0.9,
+  "holonomicMode": true,
+  "pathFolders": [
+    "4. B1 Scr (S), Lv, Int, Scr (S)",
+    "5. B1 Scr (A), Lv",
+    "15. B3 Scr (S), Int furthest right, Scr (S), Lv"
+  ],
+  "autoFolders": [],
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
+  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngAccel": 720.0,
+  "maxModuleSpeed": 4.5
+}

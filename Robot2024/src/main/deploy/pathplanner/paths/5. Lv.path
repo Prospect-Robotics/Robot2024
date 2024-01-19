@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.860689063108365,
+        "y": 7.426459071594507
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.625936094029738,
+        "y": 7.634653277908835
+      },
+      "isLocked": false,
+      "linkedName": "Lv"
+    },
+    {
+      "anchor": {
+        "x": 5.413749188608472,
+        "y": 7.426459071594507
+      },
+      "prevControl": {
+        "x": 4.471526954626967,
+        "y": 7.439212794656929
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "5. B1 Scr (A), Lv",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}

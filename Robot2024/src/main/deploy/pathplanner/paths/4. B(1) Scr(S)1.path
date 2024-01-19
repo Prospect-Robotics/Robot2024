@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.287543584506928,
+        "y": 6.7995742032608195
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.3793111927880575,
+        "y": 6.313931124236307
+      },
+      "isLocked": false,
+      "linkedName": "B(1)"
+    },
+    {
+      "anchor": {
+        "x": 1.5080062706444315,
+        "y": 5.462560460168664
+      },
+      "prevControl": {
+        "x": 1.4644637293696245,
+        "y": 6.196220453286177
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Scr(S)1 to Int"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "4. B1 Scr (S), Lv, Int, Scr (S)",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
