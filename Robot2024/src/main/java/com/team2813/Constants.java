@@ -16,4 +16,12 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  //Mechanism CAN IDs
+  public static final int INTAKE = 14;
+  public static final int LEFT_MAGAZINE = 15;
+  public static final int SHOOTER = 16;
+  public static final int SHOOTER_PIVOT= 17;
+  public static final int CLIMBER = 18;
+  public static final int RIGHT_MAGAZINE = 19;
+  public static final int INTAKE_PIVOT = 20;
 }
