@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.team2813.Constants.*;
 public class Intake extends SubsystemBase {
-    private final TalonFXWrapper intakeMotor = new TalonFXWrapper(INTAKE, TalonFXInvertType.Clockwise);
+    private final TalonFXWrapper intakeMotor = new TalonFXWrapper(INTAKE, TalonFXInvertType.CounterClockwise);
     private final TalonFXWrapper pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, TalonFXInvertType.CounterClockwise);
 
     public Intake() {
