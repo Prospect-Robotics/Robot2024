@@ -145,6 +145,9 @@ public class TalonFXWrapper implements PIDMotor {
 		motor.setSelectedSensorPosition(Units2813.motorRevsToTicks(position, 2048));
 	}
 
+	@Override
+	public double getVelocity() {return Units2813.ticksToMotorRevs(motor.getSelectedSensorVelocity(), 2048);}
+
 	public TalonFX motor() {
 		return motor;
 	}
