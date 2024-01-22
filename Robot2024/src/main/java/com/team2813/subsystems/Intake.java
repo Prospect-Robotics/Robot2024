@@ -16,6 +16,17 @@ public class Intake extends SubsystemBase {
     public Intake() {
 
     }
+
+    public void intake() {
+        intakeMotor.set(ControlMode.DUTY_CYCLE, 0.5);
+    }
+
+    public void outtake() {
+        intakeMotor.set(ControlMode.DUTY_CYCLE, -0.5);
+    }
+
+
+
 }
 
 
