@@ -1,8 +1,6 @@
-package com.team2813.subsytems;
+package com.team2813.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-import com.revrobotics.CANSparkLowLevel;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 //import com.team2813.lib2813.control.motors.SparkMaxWrapper;
 import com.team2813.lib2813.control.ControlMode;
