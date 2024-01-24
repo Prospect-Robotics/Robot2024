@@ -3,6 +3,7 @@ package com.team2813.lib2813.util;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix.ErrorCode;
+import com.revrobotics.REVLibError;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -13,6 +14,17 @@ public class ConfigUtils {
 	}
 
 	private static final int ATTEMPTS = 10;
+
+	public static void revConfig(Supplier<REVLibError> configMethod) {
+		REVLibError errorCode = configMethod.get();
+		for (int i = 1; i <= ATTEMPTS && errorCode != REVLibError.kOk; i++) {
+			DriverStation.reportError(String.format("%s: Config Attempt %d Failed", errorCode.toString(), i), false);
+			errorCode = configMethod.get();
+		}
+		if (errorCode != REVLibError.kOk) {
+			DriverStation.reportError(String.format("%s: Config Failed", errorCode.toString()), false);
+		}
+	}
 
 	public static void ctreConfig(Supplier<ErrorCode> configMethod) {
 		ErrorCode errorCode = configMethod.get();
