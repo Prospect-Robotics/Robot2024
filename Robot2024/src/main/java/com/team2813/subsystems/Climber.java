@@ -3,8 +3,8 @@ package com.team2813.subsystems;
 import static com.team2813.Constants.CLIMBER;
 
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.control.ControlMode;
+import com.team2813.lib2813.control.motors.TalonFXWrapper;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
