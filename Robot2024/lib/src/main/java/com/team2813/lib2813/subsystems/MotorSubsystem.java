@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
  * 
  * @param <T> the {@link MotorSubsystem.Position} type to use positions from. must be an enum
  */
-public abstract class MotorSubsystem<T extends Enum<T> & MotorSubsystem.Position> extends PIDSubsystem {
+public abstract class MotorSubsystem<T extends MotorSubsystem.Position> extends PIDSubsystem {
 
 	protected final Motor motor;
 	protected final Encoder encoder;
