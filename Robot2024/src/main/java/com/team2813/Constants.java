@@ -49,14 +49,16 @@ public final class Constants {
 
 	// pigeon 
 	public static final int PIGEON_ID = 13;
-
-	//Mechanism CAN IDs
-	public static final int INTAKE = 14;
-	public static final int LEFT_MAGAZINE = 15;
-	public static final int SHOOTER = 16;
-	public static final int SHOOTER_PIVOT= 17;
-	public static final int CLIMBER = 18;
-	public static final int RIGHT_MAGAZINE = 19;
-	public static final int INTAKE_PIVOT = 20;
+	
+    //Mechanism CAN IDs
+    public static final int INTAKE = 14;
+    public static final int KICKER = 15;
+    public static final int SHOOTER = 16;
+    public static final int SHOOTER_PIVOT= 17;
+    public static final int SHOOTER_ENCODER = 18;
+    public static final int CLIMBER = 19;
+    public static final int MAGAZINE = 20;
+	public static final int INTAKE_ENCODER = 21;
+	public static final int INTAKE_PIVOT = 22;
 
 }
