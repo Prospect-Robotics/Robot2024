@@ -16,8 +16,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-
   public static class OperatorConstants {
     public static final int operatorControllerPort = 0;
   }
@@ -52,11 +50,12 @@ public final class Constants {
 
   //Mechanism CAN IDs
   public static final int INTAKE = 14;
-  public static final int KICKER = 15; //Left-Magazine Motor
+  public static final int KICKER = 15;
   public static final int SHOOTER = 16;
   public static final int SHOOTER_PIVOT= 17;
-  public static final int CLIMBER = 18;
-  public static final int MAGAZINE = 19; //Right-Magazine Motor
-  public static final int INTAKE_PIVOT = 20;
-
+  public static final int SHOOTER_ENCODER = 18;
+  public static final int CLIMBER = 19;
+  public static final int MAGAZINE = 20;
+  public static final int INTAKE_ENCODER = 21;
+  public static final int INTAKE_PIVOT = 22;
 }
