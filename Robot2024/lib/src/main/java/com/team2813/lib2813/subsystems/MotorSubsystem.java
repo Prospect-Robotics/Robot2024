@@ -40,8 +40,8 @@ public abstract class MotorSubsystem<T extends MotorSubsystem.Position> extends 
 		 * The default starting position if one is not defined
 		 */
 		public static final double DEFAULT_STARTING_POSITION = 0.0;
-		private Motor motor;
-		private Encoder encoder;
+		protected Motor motor;
+		protected Encoder encoder;
 		private PIDController controller;
 		private double acceptableError;
 		private double startingPosition;
