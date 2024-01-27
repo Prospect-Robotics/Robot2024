@@ -19,8 +19,13 @@ import static com.team2813.Constants.*;
 import static com.team2813.Constants.DriverConstants.*;
 
 public class RobotContainer {
+	//robot subsystems and commands...
+
 	private final SendableChooser<Command> autoChooser;
 	private final Drive drive = new Drive();
+
+
+	//container for robot (subsystems, OI devices, commands)
 	private final XboxController driverController = new XboxController(driverControllerPort);
 	public RobotContainer() {
 		drive.setDefaultCommand(new DefaultDriveCommand(
@@ -39,8 +44,8 @@ public class RobotContainer {
 	}
 
 	private void configureBindings() {
-		SLOWMODE_BUTTON.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
-		SLOWMODE_BUTTON.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
+		slowmodeButton.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
+		slowmodeButton.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
 	}
 
 	public Command getAutonomousCommand() {
