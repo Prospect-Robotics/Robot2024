@@ -129,25 +129,17 @@ public abstract class MotorSubsystem<T extends Enum<T> & MotorSubsystem.Position
 	}
 
 	/**
-	 * Sets the desired setpoint to the current setpoint, and enables the pid
-	 * controll
-	 * 
-	 * @param setpoint the position to go to
-	 */
-	public void setSetpoint(double setpoint) {
-		if (!isEnabled()) {
-			enable();
-		}
-		super.setSetpoint(setpoint);
-	}
-
-	/**
-	 * Sets the desired setpoint to the current setpoint, and enables the pid
-	 * controll
+	 * Sets the desired setpoint to the current setpoint, and enables the PID.
+	 * control.
+	 *
+	 * <p>Prefer calling this over calling {@link #setSetpoint(double)}.
 	 * 
 	 * @param setpoint the position to go to
 	 */
 	public void setSetpoint(T setpoint) {
+		if (!isEnabled()) {
+			enable();
+		}
 		setSetpoint(setpoint.getPos());
 	}
 
