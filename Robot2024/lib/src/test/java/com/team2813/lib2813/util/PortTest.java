@@ -9,12 +9,8 @@ import org.junit.Test;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
 import java.util.HashSet;
 import java.util.Set;
-
-import com.team2813.lib2813.util.Port;
 
 @RunWith(Theories.class)
 public class PortTest {
