@@ -3,7 +3,6 @@ package com.team2813.lib2813.control.motors;
 import com.revrobotics.*;
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.PIDMotor;
-import com.team2813.lib2813.control.Encoder;
 import com.team2813.lib2813.util.ConfigUtils;
 
 import java.util.ArrayList;

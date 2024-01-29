@@ -1,7 +1,5 @@
 package com.team2813.lib2813.util;
 
-import java.lang.RuntimeException;
-
 /**
  * Signifies that a {@index CAN} Id was given to a function, and it was invalid
  */
