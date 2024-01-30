@@ -51,7 +51,7 @@ def includeDesktopSupport = false
 // Also defines JUnit 5.
 dependencies {
 	// depend on lib
-	implementation project(":lib")
+	implementation "com.team2813:lib2813"
 
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
@@ -70,13 +70,11 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 test {
-    useJUnitPlatform()
-    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+    useJUnit()
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -93,7 +91,7 @@ jar {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
-downloadDepsPreemptively.dependsOn "lib:jar"
+downloadDepsPreemptively.dependsOn gradle.includedBuild("lib2813").task(":lib:jar")
 
 // Configure jar and deploy tasks
 deployArtifact.jarTask = jar
