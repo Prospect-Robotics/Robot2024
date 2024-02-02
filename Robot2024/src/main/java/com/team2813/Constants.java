@@ -51,11 +51,12 @@ public final class Constants {
   //Mechanism CAN IDs
   public static final int INTAKE = 14;
   public static final int KICKER = 15;
-  public static final int SHOOTER = 16;
-  public static final int SHOOTER_PIVOT= 17;
-  public static final int SHOOTER_ENCODER = 18;
-  public static final int CLIMBER = 19;
-  public static final int MAGAZINE = 20;
-  public static final int INTAKE_ENCODER = 21;
-  public static final int INTAKE_PIVOT = 22;
+  public static final int SHOOTER_1 = 16;
+  public static final int SHOOTER_2 = 17;
+  public static final int SHOOTER_PIVOT= 18;
+  public static final int SHOOTER_ENCODER = 19;
+  public static final int CLIMBER = 20;
+  public static final int MAGAZINE = 21;
+  public static final int INTAKE_ENCODER = 22;
+  public static final int INTAKE_PIVOT = 23;
 }
