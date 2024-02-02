@@ -43,20 +43,20 @@ public final class Constants {
 	// back left swerve module
 	public static final int BACK_LEFT_DRIVE_ID = 10;
 	public static final int BACK_LEFT_ENCODER_ID = 11;
-	public static final int BACK_LEFT_STEER_ID = 12;	
+	public static final int BACK_LEFT_STEER_ID = 12;
 
-	// pigeon 
+	// pigeon
 	public static final int PIGEON_ID = 13;
 
-    //Mechanism CAN IDs
-    public static final int INTAKE = 14;
-    public static final int KICKER = 15;
-    public static final int SHOOTER_1 = 16;
+	//Mechanism CAN IDs
+	public static final int INTAKE = 14;
+	public static final int KICKER = 15;
+	public static final int SHOOTER_1 = 16;
 	public static final int SHOOTER_2 = 17;
-    public static final int SHOOTER_PIVOT= 18;
-    public static final int SHOOTER_ENCODER = 19;
-    public static final int CLIMBER = 20;
-    public static final int MAGAZINE = 21;
+	public static final int SHOOTER_PIVOT= 18;
+	public static final int SHOOTER_ENCODER = 19;
+	public static final int CLIMBER = 20;
+	public static final int MAGAZINE = 21;
 	public static final int INTAKE_ENCODER = 22;
 	public static final int INTAKE_PIVOT = 23;
 }

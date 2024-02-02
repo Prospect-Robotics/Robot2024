@@ -13,6 +13,11 @@ plugins {
 	id 'maven-publish'
 }
 
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
 tasks.withType(JavaCompile) {
     // Configure string concat to always inline compile
     options.compilerArgs.add '-XDstringConcat=inline'
