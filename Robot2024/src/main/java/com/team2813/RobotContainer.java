@@ -14,14 +14,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import com.team2813.commands.DefaultDriveCommand;
+import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.subsystems.Drive;
+import com.team2813.subsystems.Shooter;
+
 import static com.team2813.Constants.*;
 import static com.team2813.Constants.DriverConstants.*;
+import static com.team2813.Constants.OperatorConstants.*;
 
 public class RobotContainer {
 	private final SendableChooser<Command> autoChooser;
 	private final Drive drive = new Drive();
+	private final Shooter shooter = new Shooter();
 	private final XboxController driverController = new XboxController(driverControllerPort);
+	private final XboxController operatorController = new XboxController(operatorControllerPort);
 	public RobotContainer() {
 		drive.setDefaultCommand(new DefaultDriveCommand(
                 () -> -modifyAxis(driverController.getLeftY()) * Drive.MAX_VELOCITY,
@@ -29,6 +35,7 @@ public class RobotContainer {
                 () -> -modifyAxis(driverController.getRightX()) * Drive.MAX_ANGULAR_VELOCITY,
                 drive
         ));
+		shooter.setDefaultCommand(new DefaultShooterCommand(shooter, operatorController::getRightY));
 		configureBindings();
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto", autoChooser);
