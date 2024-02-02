@@ -41,8 +41,6 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-	implementation 'edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:2023.4.3'
-
     testImplementation 'junit:junit:4.13'
 }
 
@@ -68,6 +66,11 @@ javadoc {
 task sourceJar(type: Jar) {
 	from sourceSets.main.allJava
 	archiveClassifier = "sources"
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 }
 
 publishing {
