@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.team2813.Constants.*;
 public class Magazine extends SubsystemBase {
-    private final Motor kickerMotor;
+    Motor kickerMotor;
 
     public Magazine() {
 		TalonFXWrapper kickerMotor = new TalonFXWrapper(KICKER, TalonFXInvertType.CounterClockwise);
