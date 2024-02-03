@@ -233,7 +233,11 @@ public class Drive extends SubsystemBase {
                 backRightModule.getPosition()
         };
 
-        odometry.resetPosition(Rotation2d.fromDegrees(pigeon.getHeading()), modulePositions, currentPose);
+		if (odometry == null) {
+			odometry = new SwerveDriveOdometry(kinematics, currentPose.getRotation(), modulePositions, currentPose);
+		} else {
+			odometry.resetPosition(Rotation2d.fromDegrees(pigeon.getHeading()), modulePositions, currentPose);
+		}
     }
 
     @Override
