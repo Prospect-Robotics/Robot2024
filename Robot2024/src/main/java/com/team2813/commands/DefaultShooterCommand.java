@@ -13,6 +13,7 @@ public class DefaultShooterCommand extends Command {
 	public DefaultShooterCommand(Shooter shooter, DoubleSupplier controll) {
 		this.shooter = shooter;
 		this.controll = controll;
+		addRequirements(shooter);
 	}
 	/**
 	 * The number to multiply results from {@link #controll}. Multiplies by {@value #MULTIPLIER}
