@@ -70,13 +70,7 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-test {
-    useJUnitPlatform()
-    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -99,6 +93,14 @@ downloadDepsPreemptively.dependsOn "lib:jar"
 deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
+
+// the magic line that makes tests work :)
+wpi.java.configureTestTasks(test)
+
+tasks.named('test') {
+    // Use JUnit 4 for unit tests.
+    useJUnit()
+}
 
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
