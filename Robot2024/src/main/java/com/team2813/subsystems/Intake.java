@@ -7,8 +7,6 @@ import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.Motor;
 import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import static com.team2813.Constants.*;
 public class Intake extends SubsystemBase {
     private final Motor intakeMotor = new TalonFXWrapper(INTAKE, InvertType.COUNTER_CLOCKWISE);
     private final Motor pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.COUNTER_CLOCKWISE);
