@@ -40,23 +40,8 @@ public class Drive extends SubsystemBase {
             SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
             SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI; // m/s
     public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / Math.hypot(TRACKWIDTH / 2, WHEELBASE / 2); // radians per second
-
-<<<<<<< HEAD
-
-    
-
-=======
->>>>>>> beec593 (possibly done)
-    private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
-            // Front Left
-            new Translation2d(TRACKWIDTH / 2, WHEELBASE / 2),
-            // Front Right
-            new Translation2d(TRACKWIDTH / 2, -WHEELBASE / 2),
-            // Back Left
-            new Translation2d(-TRACKWIDTH / 2, WHEELBASE / 2),
-            // Back Right
-            new Translation2d(-TRACKWIDTH / 2, -WHEELBASE / 2)
-    );
+	
+    private final SwerveDriveKinematics kinematics;
 
     private SwerveDriveOdometry odometry;
 
@@ -87,7 +72,7 @@ public class Drive extends SubsystemBase {
 			.withCANbusName("swerve");
 		SwerveModuleConstantsFactory constantCreator = new SwerveModuleConstantsFactory()
 			.withDriveMotorGearRatio(6.75)
-			.withWheelRadius(2) // get actual value
+			.withWheelRadius(1.75) // get actual value
 			.withSlipCurrent(300) // tune :)
 			.withSteerMotorGains(steerGains)
 			.withDriveMotorGains(driveGains)
@@ -122,6 +107,12 @@ public class Drive extends SubsystemBase {
 			Units.inchesToMeters(-leftDist), Units.inchesToMeters(-frontDist),
 			false
 		);
+		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
+		Translation2d[] locations = new Translation2d[constants.length];
+		for (int i = 0; i < constants.length; i++) {
+			locations[i] = new Translation2d(constants[i].LocationX, constants[i].LocationY);
+		}
+		kinematics = new SwerveDriveKinematics(locations);
 		drivetrain = new SwerveDrivetrain(drivetrainConstants, frontLeft, frontRight, backLeft, backRight);
 		AutoBuilder.configureHolonomic(
 			this::getPose,
@@ -177,7 +168,7 @@ public class Drive extends SubsystemBase {
 				.withDriveRequestType(DriveRequestType.OpenLoopVoltage)
 				.withSteerRequestType(SteerRequestType.MotionMagicExpo);
 
-	public void drive(int x, int y, int rotation) {
+	public void drive(double x, double y, double rotation) {
 		drivetrain.setControl(
 			xyrRequest.withVelocityX(x * multiplier)
 				.withVelocityY(y * multiplier)
