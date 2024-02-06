@@ -53,8 +53,8 @@ public class RobotContainer {
 		SLOWMODE_BUTTON.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
 		SLOWMODE_BUTTON.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
 
-		INTAKE_BUTTON.onTrue(new RunWholeIntake(intake));
-		OUTTAKE_BUTTON.onTrue(new RunWholeOutake(intake));
+		INTAKE_BUTTON.whileTrue(new RunWholeIntake(intake));
+		OUTTAKE_BUTTON.whileTrue(new RunWholeOutake(intake));
 	}
 
 	public Command getAutonomousCommand() {
