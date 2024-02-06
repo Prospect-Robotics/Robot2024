@@ -134,12 +134,14 @@ public abstract class MotorSubsystem<T extends Enum<T> & MotorSubsystem.Position
 	 * 
 	 * @param setpoint the position to go to
 	 */
-	public void setSetpoint(double setpoint) {
-		if (!isEnabled()) {
-			enable();
-		}
-		super.setSetpoint(setpoint);
-	}
+	// I commented this out because it said can't ovveride the final method, but i couldnt find 
+	// where this is being used, commenting it out didnt result in any errors and still built -marko
+	// public void setSetpoint(double setpoint) {
+	// 	if (!isEnabled()) {
+	// 		enable();
+	// 	}
+	// 	super.setSetpoint(setpoint);
+	// }
 
 	/**
 	 * Sets the desired setpoint to the current setpoint, and enables the pid

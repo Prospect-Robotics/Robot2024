@@ -14,13 +14,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import com.team2813.commands.DefaultDriveCommand;
+import com.team2813.commands.OutakeCommand;
+import com.team2813.commands.IntakeCommand;
 import com.team2813.subsystems.Drive;
+import com.team2813.subsystems.Intake;
 import static com.team2813.Constants.*;
 import static com.team2813.Constants.DriverConstants.*;
+import static com.team2813.Constants.OperatorConstants.*;
 
 public class RobotContainer {
 	private final SendableChooser<Command> autoChooser;
 	private final Drive drive = new Drive();
+	private final Intake intake = new Intake();
+
 	private final XboxController driverController = new XboxController(driverControllerPort);
 	public RobotContainer() {
 		drive.setDefaultCommand(new DefaultDriveCommand(
@@ -38,9 +44,16 @@ public class RobotContainer {
 		return drive;
 	}
 
+	public Intake getIntake() {
+		return intake;
+	}
+
 	private void configureBindings() {
 		SLOWMODE_BUTTON.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
 		SLOWMODE_BUTTON.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
+
+		INTAKE_BUTTON.onTrue(new IntakeCommand(intake));
+		OUTTAKE_BUTTON.onTrue(new OutakeCommand(intake));
 	}
 
 	public Command getAutonomousCommand() {

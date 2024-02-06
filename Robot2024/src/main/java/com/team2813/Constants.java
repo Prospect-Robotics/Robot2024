@@ -20,6 +20,9 @@ public final class Constants {
 
 	public static class OperatorConstants {
 		public static final int operatorControllerPort = 0;
+		public static final CommandPS4Controller OPERATOR_CONTROLLER = new CommandPS4Controller(operatorControllerPort);
+		public static final Trigger INTAKE_BUTTON = OPERATOR_CONTROLLER.R1();
+		public static final Trigger OUTTAKE_BUTTON = OPERATOR_CONTROLLER.L1();
 	}
 	public static class DriverConstants {
 		public static final int driverControllerPort = 0;
