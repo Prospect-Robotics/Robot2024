@@ -12,10 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 import com.team2813.commands.DefaultDriveCommand;
-import com.team2813.commands.OutakeCommand;
-import com.team2813.commands.IntakeCommand;
+import com.team2813.commands.RunWholeOutake;
+import com.team2813.commands.RunWholeIntake;
 import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Intake;
 import static com.team2813.Constants.*;
@@ -52,8 +53,8 @@ public class RobotContainer {
 		SLOWMODE_BUTTON.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
 		SLOWMODE_BUTTON.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
 
-		INTAKE_BUTTON.onTrue(new IntakeCommand(intake));
-		OUTTAKE_BUTTON.onTrue(new OutakeCommand(intake));
+		INTAKE_BUTTON.onTrue(new RunWholeIntake(intake));
+		OUTTAKE_BUTTON.onTrue(new RunWholeOutake(intake));
 	}
 
 	public Command getAutonomousCommand() {
