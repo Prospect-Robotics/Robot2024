@@ -32,9 +32,9 @@ public class Intake extends SubsystemBase {
         //encoder.configSensorDirection(true);
     }
 
-    public void intake() { intakeMotor.set(ControlMode.DUTY_CYCLE, INTAKE_SPEED); }
+    public void intakeNote() { intakeMotor.set(ControlMode.DUTY_CYCLE, INTAKE_SPEED); }
 
-    public void outtake() { intakeMotor.set(ControlMode.DUTY_CYCLE, OUTTAKE_SPEED); }
+    public void outtakeNote() { intakeMotor.set(ControlMode.DUTY_CYCLE, OUTTAKE_SPEED); }
 
     public void stopIntakeMotor() { intakeMotor.set(ControlMode.DUTY_CYCLE, 0); }
 
