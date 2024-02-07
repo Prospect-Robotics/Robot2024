@@ -26,24 +26,25 @@ public final class Constants {
 	}
 
 	// front right swerve module
-	public static final int FRONT_RIGHT_DRIVE_ID = 1;
+	public static final int FRONT_RIGHT_STEER_ID = 1;
 	public static final int FRONT_RIGHT_ENCODER_ID = 2;
-	public static final int FRONT_RIGHT_STEER_ID = 3;
-
-	// front left swerve module
-	public static final int FRONT_LEFT_DRIVE_ID = 4;
-	public static final int FRONT_LEFT_ENCODER_ID = 5;
-	public static final int FRONT_LEFT_STEER_ID = 6;
+	public static final int FRONT_RIGHT_DRIVE_ID = 3;
 
 	// back right swerve module
-	public static final int BACK_RIGHT_DRIVE_ID = 7;
-	public static final int BACK_RIGHT_ENCODER_ID = 8;
-	public static final int BACK_RIGHT_STEER_ID = 9;
+	public static final int BACK_RIGHT_STEER_ID = 4;
+	public static final int BACK_RIGHT_ENCODER_ID = 5;
+	public static final int BACK_RIGHT_DRIVE_ID = 6;
 
 	// back left swerve module
-	public static final int BACK_LEFT_DRIVE_ID = 10;
-	public static final int BACK_LEFT_ENCODER_ID = 11;
-	public static final int BACK_LEFT_STEER_ID = 12;
+	public static final int BACK_LEFT_STEER_ID = 7;
+	public static final int BACK_LEFT_ENCODER_ID = 8;
+	public static final int BACK_LEFT_DRIVE_ID = 9;
+	
+
+	// front left swerve module
+	public static final int FRONT_LEFT_STEER_ID = 10;
+	public static final int FRONT_LEFT_ENCODER_ID = 11;
+	public static final int FRONT_LEFT_DRIVE_ID = 12;
 
 	// pigeon
 	public static final int PIGEON_ID = 13;

@@ -25,7 +25,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -43,8 +42,6 @@ public class Drive extends SubsystemBase {
 	
     private final SwerveDriveKinematics kinematics;
 
-    private SwerveDriveOdometry odometry;
-
     private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_ID, "swerve");
 
     private double multiplier = 1;
@@ -53,10 +50,10 @@ public class Drive extends SubsystemBase {
 
     public Drive() {
 		// rotations
-        double frontLeftSteerOffset = 0;
-        double frontRightSteerOffset = 0;
-        double backLeftSteerOffset = 0;
-        double backRightSteerOffset = 0;
+        double frontLeftSteerOffset = -0.258789;
+        double frontRightSteerOffset = 0.239014;
+        double backLeftSteerOffset = -0.338135;
+        double backRightSteerOffset = 0.043213;
 
 		// tune
 		Slot0Configs steerGains = new Slot0Configs()
@@ -72,40 +69,41 @@ public class Drive extends SubsystemBase {
 			.withCANbusName("swerve");
 		SwerveModuleConstantsFactory constantCreator = new SwerveModuleConstantsFactory()
 			.withDriveMotorGearRatio(6.75)
-			.withWheelRadius(1.75) // get actual value
+			.withSteerMotorGearRatio(150.0 / 7)
+			.withWheelRadius(1.75)
 			.withSlipCurrent(300) // tune :)
 			.withSteerMotorGains(steerGains)
 			.withDriveMotorGains(driveGains)
 			.withSteerMotorClosedLoopOutput(ClosedLoopOutputType.Voltage)
 			.withDriveMotorClosedLoopOutput(ClosedLoopOutputType.TorqueCurrentFOC)
-			.withSpeedAt12VoltsMps(4.78536)
+			.withSpeedAt12VoltsMps(MAX_VELOCITY)
 			.withFeedbackSource(SteerFeedbackType.FusedCANcoder)
 			.withCouplingGearRatio(3.5) // tune :P
-			.withSteerMotorInverted(false); // idk what this needs to be :(
-		double frontDist = 10; // x
-		double leftDist = 10; // y
+			.withSteerMotorInverted(true);
+		double frontDist = 0.381; // y
+		double leftDist = 0.3302; // x
 		SwerveModuleConstants frontLeft = constantCreator.createModuleConstants(
 			FRONT_LEFT_STEER_ID, FRONT_LEFT_DRIVE_ID,
 			FRONT_LEFT_ENCODER_ID, frontLeftSteerOffset,
 			Units.inchesToMeters(leftDist), Units.inchesToMeters(frontDist),
-			false);
+			true);
 		SwerveModuleConstants frontRight = constantCreator.createModuleConstants(
 			FRONT_RIGHT_STEER_ID, FRONT_RIGHT_DRIVE_ID,
 			FRONT_RIGHT_ENCODER_ID, frontRightSteerOffset,
 			Units.inchesToMeters(-leftDist), Units.inchesToMeters(frontDist),
-			false
+			true
 		);
 		SwerveModuleConstants backLeft = constantCreator.createModuleConstants(
 			BACK_LEFT_STEER_ID, BACK_LEFT_DRIVE_ID,
 			BACK_LEFT_ENCODER_ID, backLeftSteerOffset,
 			Units.inchesToMeters(leftDist), Units.inchesToMeters(-frontDist),
-			false
+			true
 		);
 		SwerveModuleConstants backRight = constantCreator.createModuleConstants(
 			BACK_RIGHT_STEER_ID, BACK_RIGHT_DRIVE_ID,
 			BACK_RIGHT_ENCODER_ID, backRightSteerOffset,
 			Units.inchesToMeters(-leftDist), Units.inchesToMeters(-frontDist),
-			false
+			true
 		);
 		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
 		Translation2d[] locations = new Translation2d[constants.length];
@@ -146,7 +144,7 @@ public class Drive extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return odometry.getPoseMeters();
+        return drivetrain.getState().Pose;
     }
 
     public Pigeon2Wrapper getPigeon() {
