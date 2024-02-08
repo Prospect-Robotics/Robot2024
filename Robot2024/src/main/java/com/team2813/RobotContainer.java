@@ -18,6 +18,7 @@ import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Shooter;
 import com.team2813.subsystems.Magazine;
+import com.team2813.subsystems.Amp;
 
 import static com.team2813.Constants.*;
 import static com.team2813.Constants.DriverConstants.*;
@@ -28,6 +29,7 @@ public class RobotContainer {
 	private final Drive drive = new Drive();
 	private final Shooter shooter = new Shooter();
 	private final Magazine magazine = new Magazine();
+	private final Amp amp = new Amp();
 	private final XboxController driverController = new XboxController(driverControllerPort);
 	private final XboxController operatorController = new XboxController(operatorControllerPort);
 	public RobotContainer() {
