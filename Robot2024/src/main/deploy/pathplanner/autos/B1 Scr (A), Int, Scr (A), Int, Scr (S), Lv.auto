@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.0,
+      "y": 7.0
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-amp1 (10)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-intake1 (10)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-amp2 (10)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-intake2 (10)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-speaker (10)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "b1-leave (10)"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
