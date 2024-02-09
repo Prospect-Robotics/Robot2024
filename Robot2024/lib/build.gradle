@@ -9,8 +9,13 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
-	id "edu.wpi.first.GradleRIO" version "2024.1.1"
+	id "edu.wpi.first.GradleRIO" version "2024.2.1"
 	id 'maven-publish'
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType(JavaCompile) {
@@ -41,8 +46,6 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-	implementation 'edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:2023.4.3'
-
     testImplementation 'junit:junit:4.13'
 }
 
@@ -68,6 +71,11 @@ javadoc {
 task sourceJar(type: Jar) {
 	from sourceSets.main.allJava
 	archiveClassifier = "sources"
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 }
 
 publishing {

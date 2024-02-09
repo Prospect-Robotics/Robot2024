@@ -127,8 +127,6 @@ public class TalonFXWrapper implements PIDMotor {
 			case MOTION_MAGIC:
 				demand = Units2813.motorRevsToTicks(demand, 2048);
 				break;
-			case DUTY_CYCLE:
-				break;
 			default:
 				break;
 		}
@@ -144,6 +142,9 @@ public class TalonFXWrapper implements PIDMotor {
 	public void setPosition(double position) {
 		motor.setSelectedSensorPosition(Units2813.motorRevsToTicks(position, 2048));
 	}
+
+	@Override
+	public double getVelocity() {return Units2813.ticksToMotorRevs(motor.getSelectedSensorVelocity(), 2048);}
 
 	public TalonFX motor() {
 		return motor;
