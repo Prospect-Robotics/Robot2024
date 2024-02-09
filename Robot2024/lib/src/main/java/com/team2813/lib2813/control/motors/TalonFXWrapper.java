@@ -127,8 +127,6 @@ public class TalonFXWrapper implements PIDMotor {
 			case MOTION_MAGIC:
 				demand = Units2813.motorRevsToTicks(demand, 2048);
 				break;
-			case DUTY_CYCLE:
-				break;
 			default:
 				break;
 		}
