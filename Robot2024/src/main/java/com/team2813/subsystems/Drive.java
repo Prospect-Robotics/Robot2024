@@ -181,23 +181,7 @@ public class Drive extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d currentPose) {
-<<<<<<< HEAD
-        SwerveModulePosition[] modulePositions = {
-                frontLeftModule.getPosition(),
-                frontRightModule.getPosition(),
-                backLeftModule.getPosition(),
-                backRightModule.getPosition()
-        };
-
-        pigeon.setHeading(currentPose.getRotation().getDegrees());
-        if (odometry == null) {
-            odometry = new SwerveDriveOdometry(kinematics, currentPose.getRotation(), modulePositions, currentPose);
-        } else {
-            odometry.resetPosition(Rotation2d.fromDegrees(pigeon.getHeading()), modulePositions, currentPose);
-        }
-=======
 		drivetrain.seedFieldRelative(currentPose);
->>>>>>> beec593 (possibly done)
     }
 
     @Override
