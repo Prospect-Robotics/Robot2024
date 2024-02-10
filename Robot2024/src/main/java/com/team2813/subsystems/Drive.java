@@ -27,8 +27,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static com.team2813.Constants.*;
 
 public class Drive extends SubsystemBase {
-	private static final double TRACKWIDTH = 1e-8;
-	private static final double WHEELBASE = 1e-8;
+    private static final double TRACKWIDTH = 1e-8;
+    private static final double WHEELBASE = 1e-8;
 
     public static final double MAX_VELOCITY = 6380.0 / 60.0 *
             SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
@@ -36,7 +36,7 @@ public class Drive extends SubsystemBase {
     public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / Math.hypot(TRACKWIDTH / 2, WHEELBASE / 2); // radians per second
 
 
-	
+    
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
             // Front Left
@@ -70,7 +70,7 @@ public class Drive extends SubsystemBase {
         double backLeftSteerOffset = -Math.toRadians(0);
         double backRightSteerOffset = -Math.toRadians(0);
 
-		// Module PID
+        // Module PID
         double kP = 0.2;
         double kI = 0;
         double kD = 0;
@@ -104,7 +104,7 @@ public class Drive extends SubsystemBase {
                 kD,
                 frontRightSteerOffset
         );
-		
+        
         backLeftModule = Mk4iSwerveModuleHelper.createFalcon500(
                 tab.getLayout("Back Left Module", BuiltInLayouts.kList)
                         .withSize(2, 4).withPosition(4, 0),
@@ -135,32 +135,32 @@ public class Drive extends SubsystemBase {
 
         pigeon.configMountPose(Pigeon2.AxisDirection.PositiveY, Pigeon2.AxisDirection.PositiveZ);
 
-		AutoBuilder.configureHolonomic(
-			this::getPose,
-			this::resetOdometry,
-			this::getChassisSpeeds,
-			this::drive,
-			new HolonomicPathFollowerConfig(
-				new PIDConstants(0, 0, 0), // Translation PID
-				new PIDConstants(0, 0, 0), // Rotation PID
-				MAX_VELOCITY,
-				0.4,
-				new ReplanningConfig()
-				),
-			Drive::onRed,
-			this);
+        AutoBuilder.configureHolonomic(
+            this::getPose,
+            this::resetOdometry,
+            this::getChassisSpeeds,
+            this::drive,
+            new HolonomicPathFollowerConfig(
+                new PIDConstants(0, 0, 0), // Translation PID
+                new PIDConstants(0, 0, 0), // Rotation PID
+                MAX_VELOCITY,
+                0.4,
+                new ReplanningConfig()
+                ),
+            Drive::onRed,
+            this);
     }
 
-	/**
-	 * A method that gets whether you are on red alliance. If there is not an alliance,
-	 * returns false
-	 * @return {@code true} if you are on the red alliance
-	 */
-	private static boolean onRed() {
-		return DriverStation.getAlliance()
-			.<Boolean>map((j) -> j == Alliance.Red)
-			.orElse(false);
-	}
+    /**
+     * A method that gets whether you are on red alliance. If there is not an alliance,
+     * returns false
+     * @return {@code true} if you are on the red alliance
+     */
+    private static boolean onRed() {
+        return DriverStation.getAlliance()
+            .<Boolean>map((j) -> j == Alliance.Red)
+            .orElse(false);
+    }
 
     public Rotation2d getRotation() {
         return Rotation2d.fromDegrees(pigeon.getHeading());
@@ -191,40 +191,6 @@ public class Drive extends SubsystemBase {
         chassisSpeedDemand = demand;
     }
 
-    public void initAutonomous(Pose2d initialPose) {
-        frontLeftModule.resetDriveEncoder();
-        frontRightModule.resetDriveEncoder();
-        backLeftModule.resetDriveEncoder();
-        backRightModule.resetDriveEncoder();
-
-        pigeon.setHeading(initialPose.getRotation().getDegrees());
-
-        SwerveModulePosition[] modulePositions = {
-                frontLeftModule.getPosition(),
-                frontRightModule.getPosition(),
-                backLeftModule.getPosition(),
-                backRightModule.getPosition()
-        };
-        odometry = new SwerveDriveOdometry(kinematics, initialPose.getRotation(), modulePositions, initialPose);
-    }
-
-    public void initAutonomous(Rotation2d initialRotation) {
-        frontLeftModule.resetDriveEncoder();
-        frontRightModule.resetDriveEncoder();
-        backLeftModule.resetDriveEncoder();
-        backRightModule.resetDriveEncoder();
-
-        pigeon.setHeading(initialRotation.getDegrees());
-
-        SwerveModulePosition[] modulePositions = {
-                frontLeftModule.getPosition(),
-                frontRightModule.getPosition(),
-                backLeftModule.getPosition(),
-                backRightModule.getPosition()
-        };
-        odometry = new SwerveDriveOdometry(kinematics, initialRotation, modulePositions, new Pose2d(0, 0, initialRotation));
-    }
-
     public void resetOdometry(Pose2d currentPose) {
         SwerveModulePosition[] modulePositions = {
                 frontLeftModule.getPosition(),
@@ -233,7 +199,12 @@ public class Drive extends SubsystemBase {
                 backRightModule.getPosition()
         };
 
-        odometry.resetPosition(Rotation2d.fromDegrees(pigeon.getHeading()), modulePositions, currentPose);
+        pigeon.setHeading(currentPose.getRotation().getDegrees());
+        if (odometry == null) {
+            odometry = new SwerveDriveOdometry(kinematics, currentPose.getRotation(), modulePositions, currentPose);
+        } else {
+            odometry.resetPosition(Rotation2d.fromDegrees(pigeon.getHeading()), modulePositions, currentPose);
+        }
     }
 
     @Override

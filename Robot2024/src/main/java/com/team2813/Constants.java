@@ -59,4 +59,5 @@ public final class Constants {
 	public static final int MAGAZINE = 21;
 	public static final int INTAKE_ENCODER = 22;
 	public static final int INTAKE_PIVOT = 23;
+	public static final int AMP = 24;
 }
