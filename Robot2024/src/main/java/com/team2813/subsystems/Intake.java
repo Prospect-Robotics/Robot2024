@@ -1,22 +1,18 @@
 package com.team2813.subsystems;
 
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-import com.ctre.phoenix.sensors.CANCoder;
-import com.revrobotics.CANSparkLowLevel;
-
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
-import com.team2813.lib2813.control.motors.SparkMaxWrapper;
 import com.team2813.lib2813.control.ControlMode;
-import com.team2813.lib2813.util.ConfigUtils;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.team2813.lib2813.control.Encoder;
+import com.team2813.lib2813.control.InvertType;
+import com.team2813.lib2813.control.Motor;
+import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.team2813.Constants.*;
 public class Intake extends SubsystemBase {
-    private final TalonFXWrapper intakeMotor = new TalonFXWrapper(INTAKE, TalonFXInvertType.CounterClockwise);
-    private final TalonFXWrapper pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, TalonFXInvertType.CounterClockwise);
-    private final CANCoder encoder = new CANCoder(INTAKE_ENCODER);
+    private final Motor intakeMotor = new TalonFXWrapper(INTAKE, InvertType.COUNTER_CLOCKWISE);
+    private final Motor pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.COUNTER_CLOCKWISE);
+    private final Encoder encoder = new CancoderWrapper(INTAKE_ENCODER);
 
     //private final SparkMaxWrapper intakeMotor = new SparkMaxWrapper(INTAKE, CANSparkLowLevel.MotorType.kBrushless, true);
     //private final SparkMaxWrapper pivotMotor = new SparkMaxWrapper(INTAKE_PIVOT, CANSparkLowLevel.MotorType.kBrushless, true);
@@ -44,9 +40,9 @@ public class Intake extends SubsystemBase {
 
     public void stopPivotMotor() { pivotMotor.set(ControlMode.DUTY_CYCLE, 0); }
 
-    public double getMeasurement() { return encoder.getPosition(); }
+    public double getMeasurement() { return encoder.position(); }
 
-    public void zeroSensors() { ConfigUtils.ctreConfig(() -> encoder.setPosition(0)); }
+    public void zeroSensors() { encoder.setPosition(0);}
 
 
 

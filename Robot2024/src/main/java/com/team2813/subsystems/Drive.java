@@ -1,6 +1,5 @@
 package com.team2813.subsystems;
 
-import com.ctre.phoenix.sensors.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -132,8 +131,6 @@ public class Drive extends SubsystemBase {
                 kD,
                 backRightSteerOffset
         );
-
-        pigeon.configMountPose(Pigeon2.AxisDirection.PositiveY, Pigeon2.AxisDirection.PositiveZ);
 
         AutoBuilder.configureHolonomic(
             this::getPose,

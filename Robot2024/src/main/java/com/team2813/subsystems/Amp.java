@@ -1,8 +1,8 @@
 package com.team2813.subsystems;
 
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.control.ControlMode;
+import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.Motor;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,7 +12,7 @@ public class Amp extends SubsystemBase {
     Motor ampMotor;
 
     public Amp() {
-		TalonFXWrapper ampMotor = new TalonFXWrapper(KICKER, TalonFXInvertType.CounterClockwise);
+		TalonFXWrapper ampMotor = new TalonFXWrapper(KICKER, InvertType.COUNTER_CLOCKWISE);
 		this.ampMotor = ampMotor;
     }
 

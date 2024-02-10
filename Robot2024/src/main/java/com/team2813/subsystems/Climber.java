@@ -2,8 +2,8 @@ package com.team2813.subsystems;
 
 import static com.team2813.Constants.CLIMBER;
 
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.team2813.lib2813.control.ControlMode;
+import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 @SuppressWarnings("unused")
 public class Climber extends SubsystemBase {
-    private final TalonFXWrapper climberMotor = new TalonFXWrapper(CLIMBER, TalonFXInvertType.Clockwise);
+    private final TalonFXWrapper climberMotor = new TalonFXWrapper(CLIMBER, InvertType.CLOCKWISE);
     
     public Climber() {}
 
