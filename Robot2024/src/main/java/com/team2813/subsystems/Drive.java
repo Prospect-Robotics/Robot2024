@@ -1,7 +1,5 @@
 package com.team2813.subsystems;
 
-<<<<<<< HEAD
-=======
 import static com.team2813.Constants.*;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -12,7 +10,6 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.*;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
->>>>>>> beec593 (possibly done)
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
