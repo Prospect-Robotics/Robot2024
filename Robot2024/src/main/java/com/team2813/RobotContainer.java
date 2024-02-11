@@ -45,10 +45,6 @@ public class RobotContainer {
 		SmartDashboard.putData("Auto", autoChooser);
 	}
 
-	public Drive getDrive() {
-		return drive;
-	}
-
 	private void configureBindings() {
 		SLOWMODE_BUTTON.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
 		SLOWMODE_BUTTON.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
