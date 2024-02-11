@@ -62,30 +62,23 @@ public class RobotContainer {
 
 		//intake & outtake buttons
 		intakeButton.whileTrue(new ParallelCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intake),
+			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intakePivot),
 			new InstantCommand(intake::intake, intake), 
-			new InstantCommand(mag::run, mag)
+			new InstantCommand(mag::runOnlyMag, mag)
 		));
 		intakeButton.whileFalse(new ParallelCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intake),
+			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intakePivot),
 			new InstantCommand(intake::stopIntakeMotor, intake)
 		));
 		outtakeButton.whileTrue(new ParallelCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intake),
+			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intakePivot),
 			new InstantCommand(intake::intake, intake), 
-			new InstantCommand(mag::run, mag)
+			new InstantCommand(mag::runOnlyMag, mag)
 		));
 		outtakeButton.whileFalse(new ParallelCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intake),
+			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intakePivot),
 			new InstantCommand(intake::stopIntakeMotor, intake)
 		));
-
-		shootButton.whileTrue(new SequentialCommandGroup(
-			new InstantCommand(mag::run, mag)
-			
-		));
-		//
-
 		
 	}
 

@@ -11,7 +11,7 @@ public class DefaultIntakeMagCommand extends SequentialCommandGroup {
 
     public DefaultIntakeMagCommand(Intake intakeSubsystem, Magazine magazineSubsystem) {
         super(
-                new InstantCommand(intakeSubsystem::intakeNote, intakeSubsystem),
+                new InstantCommand(intakeSubsystem::intake, intakeSubsystem),
                 new WaitCommand(0.25),
                 new InstantCommand(intakeSubsystem::stopIntakeMotor, intakeSubsystem),
                 new InstantCommand(magazineSubsystem::runMagKicker, magazineSubsystem),
@@ -19,5 +19,7 @@ public class DefaultIntakeMagCommand extends SequentialCommandGroup {
                 new InstantCommand(magazineSubsystem::stopMagKicker, magazineSubsystem)
 
         );
+        addRequirements(intakeSubsystem);
+        addRequirements(magazineSubsystem);
     }
 }

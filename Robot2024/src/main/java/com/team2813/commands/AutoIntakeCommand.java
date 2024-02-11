@@ -10,7 +10,7 @@ public class AutoIntakeCommand extends SequentialCommandGroup {
 
     public AutoIntakeCommand(Intake intakeSubsystem) {
         super(
-                new InstantCommand(intakeSubsystem::intakeNote, intakeSubsystem),
+                new InstantCommand(intakeSubsystem::intake, intakeSubsystem),
                 new WaitCommand(0.25),
                 new InstantCommand(intakeSubsystem::stopIntakeMotor, intakeSubsystem)
         );

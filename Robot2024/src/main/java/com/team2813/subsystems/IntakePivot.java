@@ -25,6 +25,7 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 
     private static final double PIVOT_UP_SPEED = .10;
     private static final double PIVOT_DOWN_SPEED = -.10;
+    private Rotations currentPosition;
     
     Motor intakePivotMotor; 
     CANCoder intakePivotEncoder;
@@ -55,6 +56,12 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 
     public void zeroSensors() { ConfigUtils.ctreConfig(() -> intakePivotEncoder.setPosition(0)); }
 
+    @Override
+    public void setSetpoint(Rotations setPoint) {
+        super.setSetpoint(setPoint);
+        currentPosition = setPoint;
+    }
+    
     public boolean positionReached() {
         return Math.abs(currentPosition.getPos() - intakePivotEncoder.getPosition()) < 0.05;
     }
