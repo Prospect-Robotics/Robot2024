@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+import com.team2813.commands.LockFunctionCommand;
 
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
@@ -19,6 +23,8 @@ import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Shooter;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Amp;
+import com.team2813.subsystems.Intake;
+import com.team2813.subsystems.IntakePivot;
 
 import static com.team2813.Constants.*;
 import static com.team2813.Constants.DriverConstants.*;
@@ -45,9 +51,42 @@ public class RobotContainer {
 		SmartDashboard.putData("Auto", autoChooser);
 	}
 
+	private final Intake intake = new Intake();
+	private final Magazine mag = new Magazine();
+	private final IntakePivot intakePivot = new IntakePivot();
+
+
 	private void configureBindings() {
-		SLOWMODE_BUTTON.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
-		SLOWMODE_BUTTON.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
+		slowmodeButton.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
+		slowmodeButton.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
+
+		//intake & outtake buttons
+		intakeButton.whileTrue(new ParallelCommandGroup(
+			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intake),
+			new InstantCommand(intake::intake, intake), 
+			new InstantCommand(mag::run, mag)
+		));
+		intakeButton.whileFalse(new ParallelCommandGroup(
+			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intake),
+			new InstantCommand(intake::stopIntakeMotor, intake)
+		));
+		outtakeButton.whileTrue(new ParallelCommandGroup(
+			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intake),
+			new InstantCommand(intake::intake, intake), 
+			new InstantCommand(mag::run, mag)
+		));
+		outtakeButton.whileFalse(new ParallelCommandGroup(
+			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intake),
+			new InstantCommand(intake::stopIntakeMotor, intake)
+		));
+
+		shootButton.whileTrue(new SequentialCommandGroup(
+			new InstantCommand(mag::run, mag)
+			
+		));
+		//
+
+		
 	}
 
 	public Command getAutonomousCommand() {

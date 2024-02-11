@@ -17,12 +17,28 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public final class Constants {
 	public static class OperatorConstants {
-		public static final int operatorControllerPort = 0;
+		public static final int operatorControllerPort = 1;
+		public static final CommandPS4Controller operatorController = new CommandPS4Controller(operatorControllerPort);
+
+		//operator controls
+		public static final Trigger intakeButton = operatorController.R1();
+		public static final Trigger outtakeButton = operatorController.L1();
+		public static final Trigger shootButton = operatorController.square();
+		public static final Trigger spoolAutoAimButton = operatorController.triangle();
+		public static final Trigger spoolPodiumButton = operatorController.circle();
+		public static final Trigger spoolAmpButton = operatorController.cross();
+		public static final Trigger climbButton = operatorController.share();
+		public static final Trigger climbManualUpButton = operatorController.povUp();
+		public static final Trigger climbManualDownButton = operatorController.povDown();
+
 	}
 	public static class DriverConstants {
 		public static final int driverControllerPort = 0;
-		public static final CommandPS4Controller DRIVER_CONTROLLER = new CommandPS4Controller(driverControllerPort);
-		public static final Trigger SLOWMODE_BUTTON = DRIVER_CONTROLLER.L1();
+		public static final CommandPS4Controller driverController = new CommandPS4Controller(driverControllerPort);
+		
+		//driver controls
+		public static final Trigger slowmodeButton = driverController.L1();
+		public static final Trigger resetSwerve = driverController.PS();
 	}
 
 	// front right swerve module
