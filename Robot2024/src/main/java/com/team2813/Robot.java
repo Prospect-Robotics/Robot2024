@@ -5,9 +5,13 @@
 package com.team2813;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -18,6 +22,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_robotContainer = new RobotContainer();
     CameraServer.startAutomaticCapture();
+    Shuffleboard.getTab("SmartDashboard").add("My Toggle Camera", CameraServer.getServer().getSource()).withSize(7, 5).withPosition(2, 0);
   }
 
   @Override
