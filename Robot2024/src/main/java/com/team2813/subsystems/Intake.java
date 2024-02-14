@@ -21,8 +21,8 @@ public class Intake extends SubsystemBase {
     private static final double INTAKE_SPEED = 0.25;
     private static final double OUTTAKE_SPEED = -0.25;
 
-    private static final double PIVOT_UP_SPEED = .10;
-    private static final double PIVOT_DOWN_SPEED = -.10;
+    private static final double PIVOT_UP_SPEED = .05;
+    private static final double PIVOT_DOWN_SPEED = -.05;
 
 
     public Intake() {
