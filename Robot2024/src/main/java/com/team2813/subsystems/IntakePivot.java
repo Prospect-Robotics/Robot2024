@@ -5,8 +5,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkLowLevel;
 import com.team2813.lib2813.control.Encoder;
-
-
+import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.motors.SparkMaxWrapper;
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.encoders.CancoderWrapper;
@@ -28,20 +27,16 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     private Rotations currentPosition;
     
     Motor intakePivotMotor; 
-    CANCoder intakePivotEncoder;
+    Encoder intakePivotEncoder;
 
     public IntakePivot() {
         
         super(new MotorSubsystemConfiguration(
-			new TalonFXWrapper(INTAKE_PIVOT, TalonFXInvertType.CounterClockwise),
+			new TalonFXWrapper(INTAKE_PIVOT, InvertType.COUNTER_CLOCKWISE),
 			new CancoderWrapper(INTAKE_ENCODER)
 			));
 
-        TalonFXWrapper m = new TalonFXWrapper(INTAKE_PIVOT, TalonFXInvertType.Clockwise);
-        intakePivotMotor = m;
-
-        CANCoder e = new CANCoder(INTAKE_ENCODER);
-        intakePivotEncoder = e;
+        intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
         setSetpoint(Rotations.INTAKE_DOWN);
     }
 
@@ -52,10 +47,6 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 
     public void stopPivotMotor() { intakePivotMotor.set(ControlMode.DUTY_CYCLE, 0); }
 
-    public double getMeasurement() { return intakePivotEncoder.getPosition(); }
-
-    public void zeroSensors() { ConfigUtils.ctreConfig(() -> intakePivotEncoder.setPosition(0)); }
-
     @Override
     public void setSetpoint(Rotations setPoint) {
         super.setSetpoint(setPoint);
@@ -63,7 +54,7 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     }
     
     public boolean positionReached() {
-        return Math.abs(currentPosition.getPos() - intakePivotEncoder.getPosition()) < 0.05;
+        return Math.abs(currentPosition.getPos() - getMeasurement()) < 0.05;
     }
 
     public static enum Rotations implements MotorSubsystem.Position {

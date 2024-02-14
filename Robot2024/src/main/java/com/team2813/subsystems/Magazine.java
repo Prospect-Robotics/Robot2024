@@ -1,8 +1,8 @@
 package com.team2813.subsystems;
 
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.control.ControlMode;
+import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.Motor;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,10 +13,10 @@ public class Magazine extends SubsystemBase {
 	Motor magMotor;
 
     public Magazine() {
-		TalonFXWrapper kickerMotor = new TalonFXWrapper(KICKER, TalonFXInvertType.CounterClockwise);
-		kickerMotor.addFollower(MAGAZINE, TalonFXInvertType.FollowMaster);
+		TalonFXWrapper kickerMotor = new TalonFXWrapper(KICKER, InvertType.COUNTER_CLOCKWISE);
+		kickerMotor.addFollower(MAGAZINE, InvertType.FOLLOW_MASTER);
 
-		TalonFXWrapper magMotor = new TalonFXWrapper(MAGAZINE, TalonFXInvertType.CounterClockwise);
+		TalonFXWrapper magMotor = new TalonFXWrapper(MAGAZINE, InvertType.COUNTER_CLOCKWISE);
 		
 		this.kickerMotor = kickerMotor;
 		this.magMotor = magMotor;

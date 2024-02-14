@@ -1,30 +1,32 @@
 package com.team2813.subsystems;
 
-import com.ctre.phoenix.sensors.Pigeon2;
+import static com.team2813.Constants.*;
+
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.*;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.*;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
-import com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
-
 import com.team2813.lib2813.control.imu.Pigeon2Wrapper;
-import com.team2813.lib2813.swerve.controllers.SwerveModule;
-import com.team2813.lib2813.swerve.helpers.Mk4iSwerveModuleHelper;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import static com.team2813.Constants.*;
 
 public class Drive extends SubsystemBase {
     private static final double TRACKWIDTH = 1e-8;
@@ -34,121 +36,93 @@ public class Drive extends SubsystemBase {
             SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
             SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI; // m/s
     public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / Math.hypot(TRACKWIDTH / 2, WHEELBASE / 2); // radians per second
+	
+    private final SwerveDriveKinematics kinematics;
 
-
-    
-
-    private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
-            // Front Left
-            new Translation2d(TRACKWIDTH / 2, WHEELBASE / 2),
-            // Front Right
-            new Translation2d(TRACKWIDTH / 2, -WHEELBASE / 2),
-            // Back Left
-            new Translation2d(-TRACKWIDTH / 2, WHEELBASE / 2),
-            // Back Right
-            new Translation2d(-TRACKWIDTH / 2, -WHEELBASE / 2)
-    );
-
-    private SwerveDriveOdometry odometry;
-
-    private final SwerveModule frontLeftModule;
-    private final SwerveModule frontRightModule;
-    private final SwerveModule backLeftModule;
-    private final SwerveModule backRightModule;
-
-    private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_ID);
-
-    private ChassisSpeeds chassisSpeedDemand = new ChassisSpeeds(0, 0, 0);
+    private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_ID, "swerve");
 
     private double multiplier = 1;
 
+	SwerveDrivetrain drivetrain;
+
     public Drive() {
-        String canbus = "swerve";
+		// rotations
+        double frontLeftSteerOffset = 0.213379;
+        double frontRightSteerOffset = -0.407959;
+        double backLeftSteerOffset = 0.372559;
+        double backRightSteerOffset = -0.395996;
 
-        double frontLeftSteerOffset = -Math.toRadians(0);
-        double frontRightSteerOffset = -Math.toRadians(0);
-        double backLeftSteerOffset = -Math.toRadians(0);
-        double backRightSteerOffset = -Math.toRadians(0);
+		// tune
+		Slot0Configs steerGains = new Slot0Configs()
+			.withKP(50).withKI(0).withKD(0.2)
+			.withKS(0).withKV(1.5).withKA(0);
+		// tune
+		Slot0Configs driveGains = new Slot0Configs()
+			.withKP(3).withKI(0).withKD(0)
+			.withKS(0).withKV(0).withKA(0);
 
-        // Module PID
-        double kP = 0.2;
-        double kI = 0;
-        double kD = 0;
-
-        ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-
-        frontLeftModule = Mk4iSwerveModuleHelper.createFalcon500(
-                tab.getLayout("Front Left Module", BuiltInLayouts.kList)
-                        .withSize(2, 4).withPosition(0, 0),
-                GearRatio.L2,
-                canbus,
-                FRONT_LEFT_DRIVE_ID,
-                FRONT_LEFT_STEER_ID,
-                FRONT_LEFT_ENCODER_ID,
-                kP,
-                kI,
-                kD,
-                frontLeftSteerOffset
-        );
-
-        frontRightModule = Mk4iSwerveModuleHelper.createFalcon500(
-                tab.getLayout("Front Right Module", BuiltInLayouts.kList)
-                        .withSize(2, 4).withPosition(2, 0),
-                GearRatio.L2,
-                canbus,
-                FRONT_RIGHT_DRIVE_ID,
-                FRONT_RIGHT_STEER_ID,
-                FRONT_RIGHT_ENCODER_ID,
-                kP,
-                kI,
-                kD,
-                frontRightSteerOffset
-        );
-        
-        backLeftModule = Mk4iSwerveModuleHelper.createFalcon500(
-                tab.getLayout("Back Left Module", BuiltInLayouts.kList)
-                        .withSize(2, 4).withPosition(4, 0),
-                GearRatio.L2,
-                canbus,
-                BACK_LEFT_DRIVE_ID,
-                BACK_LEFT_STEER_ID,
-                BACK_LEFT_ENCODER_ID,
-                kP,
-                kI,
-                kD,
-                backLeftSteerOffset
-        );
-
-        backRightModule = Mk4iSwerveModuleHelper.createFalcon500(
-                tab.getLayout("Back Right Module", BuiltInLayouts.kList)
-                        .withSize(2, 4).withPosition(6, 0),
-                GearRatio.L2,
-                canbus,
-                BACK_RIGHT_DRIVE_ID,
-                BACK_RIGHT_STEER_ID,
-                BACK_RIGHT_ENCODER_ID,
-                kP,
-                kI,
-                kD,
-                backRightSteerOffset
-        );
-
-        pigeon.configMountPose(Pigeon2.AxisDirection.PositiveY, Pigeon2.AxisDirection.PositiveZ);
-
-        AutoBuilder.configureHolonomic(
-            this::getPose,
-            this::resetOdometry,
-            this::getChassisSpeeds,
-            this::drive,
-            new HolonomicPathFollowerConfig(
-                new PIDConstants(0, 0, 0), // Translation PID
-                new PIDConstants(0, 0, 0), // Rotation PID
-                MAX_VELOCITY,
-                0.4,
-                new ReplanningConfig()
-                ),
-            Drive::onRed,
-            this);
+		SwerveDrivetrainConstants drivetrainConstants = new SwerveDrivetrainConstants()
+			.withPigeon2Id(PIGEON_ID)
+			.withCANbusName("swerve");
+		SwerveModuleConstantsFactory constantCreator = new SwerveModuleConstantsFactory()
+			.withDriveMotorGearRatio(6.75)
+			.withSteerMotorGearRatio(150.0 / 7)
+			.withWheelRadius(1.75)
+			.withSlipCurrent(300) // tune :)
+			.withSteerMotorGains(steerGains)
+			.withDriveMotorGains(driveGains)
+			.withSteerMotorClosedLoopOutput(ClosedLoopOutputType.Voltage)
+			.withDriveMotorClosedLoopOutput(ClosedLoopOutputType.TorqueCurrentFOC)
+			.withSpeedAt12VoltsMps(MAX_VELOCITY)
+			.withFeedbackSource(SteerFeedbackType.FusedCANcoder)
+			.withCouplingGearRatio(3.5) // tune :P
+			.withSteerMotorInverted(true);
+		double frontDist = 0.381; // y
+		double leftDist = 0.3302; // x
+		SwerveModuleConstants frontLeft = constantCreator.createModuleConstants(
+			FRONT_LEFT_STEER_ID, FRONT_LEFT_DRIVE_ID,
+			FRONT_LEFT_ENCODER_ID, frontLeftSteerOffset,
+			Units.inchesToMeters(leftDist), Units.inchesToMeters(frontDist),
+			true);
+		SwerveModuleConstants frontRight = constantCreator.createModuleConstants(
+			FRONT_RIGHT_STEER_ID, FRONT_RIGHT_DRIVE_ID,
+			FRONT_RIGHT_ENCODER_ID, frontRightSteerOffset,
+			Units.inchesToMeters(-leftDist), Units.inchesToMeters(frontDist),
+			true
+		);
+		SwerveModuleConstants backLeft = constantCreator.createModuleConstants(
+			BACK_LEFT_STEER_ID, BACK_LEFT_DRIVE_ID,
+			BACK_LEFT_ENCODER_ID, backLeftSteerOffset,
+			Units.inchesToMeters(leftDist), Units.inchesToMeters(-frontDist),
+			true
+		);
+		SwerveModuleConstants backRight = constantCreator.createModuleConstants(
+			BACK_RIGHT_STEER_ID, BACK_RIGHT_DRIVE_ID,
+			BACK_RIGHT_ENCODER_ID, backRightSteerOffset,
+			Units.inchesToMeters(-leftDist), Units.inchesToMeters(-frontDist),
+			true
+		);
+		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
+		Translation2d[] locations = new Translation2d[constants.length];
+		for (int i = 0; i < constants.length; i++) {
+			locations[i] = new Translation2d(constants[i].LocationX, constants[i].LocationY);
+		}
+		kinematics = new SwerveDriveKinematics(locations);
+		drivetrain = new SwerveDrivetrain(drivetrainConstants, frontLeft, frontRight, backLeft, backRight);
+		AutoBuilder.configureHolonomic(
+			this::getPose,
+			this::resetOdometry,
+			this::getChassisSpeeds,
+			this::drive,
+			new HolonomicPathFollowerConfig(
+				new PIDConstants(0.1, 0, 0), // Translation PID
+				new PIDConstants(0, 0, 0), // Rotation PID
+				MAX_VELOCITY,
+				0.410178,
+				new ReplanningConfig()
+				),
+			Drive::onRed,
+			this);
     }
 
     /**
@@ -167,7 +141,7 @@ public class Drive extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return odometry.getPoseMeters();
+        return drivetrain.getState().Pose;
     }
 
     public Pigeon2Wrapper getPigeon() {
@@ -176,10 +150,7 @@ public class Drive extends SubsystemBase {
 
     public ChassisSpeeds getChassisSpeeds() {
         return kinematics.toChassisSpeeds(
-                frontLeftModule.getState(),
-                frontRightModule.getState(),
-                backLeftModule.getState(),
-                backRightModule.getState()
+                drivetrain.getState().ModuleStates
         );
     }
 
@@ -187,50 +158,35 @@ public class Drive extends SubsystemBase {
         multiplier = enable ? 0.4 : 1;
     }
 
+	private final SwerveRequest.FieldCentric xyrRequest =
+		new SwerveRequest.FieldCentric()
+				.withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+				.withSteerRequestType(SteerRequestType.MotionMagicExpo);
+
+	public void drive(double x, double y, double rotation) {
+		drivetrain.setControl(
+			xyrRequest.withVelocityX(x * multiplier)
+				.withVelocityY(y * multiplier)
+				.withRotationalRate(rotation)
+		);
+		
+	}
+
+	private final SwerveRequest.ApplyChassisSpeeds chassisSpeedsRequest =
+		new SwerveRequest.ApplyChassisSpeeds().withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+			.withSteerRequestType(SteerRequestType.MotionMagicExpo);
+
     public void drive(ChassisSpeeds demand) {
-        chassisSpeedDemand = demand;
+        drivetrain.setControl(chassisSpeedsRequest.withSpeeds(demand));
     }
 
     public void resetOdometry(Pose2d currentPose) {
-        SwerveModulePosition[] modulePositions = {
-                frontLeftModule.getPosition(),
-                frontRightModule.getPosition(),
-                backLeftModule.getPosition(),
-                backRightModule.getPosition()
-        };
-
-        pigeon.setHeading(currentPose.getRotation().getDegrees());
-        if (odometry == null) {
-            odometry = new SwerveDriveOdometry(kinematics, currentPose.getRotation(), modulePositions, currentPose);
-        } else {
-            odometry.resetPosition(Rotation2d.fromDegrees(pigeon.getHeading()), modulePositions, currentPose);
-        }
+		drivetrain.seedFieldRelative(currentPose);
     }
 
     @Override
     public void periodic() {
         pigeon.periodicResetCheck();
         SmartDashboard.putNumber("Current Heading (degrees)", pigeon.getHeading());
-
-        if (odometry != null) {
-            SwerveModulePosition[] modulePositions = {
-                    frontLeftModule.getPosition(),
-                    frontRightModule.getPosition(),
-                    backLeftModule.getPosition(),
-                    backRightModule.getPosition()
-            };
-
-            odometry.update(getRotation(), modulePositions);
-
-            SmartDashboard.putString("Current Pose", odometry.getPoseMeters().toString());
-        }
-
-        SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(chassisSpeedDemand);
-        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, MAX_VELOCITY);
-
-        frontLeftModule.set(moduleStates[0].speedMetersPerSecond * multiplier, moduleStates[0].angle.getRadians());
-        frontRightModule.set(moduleStates[1].speedMetersPerSecond * multiplier, moduleStates[1].angle.getRadians());
-        backLeftModule.set(moduleStates[2].speedMetersPerSecond * multiplier, moduleStates[2].angle.getRadians());
-        backRightModule.set(moduleStates[3].speedMetersPerSecond * multiplier, moduleStates[3].angle.getRadians());
     }
 }

@@ -1,7 +1,6 @@
 package com.team2813.commands;
 
 import com.team2813.subsystems.Drive;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import java.util.function.DoubleSupplier;
@@ -27,11 +26,10 @@ public class DefaultDriveCommand extends Command {
 
     @Override
     public void execute() {
-        driveSubsystem.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-                translationXSupplier.getAsDouble(),
-                translationYSupplier.getAsDouble(),
-                rotationSupplier.getAsDouble(),
-                driveSubsystem.getRotation()
-        ));
+        driveSubsystem.drive(
+			translationXSupplier.getAsDouble(),
+			translationYSupplier.getAsDouble(),
+			rotationSupplier.getAsDouble()
+			);
     }
 }
