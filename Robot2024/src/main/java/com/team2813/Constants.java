@@ -32,16 +32,12 @@ public final class Constants {
 		public static final Trigger shootManualUpButton = operatorController.povLeft();
 		public static final Trigger shootManualDownButton = operatorController.povRight();
 		public static final Trigger climbManualUpButton = operatorController.povUp();
-		public static final Trigger climbManualDownButton = operatorController.povDown();
-
+		public static final Trigger climbDownUpButton = operatorController.povDown();
 	}
 	public static class DriverConstants {
 		public static final int driverControllerPort = 0;
-		public static final CommandPS4Controller driverController = new CommandPS4Controller(driverControllerPort);
-		
-		//driver controls
-		public static final Trigger slowmodeButton = driverController.L1();
-		public static final Trigger resetSwerve = driverController.PS();
+		public static final CommandPS4Controller DRIVER_CONTROLLER = new CommandPS4Controller(driverControllerPort);
+		public static final Trigger slowmodeButton = DRIVER_CONTROLLER.L1();
 	}
 
 	// front right swerve module
@@ -58,6 +54,7 @@ public final class Constants {
 	public static final int BACK_LEFT_STEER_ID = 7;
 	public static final int BACK_LEFT_ENCODER_ID = 8;
 	public static final int BACK_LEFT_DRIVE_ID = 9;
+	
 
 	// front left swerve module
 	public static final int FRONT_LEFT_STEER_ID = 10;
