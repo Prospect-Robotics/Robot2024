@@ -16,7 +16,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import com.team2813.commands.LockFunctionCommand;
-
+import com.team2813.commands.SpoolCommand;
+import com.team2813.lib2813.control.ControlMode;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.subsystems.Drive;
@@ -54,6 +55,7 @@ public class RobotContainer {
 	private final Intake intake = new Intake();
 	private final Magazine mag = new Magazine();
 	private final IntakePivot intakePivot = new IntakePivot();
+	private final Shooter shoot = new Shooter();
 
 
 	private void configureBindings() {
@@ -71,15 +73,53 @@ public class RobotContainer {
 			new InstantCommand(intake::stopIntakeMotor, intake)
 		));
 		outtakeButton.whileTrue(new ParallelCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intakePivot),
 			new InstantCommand(intake::intake, intake), 
 			new InstantCommand(mag::runOnlyMag, mag)
 		));
-		outtakeButton.whileFalse(new ParallelCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intakePivot),
+		outtakeButton.whileFalse(
 			new InstantCommand(intake::stopIntakeMotor, intake)
-		));
+		);
 		
+		ampIntakeButton.whileTrue(
+			new InstantCommand(amp::pushNoteIn, amp)
+		);
+		ampIntakeButton.whileFalse(
+			new InstantCommand(amp::stop, amp)
+		);
+		ampOuttakeButton.whileTrue(
+			new InstantCommand(amp::pushNoteOut, amp)
+		);
+		ampOuttakeButton.whileFalse(
+			new InstantCommand(amp::stop, amp)
+		);
+
+
+		shootButton.onTrue(
+			new InstantCommand(mag::runMagKicker, mag)
+		);
+		shootButton.onFalse(new ParallelCommandGroup(
+			new InstantCommand(mag::stopMagKicker, mag),
+			new InstantCommand(shoot::stop, shoot)
+		));
+		shootManualUpButton.onTrue(
+			new InstantCommand(() -> shoot.set(ControlMode.DUTY_CYCLE, 1))
+		);
+		shootManualUpButton.onFalse(
+			new InstantCommand(() -> shoot.set(ControlMode.DUTY_CYCLE, 0))
+		);
+		shootManualDownButton.onTrue(
+			new InstantCommand(() -> shoot.set(ControlMode.DUTY_CYCLE, -1))
+		);
+		shootManualDownButton.onFalse(
+			new InstantCommand(() -> shoot.set(ControlMode.DUTY_CYCLE, 0))
+		);
+
+		spoolPodiumButton.onTrue(
+			new SpoolCommand(shooter)
+		);
+
+
+
 	}
 
 	public Command getAutonomousCommand() {
