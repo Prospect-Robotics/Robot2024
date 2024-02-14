@@ -1,25 +1,14 @@
 package com.team2813.subsystems;
-import com.team2813.lib2813.control.motors.TalonFXWrapper;
+import static com.team2813.Constants.INTAKE_ENCODER;
+import static com.team2813.Constants.INTAKE_PIVOT;
 
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-import com.ctre.phoenix.sensors.CANCoder;
-import com.revrobotics.CANSparkLowLevel;
+import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.Encoder;
 import com.team2813.lib2813.control.InvertType;
-import com.team2813.lib2813.control.motors.SparkMaxWrapper;
-import com.team2813.lib2813.control.ControlMode;
-import com.team2813.lib2813.control.encoders.CancoderWrapper;
-import com.team2813.lib2813.util.ConfigUtils;
-//import com.team2813.subsystems.Intake.Rotations;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import com.team2813.lib2813.subsystems.MotorSubsystem;
-import com.team2813.lib2813.subsystems.MotorSubsystem.MotorSubsystemConfiguration;
 import com.team2813.lib2813.control.Motor;
-
-import static com.team2813.Constants.*;
+import com.team2813.lib2813.control.encoders.CancoderWrapper;
+import com.team2813.lib2813.control.motors.TalonFXWrapper;
+import com.team2813.lib2813.subsystems.MotorSubsystem;
 public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 
     private static final double PIVOT_UP_SPEED = .10;

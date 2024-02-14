@@ -4,7 +4,27 @@
 
 package com.team2813;
 
+import static com.team2813.Constants.DriverConstants.driverControllerPort;
+import static com.team2813.Constants.DriverConstants.slowmodeButton;
+import static com.team2813.Constants.OperatorConstants.ampIntakeButton;
+import static com.team2813.Constants.OperatorConstants.ampOuttakeButton;
+import static com.team2813.Constants.OperatorConstants.intakeButton;
+import static com.team2813.Constants.OperatorConstants.operatorControllerPort;
+import static com.team2813.Constants.OperatorConstants.outtakeButton;
+import static com.team2813.Constants.OperatorConstants.shootButton;
+import static com.team2813.Constants.OperatorConstants.spoolPodiumButton;
+
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.team2813.commands.DefaultDriveCommand;
+import com.team2813.commands.DefaultShooterCommand;
+import com.team2813.commands.LockFunctionCommand;
+import com.team2813.commands.SpoolCommand;
+import com.team2813.subsystems.Amp;
+import com.team2813.subsystems.Drive;
+import com.team2813.subsystems.Intake;
+import com.team2813.subsystems.IntakePivot;
+import com.team2813.subsystems.Magazine;
+import com.team2813.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -13,30 +33,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
-import com.team2813.commands.LockFunctionCommand;
-import com.team2813.commands.SpoolCommand;
-import com.team2813.lib2813.control.ControlMode;
-import com.team2813.commands.DefaultDriveCommand;
-import com.team2813.commands.DefaultShooterCommand;
-import com.team2813.subsystems.Drive;
-import com.team2813.subsystems.Shooter;
-import com.team2813.subsystems.Magazine;
-import com.team2813.subsystems.Amp;
-import com.team2813.subsystems.Intake;
-import com.team2813.subsystems.IntakePivot;
-
-import static com.team2813.Constants.*;
-import static com.team2813.Constants.DriverConstants.*;
-import static com.team2813.Constants.OperatorConstants.*;
 
 public class RobotContainer {
 	private final SendableChooser<Command> autoChooser;
+
 	private final Drive drive = new Drive();
 	private final Shooter shooter = new Shooter();
-	private final Magazine magazine = new Magazine();
 	private final Amp amp = new Amp();
+	private final Intake intake = new Intake();
+	private final Magazine mag = new Magazine();
+	private final IntakePivot intakePivot = new IntakePivot();
+
 	private final XboxController driverController = new XboxController(driverControllerPort);
 	private final XboxController operatorController = new XboxController(operatorControllerPort);
 	public RobotContainer() {
@@ -51,12 +58,6 @@ public class RobotContainer {
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto", autoChooser);
 	}
-
-	private final Intake intake = new Intake();
-	private final Magazine mag = new Magazine();
-	private final IntakePivot intakePivot = new IntakePivot();
-	private final Shooter shoot = new Shooter();
-
 
 	private void configureBindings() {
 		slowmodeButton.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
@@ -93,26 +94,13 @@ public class RobotContainer {
 			new InstantCommand(amp::stop, amp)
 		);
 
-
 		shootButton.onTrue(
-			new InstantCommand(mag::runMagKicker, mag)
+			new InstantCommand(mag::stop, mag)
 		);
 		shootButton.onFalse(new ParallelCommandGroup(
-			new InstantCommand(mag::stopMagKicker, mag),
-			new InstantCommand(shoot::stop, shoot)
+			new InstantCommand(mag::stop, mag),
+			new InstantCommand(shooter::stop, shooter)
 		));
-		shootManualUpButton.onTrue(
-			new InstantCommand(() -> shoot.set(ControlMode.DUTY_CYCLE, 1))
-		);
-		shootManualUpButton.onFalse(
-			new InstantCommand(() -> shoot.set(ControlMode.DUTY_CYCLE, 0))
-		);
-		shootManualDownButton.onTrue(
-			new InstantCommand(() -> shoot.set(ControlMode.DUTY_CYCLE, -1))
-		);
-		shootManualDownButton.onFalse(
-			new InstantCommand(() -> shoot.set(ControlMode.DUTY_CYCLE, 0))
-		);
 
 		spoolPodiumButton.onTrue(
 			new SpoolCommand(shooter)
