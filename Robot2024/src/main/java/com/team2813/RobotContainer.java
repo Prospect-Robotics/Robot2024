@@ -71,15 +71,17 @@ public class RobotContainer {
 		));
 		intakeButton.whileFalse(new ParallelCommandGroup(
 			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intakePivot),
-			new InstantCommand(intake::stopIntakeMotor, intake)
+			new InstantCommand(intake::stopIntakeMotor, intake),
+			new InstantCommand(mag::stop, mag)
 		));
 		outtakeButton.whileTrue(new ParallelCommandGroup(
 			new InstantCommand(intake::intake, intake), 
-			new InstantCommand(mag::runOnlyMag, mag)
+			new InstantCommand(mag::runMagKicker, mag)
 		));
-		outtakeButton.whileFalse(
-			new InstantCommand(intake::stopIntakeMotor, intake)
-		);
+		outtakeButton.whileFalse(new ParallelCommandGroup(
+			new InstantCommand(intake::stopIntakeMotor, intake),
+			new InstantCommand(mag::stop, mag)
+		));
 		
 		ampIntakeButton.whileTrue(
 			new InstantCommand(amp::pushNoteIn, amp)
