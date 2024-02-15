@@ -13,7 +13,7 @@ public class Magazine extends SubsystemBase {
 	Motor magMotor;
 
     public Magazine() {
-		kickerMotor = new TalonFXWrapper(KICKER, InvertType.COUNTER_CLOCKWISE);
+		kickerMotor = new TalonFXWrapper(KICKER, InvertType.CLOCKWISE);
 
 		magMotor = new TalonFXWrapper(MAGAZINE, InvertType.COUNTER_CLOCKWISE);
     }
