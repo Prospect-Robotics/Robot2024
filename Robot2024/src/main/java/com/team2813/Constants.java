@@ -25,9 +25,9 @@ public final class Constants {
 		public static final Trigger outtakeButton = operatorController.L1();
 		public static final Trigger ampIntakeButton = operatorController.R2();
 		public static final Trigger ampOuttakeButton = operatorController.L2();
-		public static final Trigger shootButton = operatorController.square();
+		public static final Trigger shootButton = operatorController.circle(); // actually maps to square
 		public static final Trigger spoolAutoAimButton = operatorController.triangle();
-		public static final Trigger spoolPodiumButton = operatorController.circle();
+		public static final Trigger spoolPodiumButton = operatorController.cross(); // actually maps to circle
 		public static final Trigger climbButton = operatorController.share();
 		public static final Trigger shootManualUpButton = operatorController.povLeft();
 		public static final Trigger shootManualDownButton = operatorController.povRight();

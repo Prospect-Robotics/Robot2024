@@ -107,9 +107,6 @@ public class RobotContainer {
 		spoolPodiumButton.onTrue(
 			new SpoolCommand(shooter)
 		);
-
-
-
 	}
 
 	public Command getAutonomousCommand() {
