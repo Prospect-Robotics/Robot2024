@@ -1,13 +1,27 @@
 package com.team2813.subsystems;
 
-import static com.team2813.Constants.*;
+import static com.team2813.Constants.BACK_LEFT_DRIVE_ID;
+import static com.team2813.Constants.BACK_LEFT_ENCODER_ID;
+import static com.team2813.Constants.BACK_LEFT_STEER_ID;
+import static com.team2813.Constants.BACK_RIGHT_DRIVE_ID;
+import static com.team2813.Constants.BACK_RIGHT_ENCODER_ID;
+import static com.team2813.Constants.BACK_RIGHT_STEER_ID;
+import static com.team2813.Constants.FRONT_LEFT_DRIVE_ID;
+import static com.team2813.Constants.FRONT_LEFT_ENCODER_ID;
+import static com.team2813.Constants.FRONT_LEFT_STEER_ID;
+import static com.team2813.Constants.FRONT_RIGHT_DRIVE_ID;
+import static com.team2813.Constants.FRONT_RIGHT_ENCODER_ID;
+import static com.team2813.Constants.FRONT_RIGHT_STEER_ID;
+import static com.team2813.Constants.PIGEON_ID;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.*;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.ClosedLoopOutputType;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.*;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -15,7 +29,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
-import com.team2813.lib2813.control.imu.Pigeon2Wrapper;
+import com.team2813.RobotSpecificConfigs;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -25,7 +39,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drive extends SubsystemBase {
@@ -38,8 +51,6 @@ public class Drive extends SubsystemBase {
     public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / Math.hypot(TRACKWIDTH / 2, WHEELBASE / 2); // radians per second
 	
     private final SwerveDriveKinematics kinematics;
-
-    private final Pigeon2Wrapper pigeon = new Pigeon2Wrapper(PIGEON_ID, "swerve");
 
     private double multiplier = 1;
 
@@ -63,7 +74,7 @@ public class Drive extends SubsystemBase {
 
 		SwerveDrivetrainConstants drivetrainConstants = new SwerveDrivetrainConstants()
 			.withPigeon2Id(PIGEON_ID)
-			.withCANbusName("swerve");
+			.withCANbusName(RobotSpecificConfigs.swerveCanbus());
 		SwerveModuleConstantsFactory constantCreator = new SwerveModuleConstantsFactory()
 			.withDriveMotorGearRatio(6.75)
 			.withSteerMotorGearRatio(150.0 / 7)
@@ -72,9 +83,9 @@ public class Drive extends SubsystemBase {
 			.withSteerMotorGains(steerGains)
 			.withDriveMotorGains(driveGains)
 			.withSteerMotorClosedLoopOutput(ClosedLoopOutputType.Voltage)
-			.withDriveMotorClosedLoopOutput(ClosedLoopOutputType.TorqueCurrentFOC)
+			.withDriveMotorClosedLoopOutput(RobotSpecificConfigs.driveOutput())
 			.withSpeedAt12VoltsMps(MAX_VELOCITY)
-			.withFeedbackSource(SteerFeedbackType.FusedCANcoder)
+			.withFeedbackSource(RobotSpecificConfigs.swerveFeedback())
 			.withCouplingGearRatio(3.5) // tune :P
 			.withSteerMotorInverted(true);
 		double frontDist = 0.381; // y
@@ -137,15 +148,11 @@ public class Drive extends SubsystemBase {
     }
 
     public Rotation2d getRotation() {
-        return Rotation2d.fromDegrees(pigeon.getHeading());
+        return drivetrain.getRotation3d().toRotation2d();
     }
 
     public Pose2d getPose() {
         return drivetrain.getState().Pose;
-    }
-
-    public Pigeon2Wrapper getPigeon() {
-        return pigeon;
     }
 
     public ChassisSpeeds getChassisSpeeds() {
@@ -186,7 +193,6 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
-        pigeon.periodicResetCheck();
-        SmartDashboard.putNumber("Current Heading (degrees)", pigeon.getHeading());
+        
     }
 }
