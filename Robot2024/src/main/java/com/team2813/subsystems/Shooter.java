@@ -3,12 +3,21 @@ package com.team2813.subsystems;
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.Motor;
+import com.team2813.lib2813.control.PIDMotor;
 import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 import static com.team2813.Constants.*;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.configs.ClosedLoopGeneralConfigs;
+import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
+import com.ctre.phoenix6.configs.CustomParamsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
+import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class Shooter extends MotorSubsystem<Shooter.Angle> {
 	Motor shooterMotor;
@@ -26,7 +35,14 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 
 	private static Motor pivotMotor() {
 		TalonFXWrapper result = new TalonFXWrapper(SHOOTER_PIVOT, InvertType.CLOCKWISE);
-		result.setBreakMode(true);
+		result.setNeutralMode(NeutralModeValue.Brake);
+		TalonFXConfigurator config = result.motor().getConfigurator();
+		config.apply(
+			new Slot0Configs().withKG(0.4)
+			.withGravityType(GravityTypeValue.Arm_Cosine)
+			);
+		config.apply(new FeedbackConfigs().withRotorToSensorRatio(1 / 64.0)
+		.withFeedbackRemoteSensorID(SHOOTER_ENCODER));
 		return result;
 	}
 

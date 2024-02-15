@@ -74,25 +74,25 @@ public class RobotContainer {
 			new InstantCommand(intake::stopIntakeMotor, intake),
 			new InstantCommand(mag::stop, mag)
 		));
-		outtakeButton.whileTrue(new ParallelCommandGroup(
-			new InstantCommand(intake::intake, intake), 
-			new InstantCommand(mag::runMagKicker, mag)
+		outtakeButton.onTrue(new ParallelCommandGroup(
+			new InstantCommand(intake::outtakeNote, intake), 
+			new InstantCommand(mag::reverseMag, mag)
 		));
-		outtakeButton.whileFalse(new ParallelCommandGroup(
+		outtakeButton.onFalse(new ParallelCommandGroup(
 			new InstantCommand(intake::stopIntakeMotor, intake),
 			new InstantCommand(mag::stop, mag)
 		));
 		
-		ampIntakeButton.whileTrue(
+		ampIntakeButton.onTrue(
 			new InstantCommand(amp::pushNoteIn, amp)
 		);
-		ampIntakeButton.whileFalse(
+		ampIntakeButton.onFalse(
 			new InstantCommand(amp::stop, amp)
 		);
-		ampOuttakeButton.whileTrue(
+		ampOuttakeButton.onTrue(
 			new InstantCommand(amp::pushNoteOut, amp)
 		);
-		ampOuttakeButton.whileFalse(
+		ampOuttakeButton.onFalse(
 			new InstantCommand(amp::stop, amp)
 		);
 

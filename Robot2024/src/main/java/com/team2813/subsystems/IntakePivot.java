@@ -13,6 +13,7 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 
     private static final double PIVOT_UP_SPEED = .10;
     private static final double PIVOT_DOWN_SPEED = -.10;
+	private static final double error = 0.05;
     private Rotations currentPosition;
     
     Motor intakePivotMotor; 
@@ -23,7 +24,7 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
         super(new MotorSubsystemConfiguration(
 			new TalonFXWrapper(INTAKE_PIVOT, InvertType.COUNTER_CLOCKWISE),
 			new CancoderWrapper(INTAKE_ENCODER)
-			));
+			).acceptableError(error));
 
         intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
         setSetpoint(Rotations.INTAKE_DOWN);
@@ -47,8 +48,8 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     }
 
     public static enum Rotations implements MotorSubsystem.Position {
-		INTAKE_DOWN(0.0),
-        INTAKE_UP(0.0);
+		INTAKE_DOWN(-6.846191),
+        INTAKE_UP(0.070312);
 
         Rotations(double pos) {
             this.pos = pos;
