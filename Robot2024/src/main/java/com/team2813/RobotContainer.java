@@ -97,7 +97,7 @@ public class RobotContainer {
 		);
 
 		shootButton.onTrue(
-			new InstantCommand(mag::stop, mag)
+			new InstantCommand(mag::runMagKicker, mag)
 		);
 		shootButton.onFalse(new ParallelCommandGroup(
 			new InstantCommand(mag::stop, mag),
