@@ -15,7 +15,7 @@ public class SpoolCommand extends Command {
 	}
 	@Override
 	public void initialize() {
-		speed = 20;
+		speed = 10;
 	}
 	@Override
 	public void execute() {

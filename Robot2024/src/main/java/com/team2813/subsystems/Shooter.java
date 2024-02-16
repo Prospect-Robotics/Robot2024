@@ -5,22 +5,15 @@ import static com.team2813.Constants.SHOOTER_2;
 import static com.team2813.Constants.SHOOTER_ENCODER;
 import static com.team2813.Constants.SHOOTER_PIVOT;
 
-import com.ctre.phoenix6.configs.ClosedLoopGeneralConfigs;
-import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
-import com.ctre.phoenix6.configs.MotorOutputConfigs;
-import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.InvertType;
-import com.team2813.lib2813.control.Motor;
 import com.team2813.lib2813.control.PIDMotor;
-import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 
@@ -29,16 +22,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends MotorSubsystem<Shooter.Angle> {
 	PIDMotor shooterMotor;
 	public Shooter() {
-		// TODO: fix invert type
 		super(new MotorSubsystemConfiguration(
 			pivotMotor()
 			));
 		TalonFXWrapper m = new TalonFXWrapper(SHOOTER_1, InvertType.CLOCKWISE);
-		// m.addFollower(SHOOTER_2, InvertType.FOLLOW_MASTER);
+		m.addFollower(SHOOTER_2, InvertType.FOLLOW_MASTER);
 		TalonFXConfigurator config = m.motor().getConfigurator();
 		config.apply(new FeedbackConfigs().withSensorToMechanismRatio(36/24.0));
 		config.apply(
-			new Slot0Configs().withKP(0.1)
+			new Slot0Configs().withKP(0.082)
 				.withKI(0).withKD(0)
 			);
 		shooterMotor = m;
