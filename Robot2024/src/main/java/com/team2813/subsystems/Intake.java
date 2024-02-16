@@ -12,7 +12,7 @@ public class Intake extends SubsystemBase {
     private final Motor intakeMotor = new TalonFXWrapper(INTAKE, InvertType.COUNTER_CLOCKWISE);
 
     private static final double INTAKE_SPEED = 0.5;
-    private static final double OUTTAKE_SPEED = -0.25;
+    private static final double OUTTAKE_SPEED = -0.5;
 
     public Intake() {
 

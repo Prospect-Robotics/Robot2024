@@ -20,7 +20,7 @@ public class Magazine extends SubsystemBase {
 
 	//Runs Kicker and Magazine Motor together
     public void runMagKicker() {
-		kickerMotor.set(ControlMode.DUTY_CYCLE, 0.5);
+		kickerMotor.set(ControlMode.DUTY_CYCLE, 0.6);
 		runOnlyMag();
 	}
 
@@ -31,7 +31,7 @@ public class Magazine extends SubsystemBase {
 
 	//Running just Magazine Motor
 	public void runOnlyMag() {
-		magMotor.set(ControlMode.DUTY_CYCLE, 0.5);
+		magMotor.set(ControlMode.DUTY_CYCLE, 0.6);
 	}
 
 	public void reverseMag() {

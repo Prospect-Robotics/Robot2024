@@ -5,33 +5,52 @@ import static com.team2813.Constants.SHOOTER_2;
 import static com.team2813.Constants.SHOOTER_ENCODER;
 import static com.team2813.Constants.SHOOTER_PIVOT;
 
+import com.ctre.phoenix6.configs.ClosedLoopGeneralConfigs;
+import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.Motor;
+import com.team2813.lib2813.control.PIDMotor;
 import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Shooter extends MotorSubsystem<Shooter.Angle> {
-	Motor shooterMotor;
+	PIDMotor shooterMotor;
 	public Shooter() {
 		// TODO: fix invert type
 		super(new MotorSubsystemConfiguration(
-			pivotMotor(),
-			new CancoderWrapper(SHOOTER_ENCODER)
+			pivotMotor()
 			));
 		TalonFXWrapper m = new TalonFXWrapper(SHOOTER_1, InvertType.CLOCKWISE);
-		m.addFollower(SHOOTER_2, InvertType.FOLLOW_MASTER);
+		// m.addFollower(SHOOTER_2, InvertType.FOLLOW_MASTER);
+		TalonFXConfigurator config = m.motor().getConfigurator();
+		config.apply(new FeedbackConfigs().withSensorToMechanismRatio(36/24.0));
+		config.apply(
+			new Slot0Configs().withKP(0.1)
+				.withKI(0).withKD(0)
+			);
 		shooterMotor = m;
 		setSetpoint(Angle.TEST);
 	}
 
-	private static Motor pivotMotor() {
+	@Override
+	public void periodic() {
+		SmartDashboard.putNumber("shooter velocity", shooterMotor.getVelocity());
+	}
+
+	private static PIDMotor pivotMotor() {
 		TalonFXWrapper result = new TalonFXWrapper(SHOOTER_PIVOT, InvertType.CLOCKWISE);
 		result.setNeutralMode(NeutralModeValue.Brake);
 		TalonFXConfigurator config = result.motor().getConfigurator();
@@ -40,16 +59,18 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 			.withGravityType(GravityTypeValue.Arm_Cosine)
 			);
 		config.apply(new FeedbackConfigs().withRotorToSensorRatio(1 / 64.0)
-		.withFeedbackRemoteSensorID(SHOOTER_ENCODER));
+		.withSensorToMechanismRatio(1 / 64.0)
+		.withFeedbackRemoteSensorID(SHOOTER_ENCODER)
+		.withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder));
 		return result;
 	}
 
 	public void stop() {
-		shooterMotor.set(ControlMode.DUTY_CYCLE, 0);
+		shooterMotor.set(ControlMode.VELOCITY, 0);
 	}
 	
 	public void run(double demand) {
-		shooterMotor.set(ControlMode.DUTY_CYCLE, demand);
+		shooterMotor.set(ControlMode.VELOCITY, demand);
 	}
 
 	public static enum Angle implements MotorSubsystem.Position {

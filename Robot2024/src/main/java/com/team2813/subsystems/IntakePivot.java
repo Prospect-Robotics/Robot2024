@@ -2,7 +2,7 @@ package com.team2813.subsystems;
 import static com.team2813.Constants.INTAKE_ENCODER;
 import static com.team2813.Constants.INTAKE_PIVOT;
 
-import com.team2813.lib2813.control.ControlMode;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.team2813.lib2813.control.Encoder;
 import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.Motor;
@@ -10,10 +10,7 @@ import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
-
-    private static final double PIVOT_UP_SPEED = .10;
-    private static final double PIVOT_DOWN_SPEED = -.10;
-	private static final double error = 0.05;
+	private static final double error = 0.04;
     private Rotations currentPosition;
     
     Motor intakePivotMotor; 
@@ -22,20 +19,21 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     public IntakePivot() {
         
         super(new MotorSubsystemConfiguration(
-			new TalonFXWrapper(INTAKE_PIVOT, InvertType.COUNTER_CLOCKWISE),
+			pivotMotor(),
 			new CancoderWrapper(INTAKE_ENCODER)
-			).acceptableError(error));
+			)
+			.PID(0.315, 0, 0)
+			.acceptableError(error)
+			.startingPosition(Rotations.INTAKE_UP));
 
         intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
-        setSetpoint(Rotations.INTAKE_DOWN);
     }
-
-
-    public void pivotUp() { intakePivotMotor.set(ControlMode.DUTY_CYCLE, PIVOT_UP_SPEED); }
-
-    public void pivotDown() { intakePivotMotor.set(ControlMode.DUTY_CYCLE, PIVOT_DOWN_SPEED); }
-
-    public void stopPivotMotor() { intakePivotMotor.set(ControlMode.DUTY_CYCLE, 0); }
+	
+	private static Motor pivotMotor() {
+		TalonFXWrapper pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
+		pivotMotor.setNeutralMode(NeutralModeValue.Brake);
+		return pivotMotor;
+	}
 
     @Override
     public void setSetpoint(Rotations setPoint) {
@@ -48,8 +46,8 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     }
 
     public static enum Rotations implements MotorSubsystem.Position {
-		INTAKE_DOWN(-6.846191),
-        INTAKE_UP(0.070312);
+		INTAKE_DOWN(-1.014160),
+        INTAKE_UP(-0.235840);
 
         Rotations(double pos) {
             this.pos = pos;
