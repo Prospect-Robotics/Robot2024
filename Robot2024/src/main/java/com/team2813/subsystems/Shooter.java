@@ -25,12 +25,12 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 		super(new MotorSubsystemConfiguration(
 			pivotMotor()
 			));
-		TalonFXWrapper m = new TalonFXWrapper(SHOOTER_1, InvertType.CLOCKWISE);
-		m.addFollower(SHOOTER_2, InvertType.FOLLOW_MASTER);
+		TalonFXWrapper m = new TalonFXWrapper(SHOOTER_2, InvertType.CLOCKWISE);
+		m.addFollower(SHOOTER_1, InvertType.FOLLOW_MASTER);
 		TalonFXConfigurator config = m.motor().getConfigurator();
 		config.apply(new FeedbackConfigs().withSensorToMechanismRatio(36/24.0));
 		config.apply(
-			new Slot0Configs().withKP(0.082)
+			new Slot0Configs().withKP(0.042)
 				.withKI(0).withKD(0)
 			);
 		shooterMotor = m;
