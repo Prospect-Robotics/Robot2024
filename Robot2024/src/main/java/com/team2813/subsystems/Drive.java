@@ -59,10 +59,10 @@ public class Drive extends SubsystemBase {
 
     public Drive() {
 		// rotations
-        double frontLeftSteerOffset = -0.216064453125; 
-        double frontRightSteerOffset = 0.40673828125; 
-        double backLeftSteerOffset = -0.363769531255; 
-        double backRightSteerOffset = 0.2216796875; 
+        double frontLeftSteerOffset = 0.210693;
+        double frontRightSteerOffset = -0.408936;
+        double backLeftSteerOffset = 0.372803;
+        double backRightSteerOffset = -0.214111;
 
 		// tune
 		Slot0Configs steerGains = new Slot0Configs()
@@ -89,29 +89,29 @@ public class Drive extends SubsystemBase {
 			.withFeedbackSource(RobotSpecificConfigs.swerveFeedback())
 			.withCouplingGearRatio(3.5) // tune :P
 			.withSteerMotorInverted(true);
-		double frontDist = 0.381; // y
-		double leftDist = 0.3302; // x
+		double frontDist = 0.381; // x
+		double leftDist = 0.3302; // y
 		SwerveModuleConstants frontLeft = constantCreator.createModuleConstants(
 			FRONT_LEFT_STEER_ID, FRONT_LEFT_DRIVE_ID,
 			FRONT_LEFT_ENCODER_ID, frontLeftSteerOffset,
-			Units.inchesToMeters(leftDist), Units.inchesToMeters(frontDist),
+			frontDist, leftDist,
 			true);
 		SwerveModuleConstants frontRight = constantCreator.createModuleConstants(
 			FRONT_RIGHT_STEER_ID, FRONT_RIGHT_DRIVE_ID,
 			FRONT_RIGHT_ENCODER_ID, frontRightSteerOffset,
-			Units.inchesToMeters(-leftDist), Units.inchesToMeters(frontDist),
+			frontDist, -leftDist,
 			true
 		);
 		SwerveModuleConstants backLeft = constantCreator.createModuleConstants(
 			BACK_LEFT_STEER_ID, BACK_LEFT_DRIVE_ID,
 			BACK_LEFT_ENCODER_ID, backLeftSteerOffset,
-			Units.inchesToMeters(leftDist), Units.inchesToMeters(-frontDist),
+			-frontDist, leftDist,
 			true
 		);
 		SwerveModuleConstants backRight = constantCreator.createModuleConstants(
 			BACK_RIGHT_STEER_ID, BACK_RIGHT_DRIVE_ID,
 			BACK_RIGHT_ENCODER_ID, backRightSteerOffset,
-			Units.inchesToMeters(-leftDist), Units.inchesToMeters(-frontDist),
+			-frontDist, -leftDist,
 			true
 		);
 		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
@@ -201,9 +201,4 @@ public class Drive extends SubsystemBase {
 	private double getPosition(int moduleId) {
 		return drivetrain.getModule(moduleId).getCANcoder().getAbsolutePosition().getValueAsDouble();
 	}
-
-    @Override
-    public void periodic() {
-        
-    }
 }
