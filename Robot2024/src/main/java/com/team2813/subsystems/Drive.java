@@ -21,7 +21,6 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.ClosedLoopOutputType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -39,6 +38,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drive extends SubsystemBase {
@@ -134,6 +135,12 @@ public class Drive extends SubsystemBase {
 				),
 			Drive::onRed,
 			this);
+		//
+		ShuffleboardTab tab = Shuffleboard.getTab("swerve");
+		tab.addDouble("front left", () -> getPosition(0));
+		tab.addDouble("front right", () -> getPosition(1));
+		tab.addDouble("back left", () -> getPosition(2));
+		tab.addDouble("back right", () -> getPosition(3));
     }
 
     /**
@@ -190,6 +197,10 @@ public class Drive extends SubsystemBase {
     public void resetOdometry(Pose2d currentPose) {
 		drivetrain.seedFieldRelative(currentPose);
     }
+
+	private double getPosition(int moduleId) {
+		return drivetrain.getModule(moduleId).getCANcoder().getAbsolutePosition().getValueAsDouble();
+	}
 
     @Override
     public void periodic() {
