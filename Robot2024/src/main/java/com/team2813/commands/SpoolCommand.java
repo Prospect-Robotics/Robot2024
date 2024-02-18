@@ -15,12 +15,12 @@ public class SpoolCommand extends Command {
 	}
 	@Override
 	public void initialize() {
-		speed = 26.9 ;
+		speed = increase;
 	}
 	@Override
 	public void execute() {
 		shooter.run(speed);
-		// speed += increase;
+		speed += increase;
 		if (speed > max) {
 			speed = max;
 		}
