@@ -59,10 +59,10 @@ public class Drive extends SubsystemBase {
 
     public Drive() {
 		// rotations
-        double frontLeftSteerOffset = 0.215576; //+
-        double frontRightSteerOffset = -0.408447; //+
-        double backLeftSteerOffset = 0.364990; //-
-        double backRightSteerOffset = -0.21582; //-
+        double frontLeftSteerOffset = -0.216064453125; 
+        double frontRightSteerOffset = 0.40673828125; 
+        double backLeftSteerOffset = -0.363769531255; 
+        double backRightSteerOffset = 0.2216796875; 
 
 		// tune
 		Slot0Configs steerGains = new Slot0Configs()

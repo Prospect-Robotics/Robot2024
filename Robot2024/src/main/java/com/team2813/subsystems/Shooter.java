@@ -49,10 +49,6 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 		TalonFXWrapper result = new TalonFXWrapper(SHOOTER_PIVOT, InvertType.CLOCKWISE);
 		result.setNeutralMode(NeutralModeValue.Brake);
 		TalonFXConfigurator config = result.motor().getConfigurator();
-		config.apply(
-			new Slot0Configs().withKG(0.4)
-			.withGravityType(GravityTypeValue.Arm_Cosine)
-			);
 		config.apply(new FeedbackConfigs().withRotorToSensorRatio(1 / 64.0)
 		.withSensorToMechanismRatio(1 / 64.0)
 		.withFeedbackRemoteSensorID(SHOOTER_ENCODER)
