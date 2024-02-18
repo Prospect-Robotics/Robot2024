@@ -39,7 +39,7 @@ public class RobotSpecificConfigs {
 		// DO NOT DELETE LINE BELOW
 		loaded = true;
 		// potentially do more expensive work, like loading a file
-		driveOutput = ClosedLoopOutputType.Voltage;
-		swerveFeedback = SteerFeedbackType.RemoteCANcoder;
+		// driveOutput = ClosedLoopOutputType.Voltage;
+		// swerveFeedback = SteerFeedbackType.RemoteCANcoder;
 	}
 }

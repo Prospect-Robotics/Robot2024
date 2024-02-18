@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends MotorSubsystem<Shooter.Angle> {
 	PIDMotor shooterMotor;
+	private double targetVelocity;
 	public Shooter() {
 		super(new MotorSubsystemConfiguration(
 			pivotMotor()
@@ -30,8 +31,8 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 		TalonFXConfigurator config = m.motor().getConfigurator();
 		config.apply(new FeedbackConfigs().withSensorToMechanismRatio(36/24.0));
 		config.apply(
-			new Slot0Configs().withKP(0.042)
-				.withKI(0).withKD(0)
+			new Slot0Configs().withKP(0.034)
+				.withKI(0.8).withKD(0.0015)
 			);
 		shooterMotor = m;
 		setSetpoint(Angle.TEST);
@@ -39,7 +40,9 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 
 	@Override
 	public void periodic() {
+		super.periodic();
 		SmartDashboard.putNumber("shooter velocity", shooterMotor.getVelocity());
+		SmartDashboard.putNumber("Target Velocity", targetVelocity);
 	}
 
 	private static PIDMotor pivotMotor() {
@@ -58,10 +61,12 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 	}
 
 	public void stop() {
+		targetVelocity = 0;
 		shooterMotor.set(ControlMode.VELOCITY, 0);
 	}
 	
 	public void run(double demand) {
+		targetVelocity = demand;
 		shooterMotor.set(ControlMode.VELOCITY, demand);
 	}
 

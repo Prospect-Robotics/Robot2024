@@ -48,7 +48,7 @@ public class Drive extends SubsystemBase {
     public static final double MAX_VELOCITY = 6380.0 / 60.0 *
             SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
             SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI; // m/s
-    public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY / Math.hypot(TRACKWIDTH / 2, WHEELBASE / 2); // radians per second
+    public static final double MAX_ANGULAR_VELOCITY = Math.PI * 8; // radians per second
 	
     private final SwerveDriveKinematics kinematics;
 
@@ -58,10 +58,10 @@ public class Drive extends SubsystemBase {
 
     public Drive() {
 		// rotations
-        double frontLeftSteerOffset = 0.213379;
-        double frontRightSteerOffset = -0.407959;
-        double backLeftSteerOffset = 0.372559;
-        double backRightSteerOffset = -0.395996;
+        double frontLeftSteerOffset = 0.215576; //+
+        double frontRightSteerOffset = -0.408447; //+
+        double backLeftSteerOffset = 0.364990; //-
+        double backRightSteerOffset = -0.21582; //-
 
 		// tune
 		Slot0Configs steerGains = new Slot0Configs()

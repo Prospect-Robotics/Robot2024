@@ -31,7 +31,7 @@ public class Magazine extends SubsystemBase {
 
 	//Running just Magazine Motor
 	public void runOnlyMag() {
-		magMotor.set(ControlMode.DUTY_CYCLE, 0.6);
+		magMotor.set(ControlMode.DUTY_CYCLE, 0.3);
 	}
 
 	public void reverseMag() {
