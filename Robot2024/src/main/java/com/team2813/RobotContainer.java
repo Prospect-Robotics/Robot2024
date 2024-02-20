@@ -62,7 +62,7 @@ public class RobotContainer {
 	}
 
 	private void configureBindings() {
-		slowmodeButton.onTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
+		slowmodeButton.whileTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
 		slowmodeButton.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
 
 		//intake & outtake buttons
