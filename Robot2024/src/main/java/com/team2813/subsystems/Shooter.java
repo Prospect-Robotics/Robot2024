@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
 	PIDMotor shooterMotor;
 	private double targetVelocity;
 	private Supplier<Double> voltage;
-
+	private static final double error = 0.05;
 	public Shooter() {
 		TalonFXWrapper m = new TalonFXWrapper(SHOOTER_2, InvertType.CLOCKWISE);
 		m.addFollower(SHOOTER_1, InvertType.FOLLOW_MASTER);
