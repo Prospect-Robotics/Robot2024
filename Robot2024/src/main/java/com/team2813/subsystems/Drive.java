@@ -163,6 +163,13 @@ public class Drive extends SubsystemBase {
 		.withSupplyCurrentLimitEnable(true));
 	}
 
+	public void turnToFace(Rotation2d rotation) {
+		drivetrain.setControl(
+			new SwerveRequest.FieldCentricFacingAngle().
+				withTargetDirection(rotation)
+			);
+	}
+
     /**
      * A method that gets whether you are on red alliance. If there is not an alliance,
      * returns false
