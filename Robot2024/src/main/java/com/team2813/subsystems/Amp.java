@@ -12,18 +12,18 @@ public class Amp extends SubsystemBase {
     Motor ampMotor;
 
     public Amp() {
-		TalonFXWrapper ampMotor = new TalonFXWrapper(KICKER, InvertType.COUNTER_CLOCKWISE);
+		TalonFXWrapper ampMotor = new TalonFXWrapper(AMP, InvertType.COUNTER_CLOCKWISE);
 		this.ampMotor = ampMotor;
     }
 
     //Motor runs counterclockwise - takes in Note
     public void pushNoteIn() {
-		ampMotor.set(ControlMode.DUTY_CYCLE, 0.5);
+		ampMotor.set(ControlMode.DUTY_CYCLE, 0.4);
 	}
 	
     //Motor runs clockwise - pushes out Note
     public void pushNoteOut() {
-        ampMotor.set(ControlMode.DUTY_CYCLE, -0.5);
+        ampMotor.set(ControlMode.DUTY_CYCLE, -0.4);
     }
 
     public void stop() {

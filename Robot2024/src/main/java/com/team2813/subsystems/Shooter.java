@@ -23,9 +23,11 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 	PIDMotor shooterMotor;
 	private double targetVelocity;
 	public Shooter() {
+		//Don't need to call the pivotMotor initialization routine if we give it its own class/Constructor
 		super(new MotorSubsystemConfiguration(
 			pivotMotor()
 			));
+		
 		TalonFXWrapper m = new TalonFXWrapper(SHOOTER_2, InvertType.CLOCKWISE);
 		m.addFollower(SHOOTER_1, InvertType.FOLLOW_MASTER);
 		TalonFXConfigurator config = m.motor().getConfigurator();
@@ -37,6 +39,18 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 		shooterMotor = m;
 		setSetpoint(Angle.TEST);
 	}
+	/*
+	*  This belongs in a new file for class Pivot
+	*/
+	/*public Pivot() {
+		TalonFXWrapper result = new TalonFXWrapper(SHOOTER_PIVOT, InvertType.CLOCKWISE);
+		result.setNeutralMode(NeutralModeValue.Brake);
+		TalonFXConfigurator config = result.motor().getConfigurator();
+		config.apply(new FeedbackConfigs().withRotorToSensorRatio(1 / 64.0)
+		.withSensorToMechanismRatio(1 / 64.0)
+		.withFeedbackRemoteSensorID(SHOOTER_ENCODER)
+		.withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder));
+	}*/
 
 	@Override
 	public void periodic() {
@@ -47,12 +61,12 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 
 	private static PIDMotor pivotMotor() {
 		TalonFXWrapper result = new TalonFXWrapper(SHOOTER_PIVOT, InvertType.CLOCKWISE);
-		result.setNeutralMode(NeutralModeValue.Brake);
-		TalonFXConfigurator config = result.motor().getConfigurator();
+		//result.setNeutralMode(NeutralModeValue.Brake);
+		/*TalonFXConfigurator config = result.motor().getConfigurator();
 		config.apply(new FeedbackConfigs().withRotorToSensorRatio(1 / 64.0)
 		.withSensorToMechanismRatio(1 / 64.0)
 		.withFeedbackRemoteSensorID(SHOOTER_ENCODER)
-		.withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder));
+		.withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder));*/
 		return result;
 	}
 

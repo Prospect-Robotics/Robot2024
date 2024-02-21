@@ -23,8 +23,8 @@ public final class Constants {
 		//operator controls
 		public static final Trigger intakeButton = operatorController.R1();
 		public static final Trigger outtakeButton = operatorController.L1();
-		public static final Trigger ampIntakeButton = operatorController.R2();
-		public static final Trigger ampOuttakeButton = operatorController.L2();
+		public static final Trigger ampIntakeButton = operatorController.triangle(); //R2
+		public static final Trigger ampOuttakeButton = operatorController.square(); //L2
 		public static final Trigger shootButton = operatorController.circle(); // actually maps to square
 		public static final Trigger spoolAutoAimButton = operatorController.triangle();
 		public static final Trigger spoolPodiumButton = operatorController.cross(); // actually maps to circle
