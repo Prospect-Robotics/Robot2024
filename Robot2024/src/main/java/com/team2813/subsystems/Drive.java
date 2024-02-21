@@ -170,6 +170,10 @@ public class Drive extends SubsystemBase {
 			);
 	}
 
+	public void stop() {
+		drivetrain.setControl(new SwerveRequest.Idle());
+	}
+
     /**
      * A method that gets whether you are on red alliance. If there is not an alliance,
      * returns false

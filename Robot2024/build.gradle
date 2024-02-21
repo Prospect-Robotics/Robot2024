@@ -52,6 +52,7 @@ def includeDesktopSupport = true
 dependencies {
 	// depend on lib
 	implementation "com.team2813:lib2813"
+	implementation "com.team2813:limelight"
 
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()

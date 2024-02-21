@@ -15,14 +15,17 @@ import static com.team2813.Constants.OperatorConstants.intakeButton;
 import static com.team2813.Constants.OperatorConstants.operatorControllerPort;
 import static com.team2813.Constants.OperatorConstants.outtakeButton;
 import static com.team2813.Constants.OperatorConstants.shootButton;
+import static com.team2813.Constants.OperatorConstants.spoolAutoAimButton;
 import static com.team2813.Constants.OperatorConstants.spoolPodiumButton;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.team2813.commands.AutoAimCommand;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.commands.SaveSwerveOffsetsCommand;
 import com.team2813.commands.SpoolCommand;
+import com.team2813.lib2813.limelight.Limelight;
 import com.team2813.subsystems.Amp;
 import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Intake;
@@ -36,7 +39,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -53,6 +55,7 @@ public class RobotContainer {
 	private final Magazine mag = new Magazine();
 	private final IntakePivot intakePivot = new IntakePivot();
 	private final ShooterPivot shooterPivot = new ShooterPivot();
+	private final Limelight limelight = Limelight.getDefaultLimelight();
 
 	private final XboxController driverController = new XboxController(driverControllerPort);
 	private final XboxController operatorController = new XboxController(operatorControllerPort);
@@ -149,6 +152,10 @@ public class RobotContainer {
 				new InstantCommand(mag::stop, mag)
 			)
 		));
+
+		spoolAutoAimButton.onTrue(
+			new AutoAimCommand(shooter, mag, drive, limelight)
+		);
 
 		spoolPodiumButton.onTrue(
 			new SpoolCommand(shooter)
