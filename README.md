@@ -43,6 +43,7 @@ code review from @amrikverma or @cuttestkittensrule.
 
 To create a new branch from master, run: `git checkout -b branch-name master`
 
-> [!NOTE] It's common to prefix branch names with your github user name (for
-> example if your GitHub user name was "chicken" you could run
-> `git checkout -b chicken/throw-note-faster master`).
+> [!NOTE]
+> It's common to prefix branch names with your github user name. For example
+> if your GitHub user name was "chicken" you could run
+> `git checkout -b chicken/throw-note-faster master` to create the branch.
