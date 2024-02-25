@@ -3,11 +3,15 @@ package com.team2813.commands;
 import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
+import com.team2813.Robot;
 import com.team2813.lib2813.limelight.Limelight;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoAimCommand extends Command {
@@ -16,6 +20,7 @@ public class AutoAimCommand extends Command {
   private final Drive drive;
   private final Limelight limelight;
   private boolean done;
+  long magStart = 0;
 
   private Pose3d speakerPos = new Pose3d(7.846862, -1.455030, 2.364370, new Rotation3d());
 
@@ -68,6 +73,7 @@ public class AutoAimCommand extends Command {
 	if (shooter.atPosition() && atRotation()) {
 		mag.runMagKicker();
 		done = true;
+		magStart = System.currentTimeMillis();
 	}
   }
 
@@ -80,6 +86,6 @@ public class AutoAimCommand extends Command {
 
   @Override
   public boolean isFinished() {
-	return done;
+	return done && System.currentTimeMillis() - magStart > 1_000;
   }
 }
