@@ -13,18 +13,17 @@ Main branch:
 
 ### Clone the repo
 
-Run the following:
+To clone the repositiory, run the following:
 
 
 ```
-$ git clone https://github.com/Prospect-Robotics/Robot2024.git
-$ cd Robot2024/
-$ git submodule update --init --recursive
+$ git clone --recurse-submodules https://github.com/Prospect-Robotics/Robot2024.git
 ```
 
-Note that passing the https URL to `git clone` tends to work better with the
-Prospect High School WiFi (the WiFi seems to block outgoing connections on the
-default SSL port).
+> [!NOTE]
+> Passing the https URL to `git clone` tends to work better than cloning using
+> SLL, since the Prospect High School WiFi (the WiFi seems to block outgoing
+> connections to github on the default SSL port.
 
 ## Development
 
@@ -40,10 +39,10 @@ To start the simulator, run: `./gradlew simulateJava`
 
 Do not commit changes directly to the master branch unless it is an emergency.
 Instead, make changes on a branch, put the changes to GitHub, and request a
-code review.
+code review from @amrikverma or @cuttestkittensrule.
 
-To create a new branch from main, run: `git checkout -b branch-name master`
+To create a new branch from master, run: `git checkout -b branch-name master`
 
-Note: It's common to prefix branch names with your github user name (for
-example if your GitHub user name was "chicken" you could run
-`git checkout -b chicken/throw-note-faster master`).
+> [!NOTE] It's common to prefix branch names with your github user name (for
+> example if your GitHub user name was "chicken" you could run
+> `git checkout -b chicken/throw-note-faster master`).
