@@ -22,8 +22,8 @@ $ git clone --recurse-submodules https://github.com/Prospect-Robotics/Robot2024.
 
 > [!NOTE]
 > Passing the https URL to `git clone` tends to work better than cloning using
-> SLL, since the Prospect High School WiFi (the WiFi seems to block outgoing
-> connections to github on the default SSL port.
+> SLL, since the Prospect High School WiFi seems to block outgoing connections
+> to github on the default SSL port.
 
 ## Development
 
@@ -41,7 +41,8 @@ Do not commit changes directly to the master branch unless it is an emergency.
 Instead, make changes on a branch, put the changes to GitHub, and request a
 code review from @amrikverma or @cuttestkittensrule.
 
-To create a new branch from master, run: `git checkout -b branch-name master`
+To create a new branch from the `master` branch, run:
+`git checkout -b branch-name master`
 
 > [!NOTE]
 > It's common to prefix branch names with your github user name. For example
