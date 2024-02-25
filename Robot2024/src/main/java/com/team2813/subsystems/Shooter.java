@@ -61,12 +61,12 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 
 	private static PIDMotor pivotMotor() {
 		TalonFXWrapper result = new TalonFXWrapper(SHOOTER_PIVOT, InvertType.CLOCKWISE);
-		//result.setNeutralMode(NeutralModeValue.Brake);
-		/*TalonFXConfigurator config = result.motor().getConfigurator();
+		result.setNeutralMode(NeutralModeValue.Brake);
+		TalonFXConfigurator config = result.motor().getConfigurator();
 		config.apply(new FeedbackConfigs().withRotorToSensorRatio(1 / 64.0)
 		.withSensorToMechanismRatio(1 / 64.0)
 		.withFeedbackRemoteSensorID(SHOOTER_ENCODER)
-		.withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder));*/
+		.withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder));
 		return result;
 	}
 

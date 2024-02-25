@@ -10,7 +10,7 @@ import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
-	private static final double error = 0.04;
+	private static final double error = 0.1;
     private Rotations currentPosition;
     
     Motor intakePivotMotor; 

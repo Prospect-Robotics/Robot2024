@@ -8,6 +8,10 @@ import static com.team2813.Constants.DriverConstants.driverControllerPort;
 import static com.team2813.Constants.DriverConstants.slowmodeButton;
 import static com.team2813.Constants.OperatorConstants.ampIntakeButton;
 import static com.team2813.Constants.OperatorConstants.ampOuttakeButton;
+
+import static com.team2813.Constants.OperatorConstants.ampInButton;
+import static com.team2813.Constants.OperatorConstants.ampOutButton;
+
 import static com.team2813.Constants.OperatorConstants.intakeButton;
 import static com.team2813.Constants.OperatorConstants.operatorControllerPort;
 import static com.team2813.Constants.OperatorConstants.outtakeButton;
@@ -93,16 +97,36 @@ public class RobotContainer {
 		
 		ampIntakeButton.onTrue(
 			new InstantCommand(amp::pushNoteIn, amp)
+			//new InstantCommand(amp::ampIntake, amp)
 		);
 		ampIntakeButton.onFalse(
 			new InstantCommand(amp::stop, amp)
+			//new InstantCommand(amp::ampStop, amp)
 		);
 		ampOuttakeButton.onTrue(
 			new InstantCommand(amp::pushNoteOut, amp)
+			//new InstantCommand(amp::ampOuttake, amp)
 		);
 		ampOuttakeButton.onFalse(
 			new InstantCommand(amp::stop, amp)
+			//new InstantCommand(amp::ampStop, amp)
 		);
+
+
+		ampInButton.onTrue(
+			new InstantCommand(amp::ampIntake, amp)
+		);
+		ampInButton.onFalse(
+			new InstantCommand(amp::ampStop, amp)
+		);
+		ampOutButton.onTrue(
+			new InstantCommand(amp::ampOuttake, amp)
+		);
+		ampOutButton.onFalse(
+			new InstantCommand(amp::ampStop, amp)
+		);
+
+
 
 		shootButton.onTrue(new SequentialCommandGroup(
 			new InstantCommand(mag::runMagKicker, mag),

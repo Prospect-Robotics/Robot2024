@@ -30,7 +30,7 @@ public final class DefaultShooterCommand extends Command {
 	/**
 	 * The number to multiply results from {@link #control}. Multiplies by {@value #MULTIPLIER}
 	 */
-	private static final double MULTIPLIER = 0.5;
+	private static final double MULTIPLIER = 0.3;
 
 	/**
 	 * The maximum value that the controler can have when no one is touching it.

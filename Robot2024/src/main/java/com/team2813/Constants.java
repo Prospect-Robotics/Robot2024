@@ -23,16 +23,19 @@ public final class Constants {
 		//operator controls
 		public static final Trigger intakeButton = operatorController.R1();
 		public static final Trigger outtakeButton = operatorController.L1();
+
+		public static final Trigger ampInButton = operatorController.povRight();
+		public static final Trigger ampOutButton = operatorController.povLeft();
+
 		public static final Trigger ampIntakeButton = operatorController.triangle(); //R2
 		public static final Trigger ampOuttakeButton = operatorController.square(); //L2
 		public static final Trigger shootButton = operatorController.circle(); // actually maps to square
-		public static final Trigger spoolAutoAimButton = operatorController.triangle();
+		//public static final Trigger spoolAutoAimButton = operatorController.triangle();
 		public static final Trigger spoolPodiumButton = operatorController.cross(); // actually maps to circle
 		public static final Trigger climbButton = operatorController.share();
-		public static final Trigger shootManualUpButton = operatorController.povLeft();
-		public static final Trigger shootManualDownButton = operatorController.povRight();
 		public static final Trigger climbManualUpButton = operatorController.povUp();
 		public static final Trigger climbDownUpButton = operatorController.povDown();
+
 	}
 	public static class DriverConstants {
 		public static final int driverControllerPort = 0;
