@@ -1,17 +1,16 @@
 package com.team2813.commands;
 
+import com.team2813.lib2813.limelight.Limelight;
 import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
-import com.team2813.Robot;
-import com.team2813.lib2813.limelight.Limelight;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoAimCommand extends Command {
@@ -20,9 +19,12 @@ public class AutoAimCommand extends Command {
   private final Drive drive;
   private final Limelight limelight;
   private boolean done;
-  long magStart = 0;
+  double magStart = 0;
 
-  private Pose3d speakerPos = new Pose3d(7.846862, -1.455030, 2.364370, new Rotation3d());
+  // speaker for red
+  private static final Pose3d redSpeakerPos = new Pose3d(7.846862, 1.455030, 2.364370, new Rotation3d());
+  private static final Pose3d blueSpeakerPos = new Pose3d(-7.846862, 1.455030, 2.364370, new Rotation3d());
+  private Pose3d speakerPos;
 
   public AutoAimCommand(Shooter shooter, Magazine mag, Drive drive, Limelight limelight) {
 	this.limelight = limelight;
@@ -30,6 +32,10 @@ public class AutoAimCommand extends Command {
 	this.drive = drive;
 	this.mag = mag;
 	addRequirements(shooter, drive);
+  }
+
+  public boolean isBlue() {
+	return DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue;
   }
 
   private void useDistance(double distance) {
@@ -52,6 +58,7 @@ public class AutoAimCommand extends Command {
 
   @Override
   public void initialize() {
+	speakerPos = isBlue() ? blueSpeakerPos : redSpeakerPos;
 	done = false;
 	Pose3d pose = getPose();
 	double diffX = speakerPos.getX() - pose.getX();
@@ -73,7 +80,7 @@ public class AutoAimCommand extends Command {
 	if (shooter.atPosition() && atRotation()) {
 		mag.runMagKicker();
 		done = true;
-		magStart = System.currentTimeMillis();
+		magStart = Timer.getFPGATimestamp();
 	}
   }
 
@@ -86,6 +93,6 @@ public class AutoAimCommand extends Command {
 
   @Override
   public boolean isFinished() {
-	return done && System.currentTimeMillis() - magStart > 1_000;
+	return done && Timer.getFPGATimestamp() - magStart >= 1;
   }
 }
