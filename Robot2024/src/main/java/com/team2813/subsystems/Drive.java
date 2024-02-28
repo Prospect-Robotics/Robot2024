@@ -31,13 +31,16 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.team2813.RobotSpecificConfigs;
 import com.team2813.RobotSpecificConfigs.SwerveConfig;
+import com.team2813.lib2813.limelight.Limelight;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -62,10 +65,13 @@ public class Drive extends SubsystemBase {
 
     private double multiplier = 1;
 
+	private final Limelight limelight;
+
 	SwerveDrivetrain drivetrain;
 
     public Drive() {
 		SwerveConfig offsets = RobotSpecificConfigs.swerveConfig();
+		limelight = Limelight.getDefaultLimelight();
 		// rotations
         double frontLeftSteerOffset = offsets.frontLeftOffset(); //0.210693
         double frontRightSteerOffset = offsets.frontRightOffset(); //-0.408936
@@ -242,9 +248,22 @@ public class Drive extends SubsystemBase {
 
 	Field2d field = new Field2d();
 
+	/**
+	 * Update position of robot
+	 * @param pose the position of the robot
+	 */
+	public void addMeasurement(Pose2d pose) {
+		drivetrain.addVisionMeasurement(pose, Timer.getFPGATimestamp());
+	}
+
 	@Override
 	public void periodic() {
 		field.setRobotPose(getPose());
 		SmartDashboard.putData(field);
+		// if we have a position from the robot, and we are in teleop, update our pose
+		if (limelight.hasTarget() && DriverStation.isTeleopEnabled()) {
+			limelight.getLocationalData().getBotpose()
+			.map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
+		}
 	}
 }

@@ -55,7 +55,6 @@ public class RobotContainer {
 	private final Magazine mag = new Magazine();
 	private final IntakePivot intakePivot = new IntakePivot();
 	private final ShooterPivot shooterPivot = new ShooterPivot();
-	private final Limelight limelight = Limelight.getDefaultLimelight();
 
 	private final XboxController driverController = new XboxController(driverControllerPort);
 	private final XboxController operatorController = new XboxController(operatorControllerPort);
@@ -154,7 +153,7 @@ public class RobotContainer {
 		));
 
 		spoolAutoAimButton.onTrue(
-			new AutoAimCommand(shooter, mag, drive, limelight)
+			new AutoAimCommand(shooter, mag, drive)
 		);
 
 		spoolPodiumButton.onTrue(

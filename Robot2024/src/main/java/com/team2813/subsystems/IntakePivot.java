@@ -11,7 +11,7 @@ import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
-	private static final double error = 0.1;
+	private static final double error = 0.5;
     private Rotations currentPosition;
     
     Motor intakePivotMotor; 
@@ -47,8 +47,8 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     }
 
     public static enum Rotations implements MotorSubsystem.Position {
-		INTAKE_DOWN(-0.934082),
-        INTAKE_UP(-0.109619);
+		INTAKE_DOWN(-0.782471),
+        INTAKE_UP(-0.000732);
 
         Rotations(double pos) {
             this.pos = pos;
