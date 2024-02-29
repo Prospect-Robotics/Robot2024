@@ -49,10 +49,10 @@ public class Drive extends SubsystemBase {
 
     public Drive() {
 		// rotations
-        double frontLeftSteerOffset = 0.213379;
-        double frontRightSteerOffset = -0.407959;
-        double backLeftSteerOffset = 0.372559;
-        double backRightSteerOffset = -0.395996;
+        double frontLeftSteerOffset = 0;
+        double frontRightSteerOffset = 0;
+        double backLeftSteerOffset = 0;
+        double backRightSteerOffset = 0;
 
 		// tune
 		Slot0Configs steerGains = new Slot0Configs()
@@ -126,10 +126,6 @@ public class Drive extends SubsystemBase {
 			Drive::onRed,
 			this);
 		ShuffleboardTab tab = Shuffleboard.getTab("swerve");
-		tab.addDouble("front left", () -> getPosition(0));
-		tab.addDouble("front right", () -> getPosition(1));
-		tab.addDouble("back left", () -> getPosition(2));
-		tab.addDouble("back right", () -> getPosition(3));
     }
 
     /**
