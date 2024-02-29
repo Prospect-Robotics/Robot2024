@@ -25,6 +25,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -123,6 +125,11 @@ public class Drive extends SubsystemBase {
 				),
 			Drive::onRed,
 			this);
+		ShuffleboardTab tab = Shuffleboard.getTab("swerve");
+		tab.addDouble("front left", () -> getPosition(0));
+		tab.addDouble("front right", () -> getPosition(1));
+		tab.addDouble("back left", () -> getPosition(2));
+		tab.addDouble("back right", () -> getPosition(3));
     }
 
     /**
