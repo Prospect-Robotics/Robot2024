@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.82,
-        "y": 6.58
+        "x": 0.8860886870710378,
+        "y": 4.294043328685501
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2048291563100983,
-        "y": 7.014467823578505
+        "x": 3.2810775680139757,
+        "y": 4.294043328685501
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.037455932612758,
-        "y": 6.994036397857022
+        "x": 1.375016433049855,
+        "y": 5.270955442914999
       },
       "prevControl": {
-        "x": 3.4381522464681837,
-        "y": 7.016919594665083
+        "x": 4.391560393275752,
+        "y": 2.863238250185798
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,18 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Intake",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -50,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 125.13988789632765,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "B2 Stuff",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
