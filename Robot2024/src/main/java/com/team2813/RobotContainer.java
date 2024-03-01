@@ -4,21 +4,11 @@
 
 package com.team2813;
 
-import static com.team2813.Constants.DriverConstants.driverControllerPort;
-import static com.team2813.Constants.DriverConstants.slowmodeButton;
-import static com.team2813.Constants.OperatorConstants.ampIntakeButton;
-import static com.team2813.Constants.OperatorConstants.ampOuttakeButton;
-
-import static com.team2813.Constants.OperatorConstants.ampInButton;
-import static com.team2813.Constants.OperatorConstants.ampOutButton;
-
-import static com.team2813.Constants.OperatorConstants.intakeButton;
-import static com.team2813.Constants.OperatorConstants.operatorControllerPort;
-import static com.team2813.Constants.OperatorConstants.outtakeButton;
-import static com.team2813.Constants.OperatorConstants.shootButton;
-import static com.team2813.Constants.OperatorConstants.spoolPodiumButton;
+import static com.team2813.Constants.DriverConstants.*;
+import static com.team2813.Constants.OperatorConstants.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.commands.LockFunctionCommand;
@@ -33,7 +23,6 @@ import com.team2813.subsystems.Shooter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -60,28 +49,28 @@ public class RobotContainer {
                 drive
         ));
 		shooter.setDefaultCommand(new DefaultShooterCommand(shooter, operatorController::getRightY));
-		configureBindings();
+		AutoCommands autoCommands = new AutoCommands(amp, intake, intakePivot, mag, shooter);
+		configureBindings(autoCommands);
 		autoChooser = AutoBuilder.buildAutoChooser();
+		addAutoCommands(autoCommands);
 		SmartDashboard.putData("Auto", autoChooser);
 	}
 
-	private void configureBindings() {
+	private void addAutoCommands(AutoCommands autoCommands) {
+		NamedCommands.registerCommand("start-intake", autoCommands.startIntake());
+		NamedCommands.registerCommand("stop-intake", autoCommands.stopIntake());
+		NamedCommands.registerCommand("shoot-front", autoCommands.shootFront());
+		NamedCommands.registerCommand("shoot-side", autoCommands.shootSide());
+		NamedCommands.registerCommand("shoot-auto", autoCommands.shootAuto());
+	}
+
+	private void configureBindings(AutoCommands autoCommands) {
 		slowmodeButton.whileTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
 		slowmodeButton.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
 
 		//intake & outtake buttons
-		intakeButton.whileTrue(new SequentialCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intakePivot),
-			new ParallelCommandGroup(
-				new InstantCommand(intake::intake, intake), 
-				new InstantCommand(mag::runOnlyMag, mag)
-			)
-		));
-		intakeButton.onFalse(new ParallelCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intakePivot),
-			new InstantCommand(intake::stopIntakeMotor, intake),
-			new InstantCommand(mag::stop, mag)
-		));
+		intakeButton.whileTrue(autoCommands.startIntake());
+		intakeButton.onFalse(autoCommands.stopIntake());
 		outtakeButton.whileTrue(new SequentialCommandGroup(
 			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intakePivot),
 			new ParallelCommandGroup(
@@ -114,16 +103,16 @@ public class RobotContainer {
 
 
 		ampInButton.onTrue(
-			new InstantCommand(amp::ampIntake, amp)
+			new InstantCommand(intake::ampIntake, intake)
 		);
 		ampInButton.onFalse(
-			new InstantCommand(amp::ampStop, amp)
+			new InstantCommand(intake::ampStop, intake)
 		);
 		ampOutButton.onTrue(
-			new InstantCommand(amp::ampOuttake, amp)
+			new InstantCommand(intake::ampOuttake, intake)
 		);
 		ampOutButton.onFalse(
-			new InstantCommand(amp::ampStop, amp)
+			new InstantCommand(intake::ampStop, intake)
 		);
 
 

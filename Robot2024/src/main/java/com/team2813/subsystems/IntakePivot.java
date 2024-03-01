@@ -17,7 +17,6 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     Encoder intakePivotEncoder;
 
     public IntakePivot() {
-        
         super(new MotorSubsystemConfiguration(
 			pivotMotor(),
 			new CancoderWrapper(INTAKE_ENCODER)

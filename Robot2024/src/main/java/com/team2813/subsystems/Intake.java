@@ -13,15 +13,21 @@ public class Intake extends SubsystemBase {
 
     private static final double INTAKE_SPEED = 0.5;
     private static final double OUTTAKE_SPEED = -0.5;
-
-    public Intake() {
-
-    }
+	
     public void intake() { intakeMotor.set(ControlMode.DUTY_CYCLE, INTAKE_SPEED); }
 
     public void outtakeNote() { intakeMotor.set(ControlMode.DUTY_CYCLE, OUTTAKE_SPEED); }
 
     public void stopIntakeMotor() { intakeMotor.set(ControlMode.DUTY_CYCLE, 0); }
+
+	private static final double AMP_INTAKE_SPEED = 0.1;
+    private static final double AMP_OUTTAKE_SPEED = -0.5;
+
+    public void ampIntake() { intakeMotor.set(ControlMode.DUTY_CYCLE, AMP_INTAKE_SPEED); }
+
+    public void ampOuttake() { intakeMotor.set(ControlMode.DUTY_CYCLE, AMP_OUTTAKE_SPEED); }
+
+    public void ampStop() { intakeMotor.set(ControlMode.DUTY_CYCLE, 0); }
 }
 
 

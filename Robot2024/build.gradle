@@ -96,7 +96,6 @@ downloadDepsPreemptively.dependsOn gradle.includedBuild("lib2813").task(":lib:ja
 // Configure jar and deploy tasks
 deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
-wpi.java.configureTestTasks(test)
 
 // the magic line that makes tests work :)
 wpi.java.configureTestTasks(test)

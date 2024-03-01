@@ -9,7 +9,6 @@ import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
-import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.InvertType;
@@ -22,11 +21,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends MotorSubsystem<Shooter.Angle> {
 	PIDMotor shooterMotor;
 	private double targetVelocity;
+	private static final double ERROR = 0.05;
 	public Shooter() {
 		//Don't need to call the pivotMotor initialization routine if we give it its own class/Constructor
 		super(new MotorSubsystemConfiguration(
 			pivotMotor()
-			));
+			).acceptableError(ERROR)
+			.startingPosition(Angle.BOTTOM_HARD_STOP));
 		
 		TalonFXWrapper m = new TalonFXWrapper(SHOOTER_2, InvertType.CLOCKWISE);
 		m.addFollower(SHOOTER_1, InvertType.FOLLOW_MASTER);
@@ -37,8 +38,12 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 				.withKI(0.8).withKD(0.0015)
 			);
 		shooterMotor = m;
-		setSetpoint(Angle.TEST);
 	}
+
+	public boolean atSetpoint() {
+		return Math.abs(getSetpoint() - getMeasurement()) <= ERROR;
+	}
+
 	/*
 	*  This belongs in a new file for class Pivot
 	*/
@@ -81,7 +86,11 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 	}
 
 	public static enum Angle implements MotorSubsystem.Position {
-		TEST(0.0);
+		BOTTOM_HARD_STOP(0),
+		TOP_HARD_STOP(0),
+		SUBWOOFER_FRONT(0),
+		SUBWOOFER_SIDE(0),
+		PODIUM(0);
 		private final double pos;
 		Angle(double pos) {
 			this.pos = pos;
