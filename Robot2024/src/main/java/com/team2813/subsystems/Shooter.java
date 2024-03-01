@@ -39,7 +39,6 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 			);
 		shooterMotor = m;
 		voltage = m.motor().getMotorVoltage();
-		setSetpoint(Angle.TEST);
 	}
 	/*
 	*  This belongs in a new file for class Pivot
@@ -89,7 +88,11 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 	}
 
 	public static enum Angle implements MotorSubsystem.Position {
-		TEST(0.0);
+		BOTTOM_HARD_STOP(0),
+		TOP_HARD_STOP(0),
+		SUBWOOFER_FRONT(0),
+		SUBWOOFER_SIDE(0),
+		PODIUM(0);
 		private final double pos;
 		Angle(double pos) {
 			this.pos = pos;
