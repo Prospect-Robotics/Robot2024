@@ -27,6 +27,11 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 
         intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
     }
+
+    @Override
+    public void periodic() {
+        super.periodic();
+    }
 	
 	private static Motor pivotMotor() {
 		TalonFXWrapper pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
