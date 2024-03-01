@@ -46,8 +46,8 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     }
 
     public static enum Rotations implements MotorSubsystem.Position {
-		INTAKE_DOWN(-1.014160),
-        INTAKE_UP(-0.235840);
+		INTAKE_DOWN(-0.934082),
+        INTAKE_UP(-0.109619);
 
         Rotations(double pos) {
             this.pos = pos;
