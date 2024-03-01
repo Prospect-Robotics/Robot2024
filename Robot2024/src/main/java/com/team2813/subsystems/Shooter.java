@@ -5,6 +5,7 @@ import static com.team2813.Constants.SHOOTER_2;
 import static com.team2813.Constants.SHOOTER_ENCODER;
 import static com.team2813.Constants.SHOOTER_PIVOT;
 
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends MotorSubsystem<Shooter.Angle> {
 	PIDMotor shooterMotor;
 	private double targetVelocity;
+	private StatusSignal<Double> voltage;
 	public Shooter() {
 		//Don't need to call the pivotMotor initialization routine if we give it its own class/Constructor
 		super(new MotorSubsystemConfiguration(
@@ -33,10 +35,10 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 		TalonFXConfigurator config = m.motor().getConfigurator();
 		config.apply(new FeedbackConfigs().withSensorToMechanismRatio(36/24.0));
 		config.apply(
-			new Slot0Configs().withKP(0.034)
-				.withKI(0.8).withKD(0.0015)
+				new Slot0Configs().withKP(0.01).withKS(0).withKV(0.017)
 			);
 		shooterMotor = m;
+		voltage = m.motor().getMotorVoltage();
 		setSetpoint(Angle.TEST);
 	}
 	/*
@@ -57,6 +59,8 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 		super.periodic();
 		SmartDashboard.putNumber("shooter velocity", shooterMotor.getVelocity());
 		SmartDashboard.putNumber("Target Velocity", targetVelocity);
+		voltage.refresh();
+		SmartDashboard.putNumber("kV", voltage.getValueAsDouble() / shooterMotor.getVelocity());
 	}
 
 	private static PIDMotor pivotMotor() {

@@ -19,6 +19,7 @@ import static com.team2813.Constants.OperatorConstants.shootButton;
 import static com.team2813.Constants.OperatorConstants.spoolPodiumButton;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.team2813.commands.AmpSpoolCommand;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.commands.LockFunctionCommand;
@@ -96,10 +97,10 @@ public class RobotContainer {
 		));
 		
 		ampIntakeButton.onTrue(
-			new InstantCommand(amp::pushNoteIn, amp)
 			//new InstantCommand(amp::ampIntake, amp)
+			new AmpSpoolCommand(shooter)
 		);
-		ampIntakeButton.onFalse(
+		/*ampIntakeButton.onFalse(
 			new InstantCommand(amp::stop, amp)
 			//new InstantCommand(amp::ampStop, amp)
 		);
@@ -110,7 +111,7 @@ public class RobotContainer {
 		ampOuttakeButton.onFalse(
 			new InstantCommand(amp::stop, amp)
 			//new InstantCommand(amp::ampStop, amp)
-		);
+		);*/
 
 
 		ampInButton.onTrue(
