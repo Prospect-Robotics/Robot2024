@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2,
+      "y": 2
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "start-intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop-intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-front"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-side"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-auto"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

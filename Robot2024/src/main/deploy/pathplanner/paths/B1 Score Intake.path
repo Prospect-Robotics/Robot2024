@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.757404969981071,
-        "y": 6.696795209066609
+        "x": 1.4437834806867724,
+        "y": 7.011498720506339
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6468209870943553,
-        "y": 7.155420624085297
+        "x": 2.3883881694216544,
+        "y": 7.177047995851627
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.2620093197775684,
-        "y": 6.989757816941229
+        "x": 2.9337269587943684,
+        "y": 6.7972584818242
       },
       "prevControl": {
-        "x": 3.1111052130958434,
-        "y": 6.979373845280429
+        "x": 2.6513193714406413,
+        "y": 7.001760527838968
+      },
+      "nextControl": {
+        "x": 3.5277461266883083,
+        "y": 6.367106670590658
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.3269251686783332,
+        "y": 5.531293435066112
+      },
+      "prevControl": {
+        "x": 2.0680353248803462,
+        "y": 5.9054044831413846
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,32 +48,36 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Spool",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "Shoot",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "Intake",
-      "waypointRelativePos": 0,
+      "name": "start intake",
+      "waypointRelativePos": 0.4,
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "start-intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.6,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "stop-intake"
+              }
+            }
+          ]
         }
       }
     }
@@ -71,12 +91,12 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
-  "folder": "B1 Stuff",
+  "folder": "B1-2SL Stuff",
   "previewStartingState": {
-    "rotation": 58.9565066227434,
+    "rotation": -1.3971810272964642,
     "velocity": 0
   },
   "useDefaultConstraints": true
