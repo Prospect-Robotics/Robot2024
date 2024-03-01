@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.76,
-      "y": 6.7
+      "x": 0.7134190306340287,
+      "y": 6.6998765551505
     },
     "rotation": 60.0
   },
@@ -12,21 +12,27 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "shoot-side"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "B1 Score Intake"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "B1 Score 2"
+            "name": "shoot-front"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "B1 Leave Intake"
+            "pathName": "Leave Subwoofer Front"
           }
         }
       ]
