@@ -65,34 +65,28 @@ public class RobotContainer {
                 drive
         ));
 		shooter.setDefaultCommand(new DefaultShooterCommand(shooter, operatorController::getRightY));
-		configureBindings();
-
-		NamedCommands.registerCommand("Spool", new SpoolCommand(shooter));
-		NamedCommands.registerCommand("Shoot", new AutoShootCommand(shooter));
-		NamedCommands.registerCommand("Intake", new AutoIntakeCommand(intake));
-
-
+		AutoCommands autoCommands = new AutoCommands(amp, intake, intakePivot, mag, shooter);
+		configureBindings(autoCommands);
+		addAutoCommands(autoCommands);
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto", autoChooser);
 	}
 
-	private void configureBindings() {
+	private void addAutoCommands(AutoCommands autoCommands) {
+		NamedCommands.registerCommand("start-intake", autoCommands.startIntake());
+		NamedCommands.registerCommand("stop-intake", autoCommands.stopIntake());
+		NamedCommands.registerCommand("shoot-front", autoCommands.shootFront());
+		NamedCommands.registerCommand("shoot-side", autoCommands.shootSide());
+		NamedCommands.registerCommand("shoot-auto", autoCommands.shootAuto());
+	}
+
+	private void configureBindings(AutoCommands autoCommands) {
 		slowmodeButton.whileTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
 		slowmodeButton.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
 
 		//intake & outtake buttons
-		intakeButton.whileTrue(new SequentialCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intakePivot),
-			new ParallelCommandGroup(
-				new InstantCommand(intake::intake, intake), 
-				new InstantCommand(mag::runOnlyMag, mag)
-			)
-		));
-		intakeButton.onFalse(new ParallelCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intakePivot),
-			new InstantCommand(intake::stopIntakeMotor, intake),
-			new InstantCommand(mag::stop, mag)
-		));
+		intakeButton.whileTrue(autoCommands.startIntake());
+		intakeButton.onFalse(autoCommands.stopIntake());
 		outtakeButton.whileTrue(new SequentialCommandGroup(
 			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intakePivot),
 			new ParallelCommandGroup(
