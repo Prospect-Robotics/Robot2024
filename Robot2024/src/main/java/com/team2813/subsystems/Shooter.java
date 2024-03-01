@@ -80,6 +80,10 @@ public class Shooter extends MotorSubsystem<Shooter.Angle> {
 		shooterMotor.set(ControlMode.VELOCITY, demand);
 	}
 
+	public void runAuto() {
+		shooterMotor.set(ControlMode.VELOCITY, 35);
+	}
+
 	public static enum Angle implements MotorSubsystem.Position {
 		TEST(0.0);
 		private final double pos;

@@ -21,6 +21,8 @@ import static com.team2813.Constants.OperatorConstants.spoolPodiumButton;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
+import com.team2813.commands.AutoShootCommand;
+import com.team2813.commands.AutoIntakeCommand;
 import com.team2813.commands.LockFunctionCommand;
 import com.team2813.commands.SpoolCommand;
 import com.team2813.subsystems.Amp;
@@ -39,6 +41,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import com.pathplanner.lib.auto.NamedCommands;
+
 
 public class RobotContainer {
 	private final SendableChooser<Command> autoChooser;
@@ -61,6 +65,12 @@ public class RobotContainer {
         ));
 		shooter.setDefaultCommand(new DefaultShooterCommand(shooter, operatorController::getRightY));
 		configureBindings();
+
+		NamedCommands.registerCommand("Spool", new SpoolCommand(shooter));
+		NamedCommands.registerCommand("Shoot", new AutoShootCommand(shooter));
+		NamedCommands.registerCommand("Intake", new AutoIntakeCommand(intake));
+
+
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto", autoChooser);
 	}
