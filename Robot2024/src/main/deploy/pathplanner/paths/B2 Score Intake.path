@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.76,
-        "y": 6.71
+        "x": 0.6755350452665192,
+        "y": 4.442656101644049
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7623907457636345,
-        "y": 6.828181294941459
+        "x": 1.5778348790700558,
+        "y": 4.126810296961367
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.999552168189158,
-        "y": 7.421269528178938
+        "x": 2.6142129395493914,
+        "y": 4.057968410765691
       },
       "prevControl": {
-        "x": 7.5960675656470364,
-        "y": 7.5352047727904985
+        "x": 1.6481189835519554,
+        "y": 4.103590582553188
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,10 +32,20 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0.9,
+      "name": "Shoot",
+      "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "Intake",
+      "waypointRelativePos": 0.65,
+      "command": {
+        "type": "sequential",
         "data": {
           "commands": []
         }
@@ -54,9 +64,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "B1 Stuff",
+  "folder": "B2 Stuff",
   "previewStartingState": {
-    "rotation": 59.65139131317934,
+    "rotation": -62.3545087413994,
     "velocity": 0
   },
   "useDefaultConstraints": true
