@@ -5,7 +5,9 @@
   "pathFolders": [
     "B1 2A1SL",
     "B1 4SL",
-    "B2 2SL"
+    "B2 2SL",
+    "B2 Stuff",
+    "B1 Stuff"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,
