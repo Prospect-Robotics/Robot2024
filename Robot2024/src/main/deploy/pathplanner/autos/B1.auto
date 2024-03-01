@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.76,
+      "y": 6.7
+    },
+    "rotation": 60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B1 Score Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B1 Score 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B1 Leave Intake"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

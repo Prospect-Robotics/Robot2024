@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7166382664238543,
-        "y": 6.667181660256177
+        "x": 0.76,
+        "y": 6.71
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2868433028532724,
-        "y": 7.471602946368096
+        "x": 1.7623907457636345,
+        "y": 6.828181294941459
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.2620093197775684,
-        "y": 6.989757816941229
+        "x": 7.999552168189158,
+        "y": 7.421269528178938
       },
       "prevControl": {
-        "x": 3.6594366055175565,
-        "y": 6.766213982576775
+        "x": 7.5960675656470364,
+        "y": 7.5352047727904985
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,18 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Spool",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "Shoot",
-      "waypointRelativePos": 0,
+      "name": "Intake",
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "parallel",
         "data": {
@@ -66,7 +56,7 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -122.9744055042239,
+    "rotation": 59.65139131317934,
     "velocity": 0
   },
   "useDefaultConstraints": true
