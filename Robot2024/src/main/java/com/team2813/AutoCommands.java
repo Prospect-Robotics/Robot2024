@@ -7,6 +7,7 @@ import com.team2813.subsystems.Intake;
 import com.team2813.subsystems.IntakePivot;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
+import com.team2813.subsystems.IntakePivot.Rotations;
 import com.team2813.subsystems.Shooter.Angle;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,12 +34,10 @@ public class AutoCommands {
 	private volatile Command startIntake = null;
 
 	private Command createStartIntake() {
-		return new SequentialCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_DOWN), intakePivot),
-			new ParallelCommandGroup(
-				new InstantCommand(intake::intake, intake), 
-				new InstantCommand(magazine::runOnlyMag, magazine)
-			)
+		return new ParallelCommandGroup(
+			new InstantCommand(() -> intakePivot.setSetpoint(Rotations.INTAKE_DOWN), intakePivot),
+			new InstantCommand(intake::intake, intake),
+			new InstantCommand(magazine::runOnlyMag, magazine)
 		);
 	}
 
@@ -57,7 +56,7 @@ public class AutoCommands {
 
 	private Command createStopIntake() {
 		return new ParallelCommandGroup(
-			new LockFunctionCommand(intakePivot::positionReached, () -> intakePivot.setSetpoint(IntakePivot.Rotations.INTAKE_UP), intakePivot),
+			new InstantCommand(() -> intakePivot.setSetpoint(Rotations.INTAKE_UP), intakePivot),
 			new InstantCommand(intake::stopIntakeMotor, intake),
 			new InstantCommand(magazine::stop, magazine)
 		);
