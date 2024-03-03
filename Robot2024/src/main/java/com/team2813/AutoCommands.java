@@ -1,34 +1,34 @@
 package com.team2813;
 
-import com.team2813.commands.LockFunctionCommand;
 import com.team2813.commands.ShootFromPosCommand;
-import com.team2813.subsystems.Amp;
 import com.team2813.subsystems.Intake;
 import com.team2813.subsystems.IntakePivot;
+import com.team2813.subsystems.IntakePivot.Rotations;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
-import com.team2813.subsystems.IntakePivot.Rotations;
-import com.team2813.subsystems.Shooter.Angle;
+import com.team2813.subsystems.ShooterPivot;
+import com.team2813.subsystems.ShooterPivot.Position;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AutoCommands {
-	private final Amp amp;
 	private final Intake intake;
 	private final IntakePivot intakePivot;
 	private final Magazine magazine;
 	private final Shooter shooter;
+	private final ShooterPivot shooterPivot;
 
-	public AutoCommands(Amp amp, Intake intake, IntakePivot intakePivot, Magazine magazine, Shooter shooter) {
-		this.amp = amp;
+	public AutoCommands(Intake intake, IntakePivot intakePivot, Magazine magazine, Shooter shooter, ShooterPivot shooterPivot) {
 		this.intake = intake;
 		this.intakePivot = intakePivot;
 		this.magazine = magazine;
 		this.shooter = shooter;
+		this.shooterPivot = shooterPivot;
 	}
 
 	private volatile Command startIntake = null;
@@ -77,7 +77,7 @@ public class AutoCommands {
 
 	private Command createShootFront() {
 		// TODO: get correct angle and speed
-		return new ShootFromPosCommand(magazine, shooter, Angle.SUBWOOFER_FRONT, 20);
+		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_FRONT, 26.5);
 	}
 
 	public Command shootFront() {
@@ -95,7 +95,7 @@ public class AutoCommands {
 
 	private Command createShootSide() {
 		// TODO: get correct angle and speed
-		return new ShootFromPosCommand(magazine, shooter, Angle.SUBWOOFER_SIDE, 20);
+		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_SIDE, 25);
 	}
 
 	public Command shootSide() {
@@ -125,5 +125,31 @@ public class AutoCommands {
 			}
 		}
 		return shootSide;
+	}
+
+	private volatile Command shootAmp = null;
+
+	private Command createShootAmp() {
+		return new SequentialCommandGroup(
+			new InstantCommand(() -> shooter.run(10), shooter),
+			new WaitCommand(0.2),
+			new InstantCommand(magazine::runMagKicker, magazine),
+			new WaitCommand(1),
+			new ParallelCommandGroup(
+				new InstantCommand(shooter::stop, shooter),
+				new InstantCommand(magazine::stop, magazine)
+			)
+		);
+	}
+
+	public Command shootAmp() {
+		if (shootAmp == null) {
+			synchronized (this) {
+				if (shootAmp == null) {
+					shootAmp = createShootAmp();
+				}
+			}
+		}
+		return shootAmp;
 	}
 }

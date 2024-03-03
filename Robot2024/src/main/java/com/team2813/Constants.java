@@ -4,6 +4,7 @@
 
 package com.team2813;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -19,6 +20,7 @@ public final class Constants {
 	public static class OperatorConstants {
 		public static final int operatorControllerPort = 1;
 		public static final CommandPS4Controller operatorController = new CommandPS4Controller(operatorControllerPort);
+		private static final XboxController operatorXboxController = new XboxController(operatorControllerPort);
 
 		//operator controls
 		public static final Trigger intakeButton = operatorController.R1();
@@ -35,6 +37,7 @@ public final class Constants {
 		public static final Trigger climbButton = operatorController.share();
 		public static final Trigger climbManualUpButton = operatorController.povUp();
 		public static final Trigger climbDownUpButton = operatorController.povDown();
+		public static final Trigger altOuttakeButton = new Trigger(() -> operatorXboxController.getLeftTriggerAxis() >= 0.5).and(() -> false);
 
 	}
 	public static class DriverConstants {

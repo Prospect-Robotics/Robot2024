@@ -14,6 +14,7 @@ import static com.team2813.Constants.FRONT_RIGHT_ENCODER_ID;
 import static com.team2813.Constants.FRONT_RIGHT_STEER_ID;
 import static com.team2813.Constants.PIGEON_ID;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -34,15 +35,24 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drive extends SubsystemBase {
+	private static class PublicisizedKinematics extends SwerveDrivetrain {
+		public PublicisizedKinematics(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
+			super(driveTrainConstants, modules);
+		}
+
+		public ChassisSpeeds getChassisSpeeds() {
+			return m_kinematics.toChassisSpeeds(getState().ModuleStates);
+		}
+	}
     private static final double TRACKWIDTH = 1e-8;
     private static final double WHEELBASE = 1e-8;
 
@@ -50,8 +60,6 @@ public class Drive extends SubsystemBase {
             SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
             SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI; // m/s
     public static final double MAX_ANGULAR_VELOCITY = Math.PI * 8; // radians per second
-	
-    private final SwerveDriveKinematics kinematics;
 
     private double multiplier = 1;
 
@@ -59,10 +67,10 @@ public class Drive extends SubsystemBase {
 
     public Drive() {
 		// rotations
-        double frontLeftSteerOffset = 0.215576171875; //0.210693
-        double frontRightSteerOffset = -0.406005859375; //-0.408936
-        double backLeftSteerOffset = 0.3671875; //0.372803
-        double backRightSteerOffset = -0.216064453125; //-0.214111
+        double frontLeftSteerOffset = 0.22412109375; //0.210693
+        double frontRightSteerOffset = -0.40771484375; //-0.408936
+        double backLeftSteerOffset = 0.37646484375; //0.372803
+        double backRightSteerOffset = -0.2158203125; //-0.214111
 
 		// tune
 		Slot0Configs steerGains = new Slot0Configs()
@@ -88,6 +96,7 @@ public class Drive extends SubsystemBase {
 			.withSpeedAt12VoltsMps(MAX_VELOCITY)
 			.withFeedbackSource(RobotSpecificConfigs.swerveFeedback())
 			.withCouplingGearRatio(3.5) // tune :P
+
 			.withSteerMotorInverted(true);
 		double frontDist = 0.381; // x
 		double leftDist = 0.3302; // y
@@ -119,15 +128,18 @@ public class Drive extends SubsystemBase {
 		for (int i = 0; i < constants.length; i++) {
 			locations[i] = new Translation2d(constants[i].LocationX, constants[i].LocationY);
 		}
-		kinematics = new SwerveDriveKinematics(locations);
-		drivetrain = new SwerveDrivetrain(drivetrainConstants, frontLeft, frontRight, backLeft, backRight);
+		PublicisizedKinematics drivetrain = new PublicisizedKinematics(drivetrainConstants, frontLeft, frontRight, backLeft, backRight);
+		this.drivetrain = drivetrain;
+		for (int i = 0; i < 4; i++) {
+			setLimits(i);
+		}
 		AutoBuilder.configureHolonomic(
 			this::getPose,
 			this::resetOdometry,
-			this::getChassisSpeeds,
+			drivetrain::getChassisSpeeds,
 			this::drive,
 			new HolonomicPathFollowerConfig(
-				new PIDConstants(0.1, 0, 0), // Translation PID
+				new PIDConstants(0.4, 0, 0), // Translation PID
 				new PIDConstants(0, 0, 0), // Rotation PID
 				MAX_VELOCITY,
 				0.410178,
@@ -141,7 +153,15 @@ public class Drive extends SubsystemBase {
 		tab.addDouble("front right", () -> getPosition(1));
 		tab.addDouble("back left", () -> getPosition(2));
 		tab.addDouble("back right", () -> getPosition(3));
-    }
+		
+	}
+
+	private void setLimits(int module) {
+		drivetrain.getModule(0).getDriveMotor()
+		.getConfigurator().apply(new CurrentLimitsConfigs()
+		.withSupplyCurrentLimit(80)
+		.withSupplyCurrentLimitEnable(true));
+	}
 
     /**
      * A method that gets whether you are on red alliance. If there is not an alliance,
@@ -160,12 +180,6 @@ public class Drive extends SubsystemBase {
 
     public Pose2d getPose() {
         return drivetrain.getState().Pose;
-    }
-
-    public ChassisSpeeds getChassisSpeeds() {
-        return kinematics.toChassisSpeeds(
-                drivetrain.getState().ModuleStates
-        );
     }
 
     public void enableSlowMode(boolean enable) {
@@ -195,10 +209,19 @@ public class Drive extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d currentPose) {
+		drivetrain.getDaqThread();
 		drivetrain.seedFieldRelative(currentPose);
     }
 
 	private double getPosition(int moduleId) {
 		return drivetrain.getModule(moduleId).getCANcoder().getAbsolutePosition().getValueAsDouble();
+	}
+
+	Field2d field = new Field2d();
+
+	@Override
+	public void periodic() {
+		field.setRobotPose(getPose());
+		SmartDashboard.putData(field);
 	}
 }

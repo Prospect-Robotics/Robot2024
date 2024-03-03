@@ -24,9 +24,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "shoot-front"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "shoot-front"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              }
+            ]
           }
         },
         {

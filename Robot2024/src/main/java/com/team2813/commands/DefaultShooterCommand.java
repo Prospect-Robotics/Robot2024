@@ -4,14 +4,15 @@ import java.util.function.DoubleSupplier;
 
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.subsystems.Shooter;
+import com.team2813.subsystems.ShooterPivot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
- * The default command for the {@link Shooter} subsystem.
+ * The default command for the {@link ShooterPivot} subsystem.
  */
 public final class DefaultShooterCommand extends Command {
-	private final Shooter shooter;
+	private final ShooterPivot shooterPivot;
 	private final DoubleSupplier control;
 
 	/**
@@ -21,10 +22,10 @@ public final class DefaultShooterCommand extends Command {
 	 * @param control Provides values from the driver controller;
 	 *                the returned values MUST be less than or equal to 1.
 	 */
-	public DefaultShooterCommand(Shooter shooter, DoubleSupplier control) {
-		this.shooter = shooter;
+	public DefaultShooterCommand(ShooterPivot shooterPivot, DoubleSupplier control) {
+		this.shooterPivot = shooterPivot;
 		this.control = control;
-		addRequirements(shooter);
+		addRequirements(shooterPivot);
 	}
 
 	/**
@@ -47,9 +48,9 @@ public final class DefaultShooterCommand extends Command {
 	public void execute() {
 		double val = control.getAsDouble();
 		if (Math.abs(val) > DEADZONE) {
-			shooter.set(ControlMode.DUTY_CYCLE, val * MULTIPLIER);
+			shooterPivot.set(ControlMode.DUTY_CYCLE, val * MULTIPLIER);
 		} else {
-			shooter.set(ControlMode.DUTY_CYCLE, 0);
+			shooterPivot.set(ControlMode.DUTY_CYCLE, 0);
 		}
 	}
 }
