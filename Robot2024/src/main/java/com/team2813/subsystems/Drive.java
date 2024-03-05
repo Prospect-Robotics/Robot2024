@@ -67,10 +67,10 @@ public class Drive extends SubsystemBase {
 
     public Drive() {
 		// rotations
-        double frontLeftSteerOffset = 0.22412109375; //0.210693
-        double frontRightSteerOffset = -0.40771484375; //-0.408936
-        double backLeftSteerOffset = 0.37646484375; //0.372803
-        double backRightSteerOffset = -0.2158203125; //-0.214111
+        double frontLeftSteerOffset = 0.212158203125; //0.210693
+        double frontRightSteerOffset = -0.409423828125; //-0.408936
+        double backLeftSteerOffset = 0.3701171875; //0.372803
+        double backRightSteerOffset = -0.21240234375; //-0.214111
 
 		// tune
 		Slot0Configs steerGains = new Slot0Configs()
@@ -209,9 +209,12 @@ public class Drive extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d currentPose) {
-		drivetrain.getDaqThread();
 		drivetrain.seedFieldRelative(currentPose);
     }
+
+	public void orientForward() {
+		drivetrain.seedFieldRelative();
+	}
 
 	private double getPosition(int moduleId) {
 		return drivetrain.getModule(moduleId).getCANcoder().getAbsolutePosition().getValueAsDouble();

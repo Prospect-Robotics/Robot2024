@@ -44,6 +44,7 @@ public final class Constants {
 		public static final int driverControllerPort = 0;
 		public static final CommandPS4Controller DRIVER_CONTROLLER = new CommandPS4Controller(driverControllerPort);
 		public static final Trigger slowmodeButton = DRIVER_CONTROLLER.L1();
+		public static final Trigger orientButton = DRIVER_CONTROLLER.options();
 	}
 
 	// front right swerve module

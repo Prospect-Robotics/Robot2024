@@ -5,6 +5,7 @@
 package com.team2813;
 
 import static com.team2813.Constants.DriverConstants.driverControllerPort;
+import static com.team2813.Constants.DriverConstants.orientButton;
 import static com.team2813.Constants.DriverConstants.slowmodeButton;
 import static com.team2813.Constants.OperatorConstants.altOuttakeButton;
 import static com.team2813.Constants.OperatorConstants.ampInButton;
@@ -128,6 +129,10 @@ public class RobotContainer {
 		);
 		ampOutButton.onFalse(
 			new InstantCommand(amp::ampStop, amp)
+		);
+
+		orientButton.onTrue(
+			new InstantCommand(drive::orientForward, drive)
 		);
 
 

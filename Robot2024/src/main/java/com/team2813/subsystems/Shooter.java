@@ -28,13 +28,14 @@ public class Shooter extends SubsystemBase {
 		m.addFollower(SHOOTER_1, InvertType.FOLLOW_MASTER);
 		TalonFXConfigurator config = m.motor().getConfigurator();
 		ConfigUtils.phoenix6Config(
-				() -> config.apply(new FeedbackConfigs().withSensorToMechanismRatio(36 / 24.0)));
+				() -> config.apply(new FeedbackConfigs().withSensorToMechanismRatio(36 / 24.0)
+				));
 		ConfigUtils.phoenix6Config(
 			() -> config.apply(
 					new Slot0Configs().withKP(0.01).withKS(0).withKV(0.017))
 		);
 		ConfigUtils.phoenix6Config(
-			() -> config.apply(new VoltageConfigs().withPeakForwardVoltage(4.5))
+			() -> config.apply(new VoltageConfigs().withPeakForwardVoltage(5))
 		);
 		shooterMotor = m;
 		voltage = m.motor().getMotorVoltage().asSupplier();

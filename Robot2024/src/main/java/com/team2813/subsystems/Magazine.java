@@ -13,15 +13,15 @@ public class Magazine extends SubsystemBase {
 	Motor magMotor;
 
     public Magazine() {
-		kickerMotor = new TalonFXWrapper(KICKER, InvertType.CLOCKWISE);
+		kickerMotor = new TalonFXWrapper(KICKER, InvertType.COUNTER_CLOCKWISE);
 
 		magMotor = new TalonFXWrapper(MAGAZINE, InvertType.COUNTER_CLOCKWISE);
     }
 
 	//Runs Kicker and Magazine Motor together
     public void runMagKicker() {
-		kickerMotor.set(ControlMode.DUTY_CYCLE, -0.6);
-		runOnlyMag();
+		kickerMotor.set(ControlMode.DUTY_CYCLE, 0.6);
+		magMotor.set(ControlMode.DUTY_CYCLE, 0.6);
 	}
 
 	public void stop() {
@@ -31,6 +31,7 @@ public class Magazine extends SubsystemBase {
 
 	//Running just Magazine Motor
 	public void runOnlyMag() {
+		kickerMotor.set(ControlMode.DUTY_CYCLE, -0.1);
 		magMotor.set(ControlMode.DUTY_CYCLE, 0.3);
 	}
 
