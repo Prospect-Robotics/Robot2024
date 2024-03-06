@@ -16,7 +16,7 @@ import com.team2813.RobotSpecificConfigs.SwerveConfig;
 public class RobotSpecificConfigsTest {
 	@Test
 	public void serializationTest() throws IOException, ClassNotFoundException {
-		SwerveConfig cnf = new SwerveConfig();
+		SwerveConfig cnf = new SwerveConfig(0.5, -0.5, 0.5, -0.5);
 		byte[] serialized = null;
 		SwerveConfig deserialized = null;
 		try (

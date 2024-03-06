@@ -1,5 +1,6 @@
 package com.team2813;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,6 +28,18 @@ public class RobotSpecificConfigs {
 		public SwerveConfig() {
 			this(0, 0, 0, 0);
 		}
+		public double frontLeftOffset() {
+			return frontLeft;
+		}
+		public double frontRightOffset() {
+			return frontRight;
+		}
+		public double backLeftOffset() {
+			return backLeft;
+		}
+		public double backRightOffset() {
+			return backRight;
+		}
 		/**
 		 * Creates a new SwerveConfig with their module offsets
 		 * @param frontLeft front left offset
@@ -37,13 +50,13 @@ public class RobotSpecificConfigs {
 		 */
 		public SwerveConfig(double frontLeft, double frontRight, double backLeft, double backRight) {
 			String message = "%s offset cannot be larger than a full circle";
-			if (frontLeft > 1) {
+			if (Math.abs(frontLeft) > 1) {
 				throw new IllegalArgumentException(String.format(message, "front left"));
-			} else if (frontRight > 1) {
+			} else if (Math.abs(frontRight) > 1) {
 				throw new IllegalArgumentException(String.format(message, "front right"));
-			} else if (backLeft > 1) {
+			} else if (Math.abs(backLeft) > 1) {
 				throw new IllegalArgumentException(String.format(message, "back left"));
-			} else if (backRight > 1) {
+			} else if (Math.abs(backRight) > 1) {
 				throw new IllegalArgumentException(String.format(message, "back right"));
 			}
 			this.frontLeft = frontLeft;
@@ -90,6 +103,7 @@ public class RobotSpecificConfigs {
 	private static SteerFeedbackType swerveFeedback = SteerFeedbackType.FusedCANcoder;
 	private static SwerveConfig swerveConfig = new SwerveConfig();
 	private static final Path swerveConfigPath = Path.of("/home", "lvuser", "swerveConfig.txt");
+	private static boolean loadedSwerveConfig;
 
 	public static String swerveCanbus() {
 		checkLoaded();
@@ -109,6 +123,11 @@ public class RobotSpecificConfigs {
 	public static SwerveConfig swerveConfig() {
 		checkLoaded();
 		return swerveConfig;
+	}
+
+	public static boolean loadedSwerveConfig() {
+		checkLoaded();
+		return loadedSwerveConfig;
 	}
 
 	private static void checkLoaded() {
@@ -135,6 +154,13 @@ public class RobotSpecificConfigs {
 		}
 	}
 
+	public static void resetSwerveConfig() {
+		// make sure file is read from first to make it impossible
+		// to write and read the file at the same time
+		checkLoaded();
+		swerveConfigPath.toFile().delete();
+	}
+
 	private static void load() {
 		// DO NOT DELETE LINE BELOW
 		loaded = true;
@@ -156,6 +182,7 @@ public class RobotSpecificConfigs {
 			} catch (IOException | ClassNotFoundException e) {
 				DriverStation.reportError("failed loading swerve config file", false);
 			}
+			loadedSwerveConfig = true;
 		}
 	}
 }

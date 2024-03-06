@@ -21,6 +21,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
+import com.team2813.commands.SaveSwerveOffsetsCommand;
 import com.team2813.commands.SpoolCommand;
 import com.team2813.subsystems.Amp;
 import com.team2813.subsystems.Drive;
@@ -32,6 +33,7 @@ import com.team2813.subsystems.Shooter;
 import com.team2813.subsystems.ShooterPivot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.Constants.OperatorConstants;
@@ -67,6 +69,8 @@ public class RobotContainer {
 		addAutoCommands(autoCommands);
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto", autoChooser);
+		Shuffleboard.getTab("swerve").add(new SaveSwerveOffsetsCommand(drive));
+		Shuffleboard.getTab("swerve").addBoolean("offsets loaded", RobotSpecificConfigs::loadedSwerveConfig);
 	}
 
 	private void addAutoCommands(AutoCommands autoCommands) {

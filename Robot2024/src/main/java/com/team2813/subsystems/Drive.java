@@ -30,6 +30,7 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.team2813.RobotSpecificConfigs;
+import com.team2813.RobotSpecificConfigs.SwerveConfig;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -66,11 +67,12 @@ public class Drive extends SubsystemBase {
 	SwerveDrivetrain drivetrain;
 
     public Drive() {
+		SwerveConfig offsets = RobotSpecificConfigs.swerveConfig();
 		// rotations
-        double frontLeftSteerOffset = 0.212158203125; //0.210693
-        double frontRightSteerOffset = -0.409423828125; //-0.408936
-        double backLeftSteerOffset = 0.3701171875; //0.372803
-        double backRightSteerOffset = -0.21240234375; //-0.214111
+        double frontLeftSteerOffset = offsets.frontLeftOffset(); //0.210693
+        double frontRightSteerOffset = offsets.frontRightOffset(); //-0.408936
+        double backLeftSteerOffset = offsets.backLeftOffset(); //0.372803
+        double backRightSteerOffset = offsets.backRightOffset(); //-0.214111
 
 		// tune
 		Slot0Configs steerGains = new Slot0Configs()
@@ -218,6 +220,15 @@ public class Drive extends SubsystemBase {
 
 	private double getPosition(int moduleId) {
 		return drivetrain.getModule(moduleId).getCANcoder().getAbsolutePosition().getValueAsDouble();
+	}
+
+	public SwerveConfig getOffsets() {
+		return new SwerveConfig(
+			-getPosition(0),
+			-getPosition(1),
+			-getPosition(2),
+			-getPosition(3)
+			);
 	}
 
 	Field2d field = new Field2d();
