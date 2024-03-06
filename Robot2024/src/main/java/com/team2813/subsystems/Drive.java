@@ -54,8 +54,6 @@ public class Drive extends SubsystemBase {
 			return m_kinematics.toChassisSpeeds(getState().ModuleStates);
 		}
 	}
-    private static final double TRACKWIDTH = 1e-8;
-    private static final double WHEELBASE = 1e-8;
 
     public static final double MAX_VELOCITY = 6380.0 / 60.0 *
             SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
