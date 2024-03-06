@@ -3,7 +3,6 @@ package com.team2813.commands;
 import java.util.function.DoubleSupplier;
 
 import com.team2813.lib2813.control.ControlMode;
-import com.team2813.subsystems.Shooter;
 import com.team2813.subsystems.ShooterPivot;
 
 import edu.wpi.first.wpilibj2.command.Command;
