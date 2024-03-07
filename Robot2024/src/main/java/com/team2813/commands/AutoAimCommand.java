@@ -4,6 +4,7 @@ import com.team2813.lib2813.limelight.Limelight;
 import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
+import com.team2813.subsystems.ShooterPivot;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoAimCommand extends Command {
   private final Shooter shooter;
+  private final ShooterPivot shooterPivot;
   private final Magazine mag;
   private final Drive drive;
   private final Limelight limelight;
@@ -27,10 +29,11 @@ public class AutoAimCommand extends Command {
   private static final Pose3d blueSpeakerPos = new Pose3d(-7.846862, 1.455030, 2.364370, new Rotation3d());
   private Pose3d speakerPos;
 
-  public AutoAimCommand(Shooter shooter, Magazine mag, Drive drive) {
+  public AutoAimCommand(Shooter shooter, ShooterPivot shooterPivot, Magazine mag, Drive drive) {
 	this.limelight = Limelight.getDefaultLimelight();
     this.shooter = shooter;
 	this.drive = drive;
+	this.shooterPivot = shooterPivot;
 	this.mag = mag;
 	addRequirements(shooter, drive, mag);
   }
@@ -48,8 +51,8 @@ public class AutoAimCommand extends Command {
   }
 
   private void useShootingAngle(double angle) {
-	shooter.setSetpoint(Math.PI * 2 / angle);
-	shooter.enable();
+	shooterPivot.setSetpoint(Math.PI * 2 / angle);
+	shooterPivot.enable();
   }
 
   private Pose3d getPose() {
@@ -76,7 +79,7 @@ public class AutoAimCommand extends Command {
 
   @Override
   public void execute() {
-	if (shooter.atPosition() && atRotation()) {
+	if (shooterPivot.atPosition() && atRotation()) {
 		mag.runMagKicker();
 		done = true;
 		magStart = Timer.getFPGATimestamp();

@@ -25,7 +25,6 @@ import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.commands.SaveSwerveOffsetsCommand;
 import com.team2813.commands.SpoolCommand;
-import com.team2813.lib2813.limelight.Limelight;
 import com.team2813.subsystems.Amp;
 import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Intake;
@@ -153,7 +152,7 @@ public class RobotContainer {
 		));
 
 		spoolAutoAimButton.onTrue(
-			new AutoAimCommand(shooter, mag, drive)
+			new AutoAimCommand(shooter, shooterPivot, mag, drive)
 		);
 
 		spoolPodiumButton.onTrue(

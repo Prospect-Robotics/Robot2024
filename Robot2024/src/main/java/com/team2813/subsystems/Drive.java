@@ -237,6 +237,10 @@ public class Drive extends SubsystemBase {
 		return drivetrain.getModule(moduleId).getCANcoder().getAbsolutePosition().getValueAsDouble();
 	}
 
+	public Pose3d get3DPose() {
+		return new Pose3d(getPose());
+	}
+
 	public SwerveConfig getOffsets() {
 		return new SwerveConfig(
 			-getPosition(0),

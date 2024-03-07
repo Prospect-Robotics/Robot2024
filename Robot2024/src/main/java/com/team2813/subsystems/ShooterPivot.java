@@ -14,9 +14,10 @@ import com.team2813.lib2813.subsystems.MotorSubsystem;
 import com.team2813.lib2813.util.ConfigUtils;
 
 public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
+	private static final double ERROR = 0.05;
 	public ShooterPivot() {
 		super(new MotorSubsystemConfiguration(
-				pivotMotor()));
+				pivotMotor()).acceptableError(ERROR));
 	}
 
 	private static PIDMotor pivotMotor() {
@@ -30,6 +31,10 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 				.withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder))
 		);
 		return result;
+	}
+
+	public boolean atPosition() {
+		return Math.abs(getMeasurement() - getSetpoint()) <= ERROR;
 	}
 
 	public static enum Position implements MotorSubsystem.Position {
