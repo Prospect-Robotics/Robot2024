@@ -7,6 +7,7 @@ package com.team2813;
 import static com.team2813.Constants.DriverConstants.driverControllerPort;
 import static com.team2813.Constants.DriverConstants.orientButton;
 import static com.team2813.Constants.DriverConstants.slowmodeButton;
+import static com.team2813.Constants.DriverConstants.spoolAutoAimButton;
 import static com.team2813.Constants.OperatorConstants.altOuttakeButton;
 import static com.team2813.Constants.OperatorConstants.ampInButton;
 import static com.team2813.Constants.OperatorConstants.ampIntakeButton;
@@ -15,7 +16,6 @@ import static com.team2813.Constants.OperatorConstants.intakeButton;
 import static com.team2813.Constants.OperatorConstants.operatorControllerPort;
 import static com.team2813.Constants.OperatorConstants.outtakeButton;
 import static com.team2813.Constants.OperatorConstants.shootButton;
-import static com.team2813.Constants.OperatorConstants.spoolAutoAimButton;
 import static com.team2813.Constants.OperatorConstants.spoolPodiumButton;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -153,6 +153,7 @@ public class RobotContainer {
 
 		spoolAutoAimButton.onTrue(
 			new AutoAimCommand(shooter, shooterPivot, mag, drive)
+			// new LockFunctionCommand(shooterPivot::atPosition, () -> shooterPivot.setSetpoint(Position.TEST), shooterPivot)
 		);
 
 		spoolPodiumButton.onTrue(

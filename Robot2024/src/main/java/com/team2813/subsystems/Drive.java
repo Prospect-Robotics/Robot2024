@@ -14,6 +14,8 @@ import static com.team2813.Constants.FRONT_RIGHT_ENCODER_ID;
 import static com.team2813.Constants.FRONT_RIGHT_STEER_ID;
 import static com.team2813.Constants.PIGEON_ID;
 
+import java.util.OptionalLong;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
@@ -24,6 +26,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.mechanisms.swerve.utility.PhoenixPIDController;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -102,7 +105,6 @@ public class Drive extends SubsystemBase {
 			.withSpeedAt12VoltsMps(MAX_VELOCITY)
 			.withFeedbackSource(RobotSpecificConfigs.swerveFeedback())
 			.withCouplingGearRatio(3.5) // tune :P
-
 			.withSteerMotorInverted(true);
 		double frontDist = 0.381; // x
 		double leftDist = 0.3302; // y
@@ -110,7 +112,8 @@ public class Drive extends SubsystemBase {
 			FRONT_LEFT_STEER_ID, FRONT_LEFT_DRIVE_ID,
 			FRONT_LEFT_ENCODER_ID, frontLeftSteerOffset,
 			frontDist, leftDist,
-			true);
+			true
+		);
 		SwerveModuleConstants frontRight = constantCreator.createModuleConstants(
 			FRONT_RIGHT_STEER_ID, FRONT_RIGHT_DRIVE_ID,
 			FRONT_RIGHT_ENCODER_ID, frontRightSteerOffset,
@@ -130,11 +133,7 @@ public class Drive extends SubsystemBase {
 			true
 		);
 		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
-		Translation2d[] locations = new Translation2d[constants.length];
-		for (int i = 0; i < constants.length; i++) {
-			locations[i] = new Translation2d(constants[i].LocationX, constants[i].LocationY);
-		}
-		PublicisizedKinematics drivetrain = new PublicisizedKinematics(drivetrainConstants, frontLeft, frontRight, backLeft, backRight);
+		PublicisizedKinematics drivetrain = new PublicisizedKinematics(drivetrainConstants, constants);
 		this.drivetrain = drivetrain;
 		for (int i = 0; i < 4; i++) {
 			setLimits(i);
@@ -159,7 +158,10 @@ public class Drive extends SubsystemBase {
 		tab.addDouble("front right", () -> getPosition(1));
 		tab.addDouble("back left", () -> getPosition(2));
 		tab.addDouble("back right", () -> getPosition(3));
-		
+
+		facingRequest = new SwerveRequest.FieldCentricFacingAngle()
+		.withSteerRequestType(SteerRequestType.MotionMagic);
+		facingRequest.HeadingController = new PhoenixPIDController(Math.toRadians(45), 0, 0);
 	}
 
 	private void setLimits(int module) {
@@ -169,9 +171,11 @@ public class Drive extends SubsystemBase {
 		.withSupplyCurrentLimitEnable(true));
 	}
 
+	final SwerveRequest.FieldCentricFacingAngle facingRequest;
+
 	public void turnToFace(Rotation2d rotation) {
 		drivetrain.setControl(
-			new SwerveRequest.FieldCentricFacingAngle().
+			facingRequest.
 				withTargetDirection(rotation)
 			);
 	}
@@ -257,17 +261,38 @@ public class Drive extends SubsystemBase {
 	 * @param pose the position of the robot
 	 */
 	public void addMeasurement(Pose2d pose) {
-		drivetrain.addVisionMeasurement(pose, Timer.getFPGATimestamp());
+		double timestamp = Timer.getFPGATimestamp();
+		OptionalLong msDelay = limelight.getLocationalData().lastMSDelay();
+		if (msDelay.isPresent()) {
+			timestamp -= msDelay.getAsLong() / 1000.0;
+		}
+		drivetrain.addVisionMeasurement(pose, timestamp);
+	}
+
+	private static final Translation2d poseOffset = new Translation2d(8.310213, 4.157313);
+
+	private boolean useLimelightOffset = false;
+
+	private static Pose2d offsetPose(Pose2d pose) {
+		double x = pose.getX() + poseOffset.getX();
+		double y = pose.getY() + poseOffset.getY();
+		return new Pose2d(x, y, pose.getRotation());
 	}
 
 	@Override
 	public void periodic() {
-		field.setRobotPose(getPose());
+		
 		SmartDashboard.putData(field);
-		// if we have a position from the robot, and we are in teleop, update our pose
+		// if we have a position from the robot, and we arx`e in teleop, update our pose
 		if (limelight.hasTarget() && DriverStation.isTeleopEnabled()) {
 			limelight.getLocationalData().getBotpose()
 			.map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
+			useLimelightOffset = true;
+		}
+		if (useLimelightOffset) {
+			field.setRobotPose(offsetPose(getPose()));
+		} else {
+			field.setRobotPose(getPose());
 		}
 	}
 }

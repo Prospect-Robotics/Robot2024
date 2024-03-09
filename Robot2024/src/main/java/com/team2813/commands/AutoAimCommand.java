@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoAimCommand extends Command {
+  private static final double offset = Math.toRadians(65);
   private final Shooter shooter;
   private final ShooterPivot shooterPivot;
   private final Magazine mag;
@@ -35,7 +36,7 @@ public class AutoAimCommand extends Command {
 	this.drive = drive;
 	this.shooterPivot = shooterPivot;
 	this.mag = mag;
-	addRequirements(shooter, drive, mag);
+	addRequirements(shooter, drive, mag, shooterPivot);
   }
 
   public boolean isBlue() {
@@ -43,17 +44,21 @@ public class AutoAimCommand extends Command {
   }
 
   private void useDistance(double distance) {
-	shooter.run(distance * 10);
+	// shooter.run(distance * 10);
   }
 
-  private void useRotationAngle(double angle) {
-	drive.turnToFace(new Rotation2d(angle));
+  private void useRotationAngle(Rotation2d rotation) {
+	this.rotation = rotation;
+	drive.turnToFace(rotation);
   }
 
   private void useShootingAngle(double angle) {
-	shooterPivot.setSetpoint(Math.PI * 2 / angle);
-	shooterPivot.enable();
+	// double posRad = angle - offset;
+	// shooterPivot.setSetpoint(posRad / (Math.PI * 2));
+	// shooterPivot.enable();
   }
+
+  Rotation2d rotation;
 
   private Pose3d getPose() {
 	// get value from limelight, use Drivetrain as backup option
@@ -66,7 +71,7 @@ public class AutoAimCommand extends Command {
 	done = false;
 	Pose3d pose = getPose();
 	Transform3d diff = speakerPos.minus(pose);
-	useRotationAngle(Math.atan2(diff.getY(), diff.getX()));
+	useRotationAngle(new Rotation2d(Math.atan2(diff.getY(), diff.getX())));
 	double flatDistance = Math.hypot(diff.getX(), diff.getY());
 	useDistance(Math.hypot(diff.getZ(), flatDistance));
 	useShootingAngle(Math.atan2(diff.getZ(), flatDistance));
@@ -74,12 +79,12 @@ public class AutoAimCommand extends Command {
 
   private boolean atRotation() {
 	return Math.abs(getPose().getRotation().toRotation2d()
-		.minus(drive.getRotation()).getDegrees()) < 2;
+		.minus(rotation).getDegrees()) < 2;
   }
 
   @Override
   public void execute() {
-	if (shooterPivot.atPosition() && atRotation()) {
+	if (atRotation() && !done) {
 		mag.runMagKicker();
 		done = true;
 		magStart = Timer.getFPGATimestamp();
