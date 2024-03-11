@@ -1,0 +1,63 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7878324509326757,
+        "y": 4.429399551744712
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.0874784805125168,
+        "y": 4.413922050066323
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.680665108333295,
+        "y": 4.074505021135632
+      },
+      "prevControl": {
+        "x": 1.751098904975588,
+        "y": 4.979914557051337
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeFirstNote",
+      "waypointRelativePos": 0.7,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": []
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -31.394348659003754,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "SSS 4P",
+  "previewStartingState": {
+    "rotation": -58.315509756156246,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
