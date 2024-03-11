@@ -15,11 +15,10 @@ import com.team2813.lib2813.subsystems.MotorSubsystem;
 import com.team2813.lib2813.util.ConfigUtils;
 
 public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
-	private static final double ERROR = 0.01;
 
 	public ShooterPivot() {
 		super(new MotorSubsystemConfiguration(
-				pivotMotor()).acceptableError(ERROR)
+				pivotMotor()).acceptableError(0.01)
 				.PID(0.2, 0, 0));
 	}
 
@@ -40,10 +39,6 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 						.withReverseSoftLimitEnable(true)));
 
 		return result;
-	}
-
-	public boolean atPosition() {
-		return Math.abs(getMeasurement() - getSetpoint()) <= ERROR;
 	}
 
 	public static enum Position implements MotorSubsystem.Position {

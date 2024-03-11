@@ -87,7 +87,7 @@ public class Drive extends SubsystemBase {
 			.withKS(0).withKV(1.5).withKA(0);
 		// tune
 		Slot0Configs driveGains = new Slot0Configs()
-			.withKP(3).withKI(0).withKD(0)
+			.withKP(2.5).withKI(0).withKD(0)
 			.withKS(0).withKV(0).withKA(0);
 
 		SwerveDrivetrainConstants drivetrainConstants = new SwerveDrivetrainConstants()
@@ -160,8 +160,10 @@ public class Drive extends SubsystemBase {
 		tab.addDouble("back right", () -> getPosition(3));
 
 		facingRequest = new SwerveRequest.FieldCentricFacingAngle()
+		.withDriveRequestType(DriveRequestType.Velocity)
 		.withSteerRequestType(SteerRequestType.MotionMagic);
-		facingRequest.HeadingController = new PhoenixPIDController(Math.toRadians(45), 0, 0);
+		facingRequest.HeadingController = new PhoenixPIDController(3.5, 0, 1.2);
+		Shuffleboard.getTab("swerve").add("rotation PID", facingRequest.HeadingController);
 	}
 
 	private void setLimits(int module) {
