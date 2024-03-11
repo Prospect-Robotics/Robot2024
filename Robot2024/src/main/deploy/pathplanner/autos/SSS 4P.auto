@@ -52,6 +52,12 @@
           "data": {
             "name": "shoot-auto"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop-intake"
+          }
         }
       ]
     }
