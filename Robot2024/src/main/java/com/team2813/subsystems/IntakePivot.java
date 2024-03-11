@@ -6,6 +6,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.team2813.lib2813.control.Encoder;
 import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.Motor;
+import com.team2813.lib2813.control.PIDMotor;
 import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
@@ -29,7 +30,7 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
         intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
     }
 	
-	private static Motor pivotMotor() {
+	private static PIDMotor pivotMotor() {
 		TalonFXWrapper pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
 		pivotMotor.setNeutralMode(NeutralModeValue.Brake);
 		return pivotMotor;
@@ -46,8 +47,8 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     }
 
     public static enum Rotations implements MotorSubsystem.Position {
-		INTAKE_DOWN(-1.014160),
-        INTAKE_UP(-0.235840);
+		INTAKE_DOWN(-0.934082),
+        INTAKE_UP(-0.109619);
 
         Rotations(double pos) {
             this.pos = pos;

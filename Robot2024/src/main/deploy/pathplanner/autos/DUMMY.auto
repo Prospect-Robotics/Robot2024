@@ -40,6 +40,12 @@
           "data": {
             "name": "shoot-auto"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-amp"
+          }
         }
       ]
     }
