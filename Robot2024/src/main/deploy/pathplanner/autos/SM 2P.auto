@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3622232452798242,
+      "y": 5.517108724879653
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SM P1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-auto"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

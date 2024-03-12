@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.7873272078389397,
+        "y": 5.521627675509816
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.030609187334446,
+        "y": 5.892037405354574
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.5583510179297146,
+        "y": 4.181470370009192
+      },
+      "prevControl": {
+        "x": 1.6330237654894955,
+        "y": 4.479384593999843
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Stop Intake",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "stop-intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -13.904190170442819,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "ASS 4P",
+  "previewStartingState": {
+    "rotation": 0.09822124009146724,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
