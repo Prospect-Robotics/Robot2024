@@ -18,6 +18,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "shoot-auto"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Herd_1"
@@ -57,12 +63,6 @@
           "type": "path",
           "data": {
             "pathName": "Herd_4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stop-intake"
           }
         }
       ]
