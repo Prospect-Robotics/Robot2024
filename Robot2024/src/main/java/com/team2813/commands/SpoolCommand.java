@@ -8,7 +8,7 @@ public class SpoolCommand extends Command {
 	private double speed;
 	private Shooter shooter;
 	private static final double increase = 0.5;
-	private static final double max = 45;
+	private static final double max = 75;
 	public SpoolCommand(Shooter shooter) {
 		this.shooter = shooter;
 		addRequirements(shooter);

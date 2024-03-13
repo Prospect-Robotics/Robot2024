@@ -32,8 +32,8 @@ public class AutoAimCommand extends Command {
   double shooterStart = 0;
 
   // speaker for red
-  private static final Pose3d redSpeakerPos = new Pose3d(7.846862, 1.455030, 2.364370, new Rotation3d());
-  private static final Pose3d blueSpeakerPos = new Pose3d(-7.846862, 1.455030, 2.364370, new Rotation3d());
+  private static final Pose3d redSpeakerPos = new Pose3d(8.034371, 1.443727, 2.062736, new Rotation3d());
+  private static final Pose3d blueSpeakerPos = new Pose3d(-8.034371, 1.443727, 2.062736, new Rotation3d());
   private Pose3d speakerPos;
 
   public AutoAimCommand(Shooter shooter, ShooterPivot shooterPivot, Magazine mag, Drive drive) {
@@ -51,7 +51,9 @@ public class AutoAimCommand extends Command {
 
   private void useDistance(double distance) {
 	shooterStart = Timer.getFPGATimestamp();
-	shooter.run(distance * 10);
+	distance *= 25;
+	SmartDashboard.putNumber("Auto-Aim Velocity", distance);
+	shooter.run(distance);
   }
 
   private void useRotationAngle(Rotation2d rotation) {
@@ -60,11 +62,11 @@ public class AutoAimCommand extends Command {
   }
 
   private void useShootingAngle(double angle) {
-	SmartDashboard.putNumber("Auto aim theta", angle);
+	SmartDashboard.putNumber("Auto-Aim Position (initial)", angle);
 	double posRad = top_rad - angle;
-	SmartDashboard.putNumber("Auto Aim pivot (radians)", posRad);
+	SmartDashboard.putNumber("Auto-Aim Position (Rad)", posRad);
 	double posRotations = posRad / (Math.PI * 2);
-	SmartDashboard.putNumber("Auto Aim pivot (rotations) ", posRotations);
+	SmartDashboard.putNumber("Auto-Aim Position (Rotations)", posRotations);
 	posRotations = 
 		MathUtil.clamp(
 			posRotations,
@@ -87,14 +89,12 @@ public class AutoAimCommand extends Command {
 	speakerPos = isBlue() ? blueSpeakerPos : redSpeakerPos;
 	done = false;
 	Pose3d pose = getPose();
-	Transform3d diff = pose.minus(speakerPos).plus(new Transform3d(0, 0, -0.266586, new Rotation3d()));
-	SmartDashboard.putNumber("diffX", diff.getX());
-	SmartDashboard.putNumber("diffY", diff.getY());
-	SmartDashboard.putNumber("diffZ", diff.getZ());
+	Transform3d diff = pose.minus(speakerPos);
+	double z = Math.abs(diff.getZ()) - 0.266586;
 	useRotationAngle(new Rotation2d(Math.atan2(diff.getY(), diff.getX())));
 	double flatDistance = Math.hypot(diff.getX(), diff.getY());
-	useDistance(Math.hypot(diff.getZ(), flatDistance));
-	useShootingAngle(Math.atan2(-diff.getZ(), flatDistance));
+	useDistance(Math.hypot(z, flatDistance));
+	useShootingAngle(Math.atan2(z, flatDistance));
   }
 
   private boolean atRotation() {
@@ -104,7 +104,11 @@ public class AutoAimCommand extends Command {
 
   @Override
   public void execute() {
-	if (!done && atRotation() && shooterPivot.atPosition() && Timer.getFPGATimestamp() - shooterStart >= 0.5) {
+	boolean drivetrainGood = atRotation();
+	boolean shooterGood = shooterPivot.atPosition();
+	SmartDashboard.putBoolean("drivetrain at position", drivetrainGood);
+	SmartDashboard.putBoolean("shooter at position", shooterGood);
+	if (!done && drivetrainGood && shooterGood && Timer.getFPGATimestamp() - shooterStart >= 0.5) {
 		mag.runMagKicker();
 		done = true;
 		magStart = Timer.getFPGATimestamp();

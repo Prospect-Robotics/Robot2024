@@ -14,12 +14,15 @@ import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 import com.team2813.lib2813.util.ConfigUtils;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	public ShooterPivot() {
 		super(new MotorSubsystemConfiguration(
-				pivotMotor()).acceptableError(0.01)
-				.PID(0.2, 0, 0));
+				pivotMotor()).acceptableError(0.003)
+				.PID(3.8, 0, 0));
+		SmartDashboard.putData("Shooter Pivot PID", m_controller);
 	}
 
 	private static PIDMotor pivotMotor() {
@@ -39,6 +42,14 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 						.withReverseSoftLimitEnable(true)));
 
 		return result;
+	}
+
+	@Override
+	protected void useOutput(double output, double setpoint) {
+		if (output < 0) {
+			output -= 0.15;
+		}
+		super.useOutput(output, setpoint);
 	}
 
 	public static enum Position implements MotorSubsystem.Position {

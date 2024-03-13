@@ -23,6 +23,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.team2813.commands.AutoAimCommand;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
+import com.team2813.commands.LockFunctionCommand;
 import com.team2813.commands.SaveSwerveOffsetsCommand;
 import com.team2813.commands.SpoolCommand;
 import com.team2813.subsystems.Amp;
@@ -30,6 +31,7 @@ import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Intake;
 import com.team2813.subsystems.IntakePivot;
 import com.team2813.subsystems.IntakePivot.Rotations;
+import com.team2813.subsystems.ShooterPivot.Position;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
 import com.team2813.subsystems.ShooterPivot;
@@ -153,7 +155,7 @@ public class RobotContainer {
 
 		spoolAutoAimButton.onTrue(
 			new AutoAimCommand(shooter, shooterPivot, mag, drive)
-			// new LockFunctionCommand(shooterPivot::atPosition, () -> shooterPivot.setSetpoint(Position.TEST), shooterPivot)
+			// new LockFunctionCommand(shooterPivot::atPosition, () -> shooterPivot.setSetpoint(Position.TEST), shooterPivot, drive)
 		);
 
 		spoolPodiumButton.onTrue(
