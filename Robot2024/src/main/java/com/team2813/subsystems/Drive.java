@@ -139,7 +139,7 @@ public class Drive extends SubsystemBase {
 			setLimits(i);
 		}
 		AutoBuilder.configureHolonomic(
-			this::getPose,
+			this::getAutoPose,
 			this::resetOdometry,
 			drivetrain::getChassisSpeeds,
 			this::drive,
@@ -201,9 +201,21 @@ public class Drive extends SubsystemBase {
         return drivetrain.getRotation3d().toRotation2d();
     }
 
-    public Pose2d getPose() {
-        return drivetrain.getState().Pose;
+    public Pose2d getTeleopPose() {
+        if (useLimelightOffset) {
+			return drivetrain.getState().Pose;
+		} else {
+			return offsetAutoPose(drivetrain.getState().Pose);
+		}
     }
+
+	public Pose2d getAutoPose() {
+		if (useLimelightOffset) {
+			return offsetTeleopPose(drivetrain.getState().Pose);
+		} else {
+			return drivetrain.getState().Pose;
+		}
+	}
 
     public void enableSlowMode(boolean enable) {
         multiplier = enable ? 0.4 : 1;
@@ -245,7 +257,7 @@ public class Drive extends SubsystemBase {
 	}
 
 	public Pose3d get3DPose() {
-		return new Pose3d(getPose());
+		return new Pose3d(getTeleopPose());
 	}
 
 	public SwerveConfig getOffsets() {
@@ -276,9 +288,15 @@ public class Drive extends SubsystemBase {
 
 	private boolean useLimelightOffset = false;
 
-	private static Pose2d offsetPose(Pose2d pose) {
+	private static Pose2d offsetAutoPose(Pose2d pose) {
 		double x = pose.getX() + poseOffset.getX();
 		double y = pose.getY() + poseOffset.getY();
+		return new Pose2d(x, y, pose.getRotation());
+	}
+
+	private static Pose2d offsetTeleopPose(Pose2d pose) {
+		double x = pose.getX() - poseOffset.getX();
+		double y = pose.getY() - poseOffset.getY();
 		return new Pose2d(x, y, pose.getRotation());
 	}
 
@@ -292,10 +310,6 @@ public class Drive extends SubsystemBase {
 			.map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
 			useLimelightOffset = true;
 		}
-		if (useLimelightOffset) {
-			field.setRobotPose(offsetPose(getPose()));
-		} else {
-			field.setRobotPose(getPose());
-		}
+		field.setRobotPose(getAutoPose());
 	}
 }
