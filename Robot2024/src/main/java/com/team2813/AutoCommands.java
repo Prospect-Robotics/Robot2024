@@ -77,7 +77,7 @@ public class AutoCommands {
 
 	private Command createShootFront() {
 		// TODO: get correct angle and speed
-		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_FRONT, 26.5);
+		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_FRONT, 75);
 	}
 
 	public Command shootFront() {
@@ -95,7 +95,7 @@ public class AutoCommands {
 
 	private Command createShootSide() {
 		// TODO: get correct angle and speed
-		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_SIDE, 25);
+		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_SIDE, 80);
 	}
 
 	public Command shootSide() {
@@ -131,7 +131,7 @@ public class AutoCommands {
 
 	private Command createShootAmp() {
 		return new SequentialCommandGroup(
-			new InstantCommand(() -> shooter.run(10), shooter),
+			new InstantCommand(() -> shooter.run(22.5), shooter),
 			new WaitCommand(0.2),
 			new InstantCommand(magazine::runMagKicker, magazine),
 			new WaitCommand(1),

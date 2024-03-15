@@ -14,6 +14,8 @@ import static com.team2813.Constants.FRONT_RIGHT_ENCODER_ID;
 import static com.team2813.Constants.FRONT_RIGHT_STEER_ID;
 import static com.team2813.Constants.PIGEON_ID;
 
+import java.util.OptionalLong;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
@@ -24,6 +26,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.mechanisms.swerve.utility.PhoenixPIDController;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -31,13 +34,16 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.team2813.RobotSpecificConfigs;
 import com.team2813.RobotSpecificConfigs.SwerveConfig;
+import com.team2813.lib2813.limelight.Limelight;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -62,10 +68,13 @@ public class Drive extends SubsystemBase {
 
     private double multiplier = 1;
 
+	private final Limelight limelight;
+
 	SwerveDrivetrain drivetrain;
 
     public Drive() {
 		SwerveConfig offsets = RobotSpecificConfigs.swerveConfig();
+		limelight = Limelight.getDefaultLimelight();
 		// rotations
         double frontLeftSteerOffset = offsets.frontLeftOffset(); //0.210693
         double frontRightSteerOffset = offsets.frontRightOffset(); //-0.408936
@@ -78,7 +87,7 @@ public class Drive extends SubsystemBase {
 			.withKS(0).withKV(1.5).withKA(0);
 		// tune
 		Slot0Configs driveGains = new Slot0Configs()
-			.withKP(3).withKI(0).withKD(0)
+			.withKP(2.5).withKI(0).withKD(0)
 			.withKS(0).withKV(0).withKA(0);
 
 		SwerveDrivetrainConstants drivetrainConstants = new SwerveDrivetrainConstants()
@@ -96,7 +105,6 @@ public class Drive extends SubsystemBase {
 			.withSpeedAt12VoltsMps(MAX_VELOCITY)
 			.withFeedbackSource(RobotSpecificConfigs.swerveFeedback())
 			.withCouplingGearRatio(3.5) // tune :P
-
 			.withSteerMotorInverted(true);
 		double frontDist = 0.381; // x
 		double leftDist = 0.3302; // y
@@ -104,7 +112,8 @@ public class Drive extends SubsystemBase {
 			FRONT_LEFT_STEER_ID, FRONT_LEFT_DRIVE_ID,
 			FRONT_LEFT_ENCODER_ID, frontLeftSteerOffset,
 			frontDist, leftDist,
-			true);
+			true
+		);
 		SwerveModuleConstants frontRight = constantCreator.createModuleConstants(
 			FRONT_RIGHT_STEER_ID, FRONT_RIGHT_DRIVE_ID,
 			FRONT_RIGHT_ENCODER_ID, frontRightSteerOffset,
@@ -124,11 +133,7 @@ public class Drive extends SubsystemBase {
 			true
 		);
 		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
-		Translation2d[] locations = new Translation2d[constants.length];
-		for (int i = 0; i < constants.length; i++) {
-			locations[i] = new Translation2d(constants[i].LocationX, constants[i].LocationY);
-		}
-		PublicisizedKinematics drivetrain = new PublicisizedKinematics(drivetrainConstants, frontLeft, frontRight, backLeft, backRight);
+		PublicisizedKinematics drivetrain = new PublicisizedKinematics(drivetrainConstants, constants);
 		this.drivetrain = drivetrain;
 		for (int i = 0; i < 4; i++) {
 			setLimits(i);
@@ -139,8 +144,8 @@ public class Drive extends SubsystemBase {
 			drivetrain::getChassisSpeeds,
 			this::drive,
 			new HolonomicPathFollowerConfig(
-				new PIDConstants(0.4, 0, 0), // Translation PID
-				new PIDConstants(0, 0, 0), // Rotation PID
+				new PIDConstants(0.9, 0, 0), // Translation PID
+				new PIDConstants(0.2, 0, 0), // Rotation PID
 				MAX_VELOCITY,
 				0.410178,
 				new ReplanningConfig()
@@ -153,7 +158,12 @@ public class Drive extends SubsystemBase {
 		tab.addDouble("front right", () -> getPosition(1));
 		tab.addDouble("back left", () -> getPosition(2));
 		tab.addDouble("back right", () -> getPosition(3));
-		
+
+		facingRequest = new SwerveRequest.FieldCentricFacingAngle()
+		.withDriveRequestType(DriveRequestType.Velocity)
+		.withSteerRequestType(SteerRequestType.MotionMagic);
+		facingRequest.HeadingController = new PhoenixPIDController(3.5, 0, 1.2);
+		Shuffleboard.getTab("swerve").add("rotation PID", facingRequest.HeadingController);
 	}
 
 	private void setLimits(int module) {
@@ -161,6 +171,19 @@ public class Drive extends SubsystemBase {
 		.getConfigurator().apply(new CurrentLimitsConfigs()
 		.withSupplyCurrentLimit(80)
 		.withSupplyCurrentLimitEnable(true));
+	}
+
+	final SwerveRequest.FieldCentricFacingAngle facingRequest;
+
+	public void turnToFace(Rotation2d rotation) {
+		drivetrain.setControl(
+			facingRequest.
+				withTargetDirection(rotation)
+			);
+	}
+
+	public void stop() {
+		drivetrain.setControl(new SwerveRequest.Idle());
 	}
 
     /**
@@ -209,6 +232,7 @@ public class Drive extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d currentPose) {
+		useLimelightOffset = false;
 		drivetrain.seedFieldRelative(currentPose);
     }
 
@@ -218,6 +242,10 @@ public class Drive extends SubsystemBase {
 
 	private double getPosition(int moduleId) {
 		return drivetrain.getModule(moduleId).getCANcoder().getAbsolutePosition().getValueAsDouble();
+	}
+
+	public Pose3d get3DPose() {
+		return new Pose3d(getPose());
 	}
 
 	public SwerveConfig getOffsets() {
@@ -231,9 +259,43 @@ public class Drive extends SubsystemBase {
 
 	Field2d field = new Field2d();
 
+	/**
+	 * Update position of robot
+	 * @param pose the position of the robot
+	 */
+	public void addMeasurement(Pose2d pose) {
+		double timestamp = Timer.getFPGATimestamp();
+		OptionalLong msDelay = limelight.getLocationalData().lastMSDelay();
+		if (msDelay.isPresent()) {
+			timestamp -= msDelay.getAsLong() / 1000.0;
+		}
+		drivetrain.addVisionMeasurement(pose, timestamp);
+	}
+
+	private static final Translation2d poseOffset = new Translation2d(8.310213, 4.157313);
+
+	private boolean useLimelightOffset = false;
+
+	private static Pose2d offsetPose(Pose2d pose) {
+		double x = pose.getX() + poseOffset.getX();
+		double y = pose.getY() + poseOffset.getY();
+		return new Pose2d(x, y, pose.getRotation());
+	}
+
 	@Override
 	public void periodic() {
-		field.setRobotPose(getPose());
+		
 		SmartDashboard.putData(field);
+		// if we have a position from the robot, and we arx`e in teleop, update our pose
+		if (limelight.hasTarget() && DriverStation.isTeleopEnabled()) {
+			limelight.getLocationalData().getBotpose()
+			.map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
+			useLimelightOffset = true;
+		}
+		if (useLimelightOffset) {
+			field.setRobotPose(offsetPose(getPose()));
+		} else {
+			field.setRobotPose(getPose());
+		}
 	}
 }

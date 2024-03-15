@@ -10,8 +10,8 @@ import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Intake extends SubsystemBase {
     private final Motor intakeMotor;
-    private static final double INTAKE_SPEED = 0.25;
-    private static final double OUTTAKE_SPEED = -0.25;
+    private static final double INTAKE_SPEED = 0.6;
+    private static final double OUTTAKE_SPEED = -0.6;
 
 	public Intake() {
 		intakeMotor = new TalonFXWrapper(INTAKE, InvertType.COUNTER_CLOCKWISE);

@@ -1,9 +1,9 @@
 package com.team2813.commands;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-
-import java.util.function.BooleanSupplier;
 
 public class LockFunctionCommand extends WaitUntilCommand {
 
@@ -20,7 +20,7 @@ public class LockFunctionCommand extends WaitUntilCommand {
         addRequirements(requirements);
     }
 
-    @Override
+	@Override
     public void initialize() {
         function.run();
     }

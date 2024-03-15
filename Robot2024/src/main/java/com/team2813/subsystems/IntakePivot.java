@@ -11,8 +11,6 @@ import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
-	private static final double error = 0.1;
-    private Rotations currentPosition;
     
     Motor intakePivotMotor; 
     Encoder intakePivotEncoder;
@@ -24,7 +22,7 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 			new CancoderWrapper(INTAKE_ENCODER)
 			)
 			.PID(0.315, 0, 0)
-			.acceptableError(error)
+			.acceptableError(0.5)
 			.startingPosition(Rotations.INTAKE_UP));
 
         intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
@@ -36,19 +34,9 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 		return pivotMotor;
 	}
 
-    @Override
-    public void setSetpoint(Rotations setPoint) {
-        super.setSetpoint(setPoint);
-        currentPosition = setPoint;
-    }
-    
-    public boolean positionReached() {
-        return Math.abs(currentPosition.getPos() - getMeasurement()) < 0.05;
-    }
-
     public static enum Rotations implements MotorSubsystem.Position {
-		INTAKE_DOWN(-0.934082),
-        INTAKE_UP(-0.109619);
+		INTAKE_DOWN(-0.782471),
+        INTAKE_UP(-0.000732);
 
         Rotations(double pos) {
             this.pos = pos;

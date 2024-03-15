@@ -32,11 +32,11 @@ public final class Constants {
 		public static final Trigger ampIntakeButton = operatorController.triangle(); //R2
 		public static final Trigger ampOuttakeButton = operatorController.square(); //L2
 		public static final Trigger shootButton = operatorController.circle(); // actually maps to square
-		//public static final Trigger spoolAutoAimButton = operatorController.triangle();
+		// public static final Trigger spoolAutoAimButton = operatorController.options();
 		public static final Trigger spoolPodiumButton = operatorController.cross(); // actually maps to circle
 		public static final Trigger climbButton = operatorController.share();
-		public static final Trigger climbManualUpButton = operatorController.povUp();
-		public static final Trigger climbDownUpButton = operatorController.povDown();
+		public static final Trigger climbUpButton = operatorController.povUp();
+		public static final Trigger climbDownButton = operatorController.povDown();
 		public static final Trigger altOuttakeButton = new Trigger(() -> operatorXboxController.getLeftTriggerAxis() >= 0.5).and(() -> false);
 
 	}
@@ -45,6 +45,7 @@ public final class Constants {
 		public static final CommandPS4Controller DRIVER_CONTROLLER = new CommandPS4Controller(driverControllerPort);
 		public static final Trigger slowmodeButton = DRIVER_CONTROLLER.L1();
 		public static final Trigger orientButton = DRIVER_CONTROLLER.options();
+		public static final Trigger spoolAutoAimButton = DRIVER_CONTROLLER.square();
 	}
 
 	// front right swerve module
@@ -83,4 +84,5 @@ public final class Constants {
 	public static final int INTAKE_ENCODER = 22;
 	public static final int INTAKE_PIVOT = 23;
 	public static final int AMP = 24;
+	public static final int CANIFIER = 25;
 }
