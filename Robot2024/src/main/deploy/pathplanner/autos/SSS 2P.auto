@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7036808379666589,
-      "y": 6.680400169815762
+      "x": 0.7878324509326757,
+      "y": 4.429399551744712
     },
-    "rotation": 60.0
+    "rotation": -59.084455384464356
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "B3-Leave"
+            "pathName": "ShootThenIntake_1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop-intake"
           }
         }
       ]

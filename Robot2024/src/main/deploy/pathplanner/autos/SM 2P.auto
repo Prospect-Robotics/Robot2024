@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7036808379666589,
-      "y": 6.680400169815762
+      "x": 1.3622232452798242,
+      "y": 5.517108724879653
     },
-    "rotation": 60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,13 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot-side"
+            "name": "shoot-front"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "B3-Leave"
+            "pathName": "SM P1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-auto"
           }
         }
       ]

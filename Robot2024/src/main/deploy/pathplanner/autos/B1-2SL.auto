@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7036808379666589,
-      "y": 6.680400169815762
+      "x": 0.7134190306340287,
+      "y": 6.6998765551505
     },
     "rotation": 60.0
   },
@@ -20,7 +20,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "B3-Leave"
+            "pathName": "B1 Score Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Leave Subwoofer Front"
           }
         }
       ]

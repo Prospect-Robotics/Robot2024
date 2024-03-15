@@ -3,27 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3888541990046945,
-        "y": 7.03211989294349
+        "x": 2.7873272078389397,
+        "y": 5.521627675509816
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0299222378578685,
-        "y": 7.033841622556758
-        "x": 2.0299222378578685,
-        "y": 7.033841622556758
+        "x": 1.030609187334446,
+        "y": 5.892037405354574
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.82,
-        "y": 6.5838817394437505
+        "x": 2.5583510179297146,
+        "y": 4.181470370009192
       },
       "prevControl": {
-        "x": 1.0955090102144491,
-        "y": 7.037447168272314
+        "x": 1.6330237654894955,
+        "y": 4.479384593999843
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,22 +32,19 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Spool",
-      "waypointRelativePos": 0.3,
+      "name": "Stop Intake",
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
-        }
-      }
-    },
-    {
-      "name": "Shoot",
-      "waypointRelativePos": 1.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "stop-intake"
+              }
+            }
+          ]
         }
       }
     }
@@ -62,11 +57,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 61.023542734825675,
-    "rotateFast": true
+    "rotation": -13.904190170442819,
+    "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
-  "previewStartingState": null,
-  "useDefaultConstraints": false
+  "folder": "ASS 4P",
+  "previewStartingState": {
+    "rotation": 0.09822124009146724,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
 }

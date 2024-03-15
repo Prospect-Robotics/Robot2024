@@ -3,15 +3,19 @@
   "robotLength": 0.91,
   "holonomicMode": true,
   "pathFolders": [
+    "ASS 4P",
     "B1 2A1SL",
     "B1 4SL",
     "B1-2SL Stuff",
     "B2 2SL",
     "B2 Stuff",
-    "B3 Stuff"
+    "B3 Stuff",
+    "SM 2P",
+    "SS 1P H3",
+    "SSS 4P"
   ],
   "autoFolders": [],
-  "defaultMaxVel": 1.0,
+  "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
