@@ -10,17 +10,18 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class ShootFromPosCommand extends SequentialCommandGroup {
-	public ShootFromPosCommand(Magazine magazine, Shooter shooter, ShooterPivot pivot, ShooterPivot.Position pos, double shooterSpeed) {
+	public ShootFromPosCommand(Magazine magazine, Shooter shooter, ShooterPivot pivot, ShooterPivot.Position pos,
+			double shooterSpeed) {
 		super(
-			// new LockFunctionCommand(shooter::atSetpoint, () -> shooter.setSetpoint(pos), shooter),
-			new InstantCommand(() -> shooter.run(shooterSpeed), shooter),
-			new WaitCommand(0.5),
-			new InstantCommand(magazine::runMagKicker, magazine),
-			new WaitCommand(0.5),
-			new ParallelCommandGroup(
-				new InstantCommand(magazine::stop, magazine),
-				new InstantCommand(shooter::stop, shooter)
-			)
+				new InstantCommand(() -> pivot.setSetpoint(pos), pivot),
+				new InstantCommand(() -> shooter.run(shooterSpeed), shooter),
+				new WaitCommand(0.5),
+				new InstantCommand(magazine::runMagKicker, magazine),
+				new WaitCommand(0.5),
+				new ParallelCommandGroup(
+						new InstantCommand(magazine::stop, magazine),
+						new InstantCommand(shooter::stop, shooter)
+				)
 		);
 	}
 }

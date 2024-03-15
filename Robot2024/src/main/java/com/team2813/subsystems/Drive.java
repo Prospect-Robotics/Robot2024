@@ -144,8 +144,8 @@ public class Drive extends SubsystemBase {
 			drivetrain::getChassisSpeeds,
 			this::drive,
 			new HolonomicPathFollowerConfig(
-				new PIDConstants(0.4, 0, 0), // Translation PID
-				new PIDConstants(0, 0, 0), // Rotation PID
+				new PIDConstants(0.9, 0, 0), // Translation PID
+				new PIDConstants(0.2, 0, 0), // Rotation PID
 				MAX_VELOCITY,
 				0.410178,
 				new ReplanningConfig()
@@ -232,6 +232,7 @@ public class Drive extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d currentPose) {
+		useLimelightOffset = false;
 		drivetrain.seedFieldRelative(currentPose);
     }
 

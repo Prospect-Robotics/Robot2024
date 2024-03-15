@@ -4,13 +4,14 @@ import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.Motor;
+import com.team2813.lib2813.control.PIDMotor;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.team2813.Constants.*;
 public class Magazine extends SubsystemBase {
     Motor kickerMotor;
-	Motor magMotor;
+	PIDMotor magMotor;
 
     public Magazine() {
 		kickerMotor = new TalonFXWrapper(KICKER, InvertType.COUNTER_CLOCKWISE);

@@ -35,8 +35,8 @@ public final class Constants {
 		// public static final Trigger spoolAutoAimButton = operatorController.options();
 		public static final Trigger spoolPodiumButton = operatorController.cross(); // actually maps to circle
 		public static final Trigger climbButton = operatorController.share();
-		public static final Trigger climbManualUpButton = operatorController.povUp();
-		public static final Trigger climbDownUpButton = operatorController.povDown();
+		public static final Trigger climbUpButton = operatorController.povUp();
+		public static final Trigger climbDownButton = operatorController.povDown();
 		public static final Trigger altOuttakeButton = new Trigger(() -> operatorXboxController.getLeftTriggerAxis() >= 0.5).and(() -> false);
 
 	}
