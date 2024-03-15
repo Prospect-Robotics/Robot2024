@@ -10,7 +10,6 @@ import com.team2813.subsystems.ShooterPivot;
 import com.team2813.subsystems.ShooterPivot.Position;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -103,24 +102,6 @@ public class AutoCommands {
 			synchronized (this) {
 				if (shootSide == null) {
 					shootSide = createShootSide();
-				}
-			}
-		}
-		return shootSide;
-	}
-
-	private volatile Command shootAuto = null;
-
-	private Command createShootAuto() {
-		// TODO: replace with auto aim when completed
-		return Commands.none();
-	}
-
-	public Command shootAuto() {
-		if (shootAuto == null) {
-			synchronized (this) {
-				if (shootSide == null) {
-					shootSide = createShootAuto();
 				}
 			}
 		}

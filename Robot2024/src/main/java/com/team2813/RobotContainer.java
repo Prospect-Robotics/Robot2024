@@ -23,6 +23,7 @@ import static com.team2813.Constants.OperatorConstants.spoolPodiumButton;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.team2813.commands.AutoAimCommand;
+import com.team2813.commands.AutonomousAutoAimCommand;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.commands.SaveSwerveOffsetsCommand;
@@ -85,7 +86,7 @@ public class RobotContainer {
 		NamedCommands.registerCommand("stop-intake", autoCommands.stopIntake());
 		NamedCommands.registerCommand("shoot-front", autoCommands.shootFront());
 		NamedCommands.registerCommand("shoot-side", autoCommands.shootSide());
-		NamedCommands.registerCommand("shoot-auto", autoCommands.shootAuto());
+		NamedCommands.registerCommand("shoot-auto", new AutonomousAutoAimCommand(shooter, shooterPivot, mag, drive::get3DPose));
 		NamedCommands.registerCommand("shoot-amp", autoCommands.shootAmp());
 	}
 
