@@ -10,6 +10,11 @@ import com.team2813.lib2813.control.PIDMotor;
 import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
     
     Motor intakePivotMotor; 
@@ -24,14 +29,21 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 			.PID(0.315, 0, 0)
 			.acceptableError(0.5)
 			.startingPosition(Rotations.INTAKE_UP));
-
-        intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
+			
+         intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
+		
     }
 	
 	private static PIDMotor pivotMotor() {
 		TalonFXWrapper pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
 		pivotMotor.setNeutralMode(NeutralModeValue.Brake);
+
 		return pivotMotor;
+	}
+
+	@Override
+	public void periodic() {
+		SmartDashboard.putNumber("Intake Pivot CANCoder Position", encoder.position());
 	}
 
     public static enum Rotations implements MotorSubsystem.Position {
@@ -47,6 +59,7 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 		public double getPos() {
 			return pos;
 		}
+
     }
 
 }
