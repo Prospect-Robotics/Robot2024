@@ -11,8 +11,6 @@ import com.team2813.lib2813.control.encoders.CancoderWrapper;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
@@ -26,13 +24,16 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 			pivotMotor(),
 			new CancoderWrapper(INTAKE_ENCODER)
 			)
-			.PID(0.315, 0, 0)
+			.PID(0.313, 0, 0)
 			.acceptableError(0.5)
 			.startingPosition(Rotations.INTAKE_UP));
-			
-         intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
-		
+
+        intakePivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.COUNTER_CLOCKWISE);
     }
+
+	public void resetPosition() {
+		encoder.setPosition(0);
+	}
 	
 	private static PIDMotor pivotMotor() {
 		TalonFXWrapper pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
@@ -47,8 +48,8 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 	}
 
     public static enum Rotations implements MotorSubsystem.Position {
-		INTAKE_DOWN(-0.782471),
-        INTAKE_UP(-0.000732);
+		INTAKE_DOWN(0.797119),
+		INTAKE_UP(0.010254);
 
         Rotations(double pos) {
             this.pos = pos;

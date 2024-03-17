@@ -17,10 +17,12 @@ import edu.wpi.first.wpilibj.util.Color;
 public class LEDs extends QueueLightshow {
 	private final CANifier canifier;
 	private final Magazine magazine;
-	public LEDs(Magazine magazine) {
+	private final Intake intake;
+	public LEDs(Magazine magazine, Intake intake) {
 		super(new HashSet<>());
 		canifier = new CANifier(CANIFIER);
 		this.magazine = magazine;
+		this.intake = intake;
 		Set<State> states = new HashSet<>();
 		for (NewStates s : NewStates.values()) {
 			states.add(s.createState(this));
@@ -36,17 +38,13 @@ public class LEDs extends QueueLightshow {
 
 	private enum NewStates {
 		Disabled(new Color(255, 0, 0), (j) -> true),
-		Green(
-			new Color(0, 255, 0),
-			(j) -> DriverStation.isEnabled()
-		),
-		Yellow(
+		MagStalled(
 			new Color(255, 255, 0),
-			(j) -> j.magazine.magMotor.getVelocity() < 0.01 && intakeButton.getAsBoolean()
+			(j) -> j.intake.isStalled()
 		),
 		Blue(new Color(0, 0, 255), (j) -> false),
-		Orange(new Color(255, 165, 0), (j) -> false),
-		White(new Color(255, 255, 255), (j) -> false);
+		NoteInMag(new Color(255, 165, 0), (j) -> j.magazine.noteInMag()),
+		Enabled(new Color(255, 255, 255), (j) -> DriverStation.isEnabled());
 		private final Color c;
 		private final Function<LEDs, Boolean> sup;
 		NewStates(Color c, Function<LEDs, Boolean> sup) {

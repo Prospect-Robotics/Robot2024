@@ -4,6 +4,8 @@
 
 package com.team2813;
 
+
+
 import static com.team2813.Constants.DriverConstants.driverControllerPort;
 import static com.team2813.Constants.DriverConstants.orientButton;
 import static com.team2813.Constants.DriverConstants.slowmodeButton;
@@ -59,7 +61,7 @@ public class RobotContainer {
 	private final Magazine mag = new Magazine();
 	private final IntakePivot intakePivot = new IntakePivot();
 	private final ShooterPivot shooterPivot = new ShooterPivot();
-	private final LEDs leds = new LEDs(mag);
+	private final LEDs leds = new LEDs(mag, intake);
 	private final Climber climber = new Climber();
 
 	private final XboxController driverController = new XboxController(driverControllerPort);
@@ -97,6 +99,7 @@ public class RobotContainer {
 		// intake & outtake buttons
 		intakeButton.whileTrue(autoCommands.startIntake());
 		intakeButton.onFalse(autoCommands.stopIntake());
+
 		outtakeButton.whileTrue(new ParallelCommandGroup(
 				new InstantCommand(intake::outtakeNote, intake),
 				new InstantCommand(mag::reverseMag, mag)));

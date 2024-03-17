@@ -205,13 +205,13 @@ public class Drive extends SubsystemBase {
         if (useLimelightOffset) {
 			return drivetrain.getState().Pose;
 		} else {
-			return offsetAutoPose(drivetrain.getState().Pose);
+			return offsetTeleopPose(drivetrain.getState().Pose);
 		}
     }
 
 	public Pose2d getAutoPose() {
 		if (useLimelightOffset) {
-			return offsetTeleopPose(drivetrain.getState().Pose);
+			return offsetAutoPose(drivetrain.getState().Pose);
 		} else {
 			return drivetrain.getState().Pose;
 		}
@@ -227,6 +227,7 @@ public class Drive extends SubsystemBase {
 				.withSteerRequestType(SteerRequestType.MotionMagicExpo);
 
 	public void drive(double x, double y, double rotation) {
+		double multiplier = onRed() && useLimelightOffset ? this.multiplier * -1 : this.multiplier;
 		drivetrain.setControl(
 			xyrRequest.withVelocityX(x * multiplier)
 				.withVelocityY(y * multiplier)
@@ -306,9 +307,9 @@ public class Drive extends SubsystemBase {
 		SmartDashboard.putData(field);
 		// if we have a position from the robot, and we arx`e in teleop, update our pose
 		if (limelight.hasTarget() && DriverStation.isTeleopEnabled()) {
-			limelight.getLocationalData().getBotpose()
-			.map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
-			useLimelightOffset = true;
+			// limelight.getLocationalData().getBotpose()
+			// .map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
+			// useLimelightOffset = true;
 		}
 		field.setRobotPose(getAutoPose());
 	}
