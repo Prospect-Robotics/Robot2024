@@ -4,11 +4,24 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/lib2813" name="lib2813">
+                <projects>
+                  <project path="$PROJECT_DIR$/lib2813" />
+                  <project path="$PROJECT_DIR$/lib2813/lib" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/lib" />
+            <option value="$PROJECT_DIR$/lib2813" />
+            <option value="$PROJECT_DIR$/lib2813/lib" />
           </set>
         </option>
       </GradleProjectSettings>
