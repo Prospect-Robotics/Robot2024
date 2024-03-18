@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.74,
+      "y": 4.39
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B2 Score Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "runback B2 Score Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "outforfront B2 Score Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "finalstretch B2 Score Intake"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

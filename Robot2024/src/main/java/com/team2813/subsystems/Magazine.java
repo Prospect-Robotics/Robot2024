@@ -4,39 +4,39 @@ import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.InvertType;
 import com.team2813.lib2813.control.Motor;
+import com.team2813.lib2813.control.PIDMotor;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.team2813.Constants.*;
 public class Magazine extends SubsystemBase {
     Motor kickerMotor;
-	Motor magMotor;
+	PIDMotor magMotor;
 
     public Magazine() {
-		TalonFXWrapper kickerMotor = new TalonFXWrapper(KICKER, InvertType.COUNTER_CLOCKWISE);
-		kickerMotor.addFollower(MAGAZINE, InvertType.FOLLOW_MASTER);
+		kickerMotor = new TalonFXWrapper(KICKER, InvertType.COUNTER_CLOCKWISE);
 
-		TalonFXWrapper magMotor = new TalonFXWrapper(MAGAZINE, InvertType.COUNTER_CLOCKWISE);
-		
-		this.kickerMotor = kickerMotor;
-		this.magMotor = magMotor;
+		magMotor = new TalonFXWrapper(MAGAZINE, InvertType.COUNTER_CLOCKWISE);
     }
 
 	//Runs Kicker and Magazine Motor together
     public void runMagKicker() {
-		kickerMotor.set(ControlMode.DUTY_CYCLE, 0.5);
+		kickerMotor.set(ControlMode.DUTY_CYCLE, 0.8);
+		magMotor.set(ControlMode.DUTY_CYCLE, 0.8);
 	}
 
-	public void stopMagKicker() {
+	public void stop() {
 		kickerMotor.set(ControlMode.DUTY_CYCLE, 0);
+		magMotor.set(ControlMode.DUTY_CYCLE, 0);
 	}
 
 	//Running just Magazine Motor
 	public void runOnlyMag() {
-		magMotor.set(ControlMode.DUTY_CYCLE, 0.5);
+		kickerMotor.set(ControlMode.DUTY_CYCLE, -0.1);
+		magMotor.set(ControlMode.DUTY_CYCLE, 0.6);
 	}
 
-	public void stopOnlyMag() {
-		magMotor.set(ControlMode.DUTY_CYCLE, 0);
+	public void reverseMag() {
+		magMotor.set(ControlMode.DUTY_CYCLE, -0.6);
 	}
 }

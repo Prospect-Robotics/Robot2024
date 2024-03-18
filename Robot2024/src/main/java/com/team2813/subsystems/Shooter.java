@@ -1,43 +1,65 @@
 package com.team2813.subsystems;
 
+import static com.team2813.Constants.SHOOTER_1;
+import static com.team2813.Constants.SHOOTER_2;
+
+import java.util.function.Supplier;
+
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
+import com.ctre.phoenix6.configs.VoltageConfigs;
 import com.team2813.lib2813.control.ControlMode;
 import com.team2813.lib2813.control.InvertType;
-import com.team2813.lib2813.control.Motor;
-import com.team2813.lib2813.control.encoders.CancoderWrapper;
+import com.team2813.lib2813.control.PIDMotor;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
-import com.team2813.lib2813.subsystems.MotorSubsystem;
-import static com.team2813.Constants.*;
+import com.team2813.lib2813.util.ConfigUtils;
 
-public class Shooter extends MotorSubsystem<Shooter.Angle> {
-	Motor shooterMotor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class Shooter extends SubsystemBase {
+	PIDMotor shooterMotor;
+	private double targetVelocity;
+	private Supplier<Double> voltage;
 	public Shooter() {
-		// TODO: fix invert type
-		super(new MotorSubsystemConfiguration(
-			new TalonFXWrapper(SHOOTER_PIVOT, InvertType.CLOCKWISE),
-			new CancoderWrapper(SHOOTER_ENCODER)
-			));
-		TalonFXWrapper m = new TalonFXWrapper(SHOOTER_1, InvertType.CLOCKWISE);
-		m.addFollower(SHOOTER_2, InvertType.OPPOSE_MASTER);
+		TalonFXWrapper m = new TalonFXWrapper(SHOOTER_2, InvertType.CLOCKWISE);
+		m.addFollower(SHOOTER_1, InvertType.FOLLOW_MASTER);
+		TalonFXConfigurator config = m.motor().getConfigurator();
+		ConfigUtils.phoenix6Config(
+				() -> config.apply(new FeedbackConfigs().withSensorToMechanismRatio(24.0 / 36)
+				));
+		ConfigUtils.phoenix6Config(
+			() -> config.apply(
+					new Slot0Configs().withKP(0.01).withKS(0).withKV(0.009))
+		);
+		ConfigUtils.phoenix6Config(
+			() -> config.apply(new VoltageConfigs().withPeakForwardVoltage(4.5))
+		);
+		ConfigUtils.phoenix6Config(
+			() -> config.apply(new CurrentLimitsConfigs().withSupplyCurrentLimit(40))
+		);
+		
 		shooterMotor = m;
-		setSetpoint(Angle.TEST);
-	}
-	public void stop() {
-		shooterMotor.set(ControlMode.DUTY_CYCLE, 0);
-	}
-	
-	public void run(double demand) {
-		shooterMotor.set(ControlMode.DUTY_CYCLE, demand);
+		voltage = m.motor().getMotorVoltage().asSupplier();
 	}
 
-	public static enum Angle implements MotorSubsystem.Position {
-		TEST(0.0);
-		private final double pos;
-		Angle(double pos) {
-			this.pos = pos;
-		}
-		@Override
-		public double getPos() {
-			return pos;
-		}
+	@Override
+	public void periodic() {
+		super.periodic();
+		SmartDashboard.putNumber("Shooter Velocity", shooterMotor.getVelocity());
+		SmartDashboard.putNumber("Shooter Target Velocity", targetVelocity);
+		SmartDashboard.putNumber("Shooter Voltage Usage", voltage.get());
+	}
+
+	public void stop() {
+		targetVelocity = 0;
+		shooterMotor.set(ControlMode.VELOCITY, 0);
+	}
+
+	public void run(double demand) {
+		targetVelocity = demand;
+		shooterMotor.set(ControlMode.VELOCITY, demand);
 	}
 }

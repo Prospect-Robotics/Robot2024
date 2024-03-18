@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7878324509326757,
+      "y": 4.429399551744712
+    },
+    "rotation": -59.084455384464356
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-side"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ShootThenIntake_1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop-intake"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

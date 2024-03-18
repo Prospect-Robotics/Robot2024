@@ -4,6 +4,7 @@
 
 package com.team2813;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -17,12 +18,34 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public final class Constants {
 	public static class OperatorConstants {
-		public static final int operatorControllerPort = 0;
+		public static final int operatorControllerPort = 1;
+		public static final CommandPS4Controller operatorController = new CommandPS4Controller(operatorControllerPort);
+		private static final XboxController operatorXboxController = new XboxController(operatorControllerPort);
+
+		//operator controls
+		public static final Trigger intakeButton = operatorController.R1();
+		public static final Trigger outtakeButton = operatorController.L1();
+
+		public static final Trigger ampInButton = operatorController.povRight();
+		public static final Trigger ampOutButton = operatorController.povLeft();
+
+		public static final Trigger ampIntakeButton = operatorController.triangle(); //R2
+		public static final Trigger ampOuttakeButton = operatorController.square(); //L2
+		public static final Trigger shootButton = operatorController.circle(); // actually maps to square
+		// public static final Trigger spoolAutoAimButton = operatorController.options();
+		public static final Trigger spoolPodiumButton = operatorController.cross(); // actually maps to circle
+		public static final Trigger climbButton = operatorController.share();
+		public static final Trigger climbUpButton = operatorController.povUp();
+		public static final Trigger climbDownButton = operatorController.povDown();
+		public static final Trigger altOuttakeButton = new Trigger(() -> operatorXboxController.getLeftTriggerAxis() >= 0.5).and(() -> false);
+
 	}
 	public static class DriverConstants {
 		public static final int driverControllerPort = 0;
 		public static final CommandPS4Controller DRIVER_CONTROLLER = new CommandPS4Controller(driverControllerPort);
-		public static final Trigger SLOWMODE_BUTTON = DRIVER_CONTROLLER.L1();
+		public static final Trigger slowmodeButton = DRIVER_CONTROLLER.L1();
+		public static final Trigger orientButton = DRIVER_CONTROLLER.options();
+		public static final Trigger spoolAutoAimButton = DRIVER_CONTROLLER.square();
 	}
 
 	// front right swerve module
@@ -61,4 +84,5 @@ public final class Constants {
 	public static final int INTAKE_ENCODER = 22;
 	public static final int INTAKE_PIVOT = 23;
 	public static final int AMP = 24;
+	public static final int CANIFIER = 25;
 }

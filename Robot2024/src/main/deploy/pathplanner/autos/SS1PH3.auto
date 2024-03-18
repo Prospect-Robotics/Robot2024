@@ -1,0 +1,73 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.4536096294414813,
+      "y": 2.0546400953913015
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OutNShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-auto"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Herd_1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Herd_2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Herd_3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot-front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Herd_4"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

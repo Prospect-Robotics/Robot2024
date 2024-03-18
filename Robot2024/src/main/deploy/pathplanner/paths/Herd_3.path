@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3441995907650008,
-        "y": 7.0
+        "x": 7.93,
+        "y": 2.44
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3835484579514357,
-        "y": 6.775388772352403
+        "x": 6.107269329903628,
+        "y": 2.399002624672558
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.909925657816983,
-        "y": 7.0
+        "x": 7.92642099172547,
+        "y": 4.092415027422648
       },
       "prevControl": {
-        "x": 2.903333991855873,
-        "y": 7.113060800194389
+        "x": 6.224227179925036,
+        "y": 4.15975691210706
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
-  "previewStartingState": null,
-  "useDefaultConstraints": false
+  "folder": "SS 1P H3",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
 }
