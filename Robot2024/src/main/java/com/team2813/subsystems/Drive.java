@@ -305,11 +305,12 @@ public class Drive extends SubsystemBase {
 	public void periodic() {
 		
 		SmartDashboard.putData(field);
+		SmartDashboard.putString("json", limelight.getJsonDump().map(Object::toString).orElse("NONE"));
 		// if we have a position from the robot, and we arx`e in teleop, update our pose
 		if (limelight.hasTarget() && DriverStation.isTeleopEnabled()) {
-			// limelight.getLocationalData().getBotpose()
-			// .map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
-			// useLimelightOffset = true;
+			limelight.getLocationalData().getBotpose()
+			.map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
+			useLimelightOffset = true;
 		}
 		field.setRobotPose(getAutoPose());
 	}

@@ -30,6 +30,7 @@ import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.commands.SaveSwerveOffsetsCommand;
 import com.team2813.commands.SpoolCommand;
+import com.team2813.lib2813.limelight.Limelight;
 import com.team2813.subsystems.Amp;
 import com.team2813.subsystems.Climber;
 import com.team2813.subsystems.Drive;
@@ -81,6 +82,9 @@ public class RobotContainer {
 		SmartDashboard.putData("Auto", autoChooser);
 		Shuffleboard.getTab("swerve").add(new SaveSwerveOffsetsCommand(drive));
 		Shuffleboard.getTab("swerve").addBoolean("offsets loaded", RobotSpecificConfigs::loadedSwerveConfig);
+		Limelight limelight = Limelight.getDefaultLimelight();
+		Shuffleboard.getTab("swerve").addBoolean("JSON retrieved", () -> limelight.getJsonDump().isPresent());
+		Shuffleboard.getTab("swerve").addBoolean("Has Botpose", () -> limelight.getLocationalData().getBotpose().isPresent());
 	}
 
 	private void addAutoCommands(AutoCommands autoCommands) {
