@@ -83,8 +83,6 @@ public class RobotContainer {
 		Shuffleboard.getTab("swerve").add(new SaveSwerveOffsetsCommand(drive));
 		Shuffleboard.getTab("swerve").addBoolean("offsets loaded", RobotSpecificConfigs::loadedSwerveConfig);
 		Limelight limelight = Limelight.getDefaultLimelight();
-		Shuffleboard.getTab("swerve").addBoolean("JSON retrieved", () -> limelight.getJsonDump().isPresent());
-		Shuffleboard.getTab("swerve").addBoolean("Has Botpose", () -> limelight.getLocationalData().getBotpose().isPresent());
 	}
 
 	private void addAutoCommands(AutoCommands autoCommands) {

@@ -44,12 +44,13 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 
 	@Override
 	public void periodic() {
+		super.periodic();
 		SmartDashboard.putNumber("Intake Pivot CANCoder Position", encoder.position());
 	}
 
     public static enum Rotations implements MotorSubsystem.Position {
-		INTAKE_DOWN(0.797119),
-		INTAKE_UP(0.010254);
+		INTAKE_DOWN(1.234863),
+		INTAKE_UP(0.398682);
 
         Rotations(double pos) {
             this.pos = pos;

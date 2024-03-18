@@ -4,6 +4,8 @@
 
 package com.team2813;
 
+import static com.team2813.Constants.DriverConstants.DRIVER_CONTROLLER;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -29,8 +31,8 @@ public final class Constants {
 		public static final Trigger ampInButton = operatorController.povRight();
 		public static final Trigger ampOutButton = operatorController.povLeft();
 
-		public static final Trigger ampIntakeButton = operatorController.triangle(); //R2
-		public static final Trigger ampOuttakeButton = operatorController.square(); //L2
+		public static final Trigger ampIntakeButton = DRIVER_CONTROLLER.triangle(); //R2
+		public static final Trigger ampOuttakeButton = DRIVER_CONTROLLER.square(); //L2
 		public static final Trigger shootButton = operatorController.circle(); // actually maps to square
 		// public static final Trigger spoolAutoAimButton = operatorController.options();
 		public static final Trigger spoolPodiumButton = operatorController.cross(); // actually maps to circle
