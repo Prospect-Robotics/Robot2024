@@ -36,7 +36,10 @@ public class AutoCommands {
 
 	private Command createStartIntake() {
 		return new ParallelCommandGroup(
-			new InstantCommand(() -> intakePivot.setSetpoint(Rotations.INTAKE_DOWN), intakePivot),
+			new ParallelRaceGroup(
+				new LockFunctionCommand(intakePivot::atPosition, () -> intakePivot.setSetpoint(Rotations.INTAKE_DOWN), intakePivot),
+				new WaitCommand(0.5)
+			),
 			new InstantCommand(intake::intake, intake),
 			new InstantCommand(magazine::runOnlyMag, magazine)
 		);
@@ -57,7 +60,10 @@ public class AutoCommands {
 
 	private Command createStopIntake() {
 		return new ParallelCommandGroup(
-			new InstantCommand(() -> intakePivot.setSetpoint(Rotations.INTAKE_UP), intakePivot),
+			new ParallelRaceGroup(
+				new LockFunctionCommand(intakePivot::atPosition, () -> intakePivot.setSetpoint(Rotations.INTAKE_UP), intakePivot),
+				new WaitCommand(0.5)
+			),
 			new InstantCommand(intake::stopIntakeMotor, intake),
 			new InstantCommand(magazine::stop, magazine)
 		);

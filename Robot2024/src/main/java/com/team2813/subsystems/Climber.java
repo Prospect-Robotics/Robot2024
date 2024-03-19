@@ -26,7 +26,9 @@ public class Climber extends SubsystemBase {
 				() -> cnf.apply(
 					new SoftwareLimitSwitchConfigs()
 					.withForwardSoftLimitEnable(true)
-					.withForwardSoftLimitThreshold(52.632324)
+					.withForwardSoftLimitThreshold(72.926758)
+					.withReverseSoftLimitEnable(true)
+					.withReverseSoftLimitThreshold(0.556152)
 				)
 		);
 		this.climberMotor = climberMotor;
@@ -41,7 +43,7 @@ public class Climber extends SubsystemBase {
 	}
 
 	public void stop() {
-		climberMotor.set(ControlMode.DUTY_CYCLE, 0);
+		climberMotor.set(ControlMode.DUTY_CYCLE, -0.01);
 	}
 
 	// @Override

@@ -93,6 +93,7 @@ jar {
 }
 
 downloadDepsPreemptively.dependsOn gradle.includedBuild("lib2813").task(":lib:jar")
+downloadDepsPreemptively.dependsOn gradle.includedBuild("lib2813").task(":limelight:jar")
 
 // Configure jar and deploy tasks
 deployArtifact.jarTask = jar

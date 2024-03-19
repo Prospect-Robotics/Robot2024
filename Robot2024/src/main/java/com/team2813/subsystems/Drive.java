@@ -226,8 +226,9 @@ public class Drive extends SubsystemBase {
 				.withDriveRequestType(DriveRequestType.OpenLoopVoltage)
 				.withSteerRequestType(SteerRequestType.MotionMagicExpo);
 
+	boolean correctRotation = false;
 	public void drive(double x, double y, double rotation) {
-		double multiplier = onRed() && useLimelightOffset ? this.multiplier * -1 : this.multiplier;
+		double multiplier = onRed() && correctRotation ? this.multiplier * -1 : this.multiplier;
 		drivetrain.setControl(
 			xyrRequest.withVelocityX(x * multiplier)
 				.withVelocityY(y * multiplier)
@@ -246,6 +247,7 @@ public class Drive extends SubsystemBase {
 
     public void resetOdometry(Pose2d currentPose) {
 		useLimelightOffset = false;
+		correctRotation = true;
 		drivetrain.seedFieldRelative(currentPose);
     }
 
@@ -307,10 +309,11 @@ public class Drive extends SubsystemBase {
 		SmartDashboard.putData(field);
 		SmartDashboard.putString("json", limelight.getJsonDump().map(Object::toString).orElse("NONE"));
 		// if we have a position from the robot, and we arx`e in teleop, update our pose
-		if (limelight.hasTarget() && DriverStation.isTeleopEnabled()) {
+		if (limelight.hasTarget()) {
 			limelight.getLocationalData().getBotpose()
 			.map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
 			useLimelightOffset = true;
+			correctRotation = true;
 		}
 		field.setRobotPose(getAutoPose());
 	}
