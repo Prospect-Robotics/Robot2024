@@ -62,7 +62,7 @@ public class AutoCommands {
 		return new ParallelCommandGroup(
 			new ParallelRaceGroup(
 				new LockFunctionCommand(intakePivot::atPosition, () -> intakePivot.setSetpoint(Rotations.INTAKE_UP), intakePivot),
-				new WaitCommand(0.5)
+				new WaitCommand(1)
 			),
 			new InstantCommand(intake::stopIntakeMotor, intake),
 			new InstantCommand(magazine::stop, magazine)
