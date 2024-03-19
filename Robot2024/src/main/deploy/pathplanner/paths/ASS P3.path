@@ -58,7 +58,7 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": -3.539923181240585,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "ASS 4P",

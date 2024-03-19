@@ -28,27 +28,15 @@
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
-  "constraintZones": [],
-  "eventMarkers": [
+  "rotationTargets": [
     {
-      "name": "Start Intake",
-      "waypointRelativePos": 0.2,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "start-intake"
-              }
-            }
-          ]
-        }
-      }
+      "waypointRelativePos": 0.15,
+      "rotationDegrees": 59.27,
+      "rotateFast": true
     }
   ],
+  "constraintZones": [],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -58,12 +46,12 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 32.93842797392229,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "ASS 4P",
   "previewStartingState": {
-    "rotation": 59.274611352977544,
+    "rotation": 59.27,
     "velocity": 0
   },
   "useDefaultConstraints": true
