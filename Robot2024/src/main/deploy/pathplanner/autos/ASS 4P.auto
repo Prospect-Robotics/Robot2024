@@ -38,7 +38,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot-side"
+            "name": "shoot-auto"
           }
         },
         {
@@ -78,15 +78,21 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "stop-intake"
+            "pathName": "ASS P4"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "shoot-auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop-intake"
           }
         }
       ]
