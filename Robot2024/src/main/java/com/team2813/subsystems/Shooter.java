@@ -53,6 +53,10 @@ public class Shooter extends SubsystemBase {
 		SmartDashboard.putNumber("Shooter Voltage Usage", voltage.get());
 	}
 
+	public boolean atVelocity() {
+		return Math.abs(targetVelocity - shooterMotor.getVelocity()) < 1;
+	}
+
 	public void stop() {
 		targetVelocity = 0;
 		shooterMotor.set(ControlMode.VELOCITY, 0);

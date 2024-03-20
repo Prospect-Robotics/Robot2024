@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4133119322786265,
-        "y": 4.110080564841189
+        "x": 2.325913504133556,
+        "y": 4.092533575692151
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.842385786706097,
-        "y": 4.182816440409666
+        "x": 1.7549873585610267,
+        "y": 4.165269451260628
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ASS P3 End"
     },
     {
       "anchor": {
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.5,
-    "maxAcceleration": 4.5,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

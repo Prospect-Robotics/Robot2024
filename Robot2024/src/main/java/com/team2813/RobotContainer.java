@@ -4,23 +4,25 @@
 
 package com.team2813;
 
-
-
+import static com.team2813.Constants.DriverConstants.ampIntakeButton;
 import static com.team2813.Constants.DriverConstants.driverControllerPort;
 import static com.team2813.Constants.DriverConstants.orientButton;
 import static com.team2813.Constants.DriverConstants.slowmodeButton;
 import static com.team2813.Constants.DriverConstants.spoolAutoAimButton;
 import static com.team2813.Constants.OperatorConstants.altOuttakeButton;
 import static com.team2813.Constants.OperatorConstants.ampInButton;
-import static com.team2813.Constants.OperatorConstants.ampIntakeButton;
 import static com.team2813.Constants.OperatorConstants.ampOutButton;
 import static com.team2813.Constants.OperatorConstants.climbDownButton;
 import static com.team2813.Constants.OperatorConstants.climbUpButton;
+import static com.team2813.Constants.OperatorConstants.farSpeaker;
 import static com.team2813.Constants.OperatorConstants.intakeButton;
 import static com.team2813.Constants.OperatorConstants.operatorControllerPort;
 import static com.team2813.Constants.OperatorConstants.outtakeButton;
+import static com.team2813.Constants.OperatorConstants.shootAmp;
 import static com.team2813.Constants.OperatorConstants.shootButton;
-import static com.team2813.Constants.OperatorConstants.spoolPodiumButton;
+import static com.team2813.Constants.OperatorConstants.shootPodium;
+import static com.team2813.Constants.OperatorConstants.shootWooferFront;
+import static com.team2813.Constants.OperatorConstants.shootWooferSide;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -29,8 +31,6 @@ import com.team2813.commands.AutonomousAutoAimCommand;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.commands.SaveSwerveOffsetsCommand;
-import com.team2813.commands.SpoolCommand;
-import com.team2813.lib2813.limelight.Limelight;
 import com.team2813.subsystems.Amp;
 import com.team2813.subsystems.Climber;
 import com.team2813.subsystems.Drive;
@@ -82,7 +82,6 @@ public class RobotContainer {
 		SmartDashboard.putData("Auto", autoChooser);
 		Shuffleboard.getTab("swerve").add(new SaveSwerveOffsetsCommand(drive));
 		Shuffleboard.getTab("swerve").addBoolean("offsets loaded", RobotSpecificConfigs::loadedSwerveConfig);
-		Limelight limelight = Limelight.getDefaultLimelight();
 	}
 
 	private void addAutoCommands(AutoCommands autoCommands) {
@@ -165,13 +164,16 @@ public class RobotContainer {
 						new InstantCommand(mag::stop, mag))));
 
 		spoolAutoAimButton.onTrue(
-				new AutoAimCommand(shooter, shooterPivot, mag, drive)
+				new AutonomousAutoAimCommand(shooter, shooterPivot, mag, drive::get3DPose)
 		// new LockFunctionCommand(shooterPivot::atPosition, () ->
 		// shooterPivot.setSetpoint(Position.TEST), shooterPivot, drive)
 		);
 
-		spoolPodiumButton.onTrue(
-				new SpoolCommand(shooter));
+		shootWooferFront.onTrue(autoCommands.shootFront());
+		shootWooferSide.onTrue(autoCommands.shootSide());
+		shootAmp.onTrue(autoCommands.shootAmp());
+		shootPodium.onTrue(autoCommands.shootPodium());
+		farSpeaker.onTrue(autoCommands.farSpeaker());
 	}
 
 	public Command getAutonomousCommand() {

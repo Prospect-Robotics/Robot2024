@@ -130,7 +130,7 @@ public class Drive extends SubsystemBase {
 			BACK_RIGHT_STEER_ID, BACK_RIGHT_DRIVE_ID,
 			BACK_RIGHT_ENCODER_ID, backRightSteerOffset,
 			-frontDist, -leftDist,
-			true
+			false
 		);
 		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
 		PublicisizedKinematics drivetrain = new PublicisizedKinematics(drivetrainConstants, constants);
@@ -144,8 +144,8 @@ public class Drive extends SubsystemBase {
 			drivetrain::getChassisSpeeds,
 			this::drive,
 			new HolonomicPathFollowerConfig(
-				new PIDConstants(0.9, 0, 0), // Translation PID
-				new PIDConstants(0.2, 0, 0), // Rotation PID
+				new PIDConstants(1.8, 0, 0), // Translation PID
+				new PIDConstants(0.5, 0, 0), // Rotation PID
 				MAX_VELOCITY,
 				0.410178,
 				new ReplanningConfig()
@@ -162,14 +162,14 @@ public class Drive extends SubsystemBase {
 		facingRequest = new SwerveRequest.FieldCentricFacingAngle()
 		.withDriveRequestType(DriveRequestType.Velocity)
 		.withSteerRequestType(SteerRequestType.MotionMagic);
-		facingRequest.HeadingController = new PhoenixPIDController(3.5, 0, 1.2);
+		facingRequest.HeadingController = new PhoenixPIDController(3.5, 0, 0);
 		Shuffleboard.getTab("swerve").add("rotation PID", facingRequest.HeadingController);
 	}
 
 	private void setLimits(int module) {
 		drivetrain.getModule(0).getDriveMotor()
 		.getConfigurator().apply(new CurrentLimitsConfigs()
-		.withSupplyCurrentLimit(80)
+		.withSupplyCurrentLimit(60)
 		.withSupplyCurrentLimitEnable(true));
 	}
 

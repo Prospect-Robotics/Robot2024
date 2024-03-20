@@ -63,8 +63,9 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 		SUBWOOFER_FRONT(0.007080),
 		SUBWOOFER_SIDE(0.007080),
 		AMP(0.008301),
-		PODIUM(0),
+		PODIUM(0.054443),
 		TEST(0.067871),
+		FAR_SPEAKER(0.088135),
 		BOTTOM_HARD_STOP(0.111816);
 
 		private final double pos;

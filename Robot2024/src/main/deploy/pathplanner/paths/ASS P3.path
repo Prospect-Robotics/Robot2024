@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.849631037803743,
-        "y": 5.4087981315843585
+        "x": 2.9337269587943684,
+        "y": 5.55076982040085
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4393819235927163,
-        "y": 6.716313229873483
+        "x": 1.523477844583342,
+        "y": 6.858284918689975
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ASS P2 End"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ASS P3 End"
     }
   ],
   "rotationTargets": [],
@@ -50,8 +50,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 5.5,
-    "maxAcceleration": 4.5,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

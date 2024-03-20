@@ -4,8 +4,6 @@
 
 package com.team2813;
 
-import static com.team2813.Constants.DriverConstants.DRIVER_CONTROLLER;
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -19,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
 	public static class OperatorConstants {
 		public static final int operatorControllerPort = 1;
 		public static final CommandPS4Controller operatorController = new CommandPS4Controller(operatorControllerPort);
@@ -30,12 +29,16 @@ public final class Constants {
 
 		public static final Trigger ampInButton = operatorController.povRight();
 		public static final Trigger ampOutButton = operatorController.povLeft();
+		public static final Trigger shootButton = operatorController.options(); // actually maps to square
+		public static final Trigger shootWooferFront = operatorController.cross();
+		public static final Trigger shootWooferSide = operatorController.PS();
+		public static final Trigger shootPodium = operatorController.square();
+		public static final Trigger shootAmp = operatorController.triangle();
+		public static final Trigger farSpeaker = operatorController.circle();
 
-		public static final Trigger ampIntakeButton = DRIVER_CONTROLLER.triangle(); //R2
-		public static final Trigger ampOuttakeButton = DRIVER_CONTROLLER.square(); //L2
-		public static final Trigger shootButton = operatorController.circle(); // actually maps to square
-		// public static final Trigger spoolAutoAimButton = operatorController.options();
-		public static final Trigger spoolPodiumButton = operatorController.cross(); // actually maps to circle
+
+		//square = cross, cross = circle, circle = square
+
 		public static final Trigger climbButton = operatorController.share();
 		public static final Trigger climbUpButton = operatorController.povUp();
 		public static final Trigger climbDownButton = operatorController.povDown();
@@ -47,7 +50,8 @@ public final class Constants {
 		public static final CommandPS4Controller DRIVER_CONTROLLER = new CommandPS4Controller(driverControllerPort);
 		public static final Trigger slowmodeButton = DRIVER_CONTROLLER.L1();
 		public static final Trigger orientButton = DRIVER_CONTROLLER.options();
-		public static final Trigger spoolAutoAimButton = DRIVER_CONTROLLER.square();
+		public static final Trigger spoolAutoAimButton = DRIVER_CONTROLLER.square(); // actually maps to cross
+		public static final Trigger ampIntakeButton = DRIVER_CONTROLLER.triangle(); //R2
 	}
 
 	// front right swerve module
