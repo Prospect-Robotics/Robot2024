@@ -118,7 +118,7 @@ public class AutoCommands {
 	private volatile Command shootAmp = null;
 
 	private Command createShootAmp() {
-		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.AMP, 25);
+		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.AMP, 22.5);
 	}
 
 	public Command shootAmp() {

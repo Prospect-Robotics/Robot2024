@@ -164,11 +164,17 @@ public class RobotContainer {
 				new InstantCommand(drive::orientForward, drive));
 
 		shootButton.onTrue(new SequentialCommandGroup(
-				new InstantCommand(mag::runMagKicker, mag),
+			new ParallelRaceGroup(
 				new WaitCommand(1),
-				new ParallelCommandGroup(
-						new InstantCommand(shooter::stop, shooter),
-						new InstantCommand(mag::stop, mag))));
+				new LockFunctionCommand(shooter::atVelocity, () -> shooter.run(75), shooter)
+			),
+			new InstantCommand(mag::runMagKicker, mag),
+			new WaitCommand(0.5),
+			new ParallelCommandGroup(
+				new InstantCommand(mag::stop, mag),
+				new InstantCommand(shooter::stop, shooter)
+			)
+		));
 
 		spoolAutoAimButton.onTrue(
 				new AutonomousAutoAimCommand(shooter, shooterPivot, mag, drive::get3DPose)
