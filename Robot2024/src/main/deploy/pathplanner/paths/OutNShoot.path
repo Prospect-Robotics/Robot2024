@@ -25,21 +25,21 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "OutNShoot End"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -37.56,
+    "rotation": -37.55904273233035,
     "rotateFast": false
   },
   "reversed": false,
