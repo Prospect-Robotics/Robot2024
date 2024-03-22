@@ -130,7 +130,7 @@ public class Drive extends SubsystemBase {
 			BACK_RIGHT_STEER_ID, BACK_RIGHT_DRIVE_ID,
 			BACK_RIGHT_ENCODER_ID, backRightSteerOffset,
 			-frontDist, -leftDist,
-			false
+			true
 		);
 		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
 		PublicisizedKinematics drivetrain = new PublicisizedKinematics(drivetrainConstants, constants);
@@ -169,7 +169,7 @@ public class Drive extends SubsystemBase {
 	private void setLimits(int module) {
 		drivetrain.getModule(0).getDriveMotor()
 		.getConfigurator().apply(new CurrentLimitsConfigs()
-		.withSupplyCurrentLimit(60)
+		.withSupplyCurrentLimit(40)
 		.withSupplyCurrentLimitEnable(true));
 	}
 
@@ -307,6 +307,7 @@ public class Drive extends SubsystemBase {
 	public void periodic() {
 		
 		SmartDashboard.putData(field);
+
 		SmartDashboard.putString("json", limelight.getJsonDump().map(Object::toString).orElse("NONE"));
 		// if we have a position from the robot, and we arx`e in teleop, update our pose
 		if (limelight.hasTarget()) {

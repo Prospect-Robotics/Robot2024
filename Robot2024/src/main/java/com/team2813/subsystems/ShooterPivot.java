@@ -41,6 +41,8 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 						.withForwardSoftLimitEnable(true)
 						.withReverseSoftLimitEnable(true)));
 
+		result.setPosition(Position.TOP_HARD_STOP.getPos());
+
 		return result;
 	}
 

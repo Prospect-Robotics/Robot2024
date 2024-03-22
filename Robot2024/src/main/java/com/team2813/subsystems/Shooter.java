@@ -54,7 +54,7 @@ public class Shooter extends SubsystemBase {
 	}
 
 	public boolean atVelocity() {
-		return Math.abs(targetVelocity - shooterMotor.getVelocity()) < 1;
+		return shooterMotor.getVelocity() - targetVelocity > -1;
 	}
 
 	public void stop() {

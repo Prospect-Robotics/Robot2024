@@ -43,7 +43,7 @@ public class LEDs extends QueueLightshow {
 			(j) -> j.intake.isStalled()
 		),
 		Blue(new Color(0, 0, 255), (j) -> false),
-		NoteInMag(new Color(255, 165, 0), (j) -> j.magazine.noteInMag()),
+		NoteInMag(new Color(255, 165, 0), (j) -> j.magazine.noteInMag() && DriverStation.isEnabled()),
 		Enabled(new Color(255, 255, 255), (j) -> DriverStation.isEnabled());
 		private final Color c;
 		private final Function<LEDs, Boolean> sup;

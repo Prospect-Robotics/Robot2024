@@ -29,12 +29,13 @@ public final class Constants {
 
 		public static final Trigger ampInButton = operatorController.povRight();
 		public static final Trigger ampOutButton = operatorController.povLeft();
-		public static final Trigger shootButton = operatorController.options(); // actually maps to square
-		public static final Trigger shootWooferFront = operatorController.cross();
+		public static final Trigger shootButton = operatorController.options();
+		public static final Trigger shootWooferFront = operatorController.cross(); // circle
 		public static final Trigger shootWooferSide = operatorController.PS();
-		public static final Trigger shootPodium = operatorController.square();
+		public static final Trigger shootPodium = operatorController.square(); // cross
 		public static final Trigger shootAmp = operatorController.triangle();
-		public static final Trigger farSpeaker = operatorController.circle();
+		public static final Trigger farSpeaker = operatorController.circle().and(() -> false); // square
+		public static final Trigger autoShootButton = operatorController.circle(); // square
 
 
 		//square = cross, cross = circle, circle = square
