@@ -34,6 +34,14 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 	public void resetPosition() {
 		encoder.setPosition(0);
 	}
+
+	@Override
+	protected void useOutput(double output, double setpoint) {
+		if (output < 0) {
+			output -= 0.02;
+		}
+		super.useOutput(output, setpoint);
+	}
 	
 	private static PIDMotor pivotMotor() {
 		TalonFXWrapper pivotMotor = new TalonFXWrapper(INTAKE_PIVOT, InvertType.CLOCKWISE);
@@ -49,8 +57,8 @@ public class IntakePivot extends MotorSubsystem<IntakePivot.Rotations> {
 	}
 
     public static enum Rotations implements MotorSubsystem.Position {
-		INTAKE_DOWN(1.234863),
-		INTAKE_UP(0.398682);
+		INTAKE_DOWN(0.825439),
+		INTAKE_UP(0);
 
         Rotations(double pos) {
             this.pos = pos;

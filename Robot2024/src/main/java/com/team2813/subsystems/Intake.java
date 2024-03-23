@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Intake extends SubsystemBase {
     private final PIDMotor intakeMotor;
 	private boolean intaking = false;
-    private static final double INTAKE_SPEED = 0.575;
+    private static final double INTAKE_SPEED = 0.6;
     private static final double OUTTAKE_SPEED = -0.6;
 
 	public Intake() {

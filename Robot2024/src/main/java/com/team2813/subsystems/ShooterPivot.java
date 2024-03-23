@@ -62,9 +62,9 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	public static enum Position implements MotorSubsystem.Position {
 		TOP_HARD_STOP(0),
-		SUBWOOFER_FRONT(0.028809),
-		SUBWOOFER_SIDE(0.028809),
-		AMP(0.046631),
+		SUBWOOFER_FRONT(0.023926),
+		SUBWOOFER_SIDE(0.023926),
+		AMP(0.033936),
 		PODIUM(0.054443),
 		TEST(0.067871),
 		FAR_SPEAKER(0.088135),
