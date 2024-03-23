@@ -1,11 +1,10 @@
 package com.team2813.subsystems;
 
 import static com.team2813.Constants.CANIFIER;
-import static com.team2813.Constants.OperatorConstants.intakeButton;
 
-import java.util.function.Function;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 import com.ctre.phoenix.CANifier;
 import com.team2813.lib2813.subsystems.lightshow.QueueLightshow;

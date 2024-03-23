@@ -21,7 +21,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 	public ShooterPivot() {
 		super(new MotorSubsystemConfiguration(
 				pivotMotor()).acceptableError(0.004)
-				.PID(4.2, 0, 0));
+				.PID(4.2, 0, 0).startingPosition(Position.TOP_HARD_STOP));
 		SmartDashboard.putData("Shooter Pivot PID", m_controller);
 	}
 
@@ -62,9 +62,9 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	public static enum Position implements MotorSubsystem.Position {
 		TOP_HARD_STOP(0),
-		SUBWOOFER_FRONT(0.007080),
-		SUBWOOFER_SIDE(0.007080),
-		AMP(0.022705),
+		SUBWOOFER_FRONT(0.028809),
+		SUBWOOFER_SIDE(0.028809),
+		AMP(0.046631),
 		PODIUM(0.054443),
 		TEST(0.067871),
 		FAR_SPEAKER(0.088135),

@@ -82,7 +82,6 @@ public class AutoCommands {
 	private volatile Command shootFront = null;
 
 	private Command createShootFront() {
-		// TODO: get correct angle and speed
 		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_FRONT, 75);
 	}
 
@@ -100,7 +99,6 @@ public class AutoCommands {
 	private volatile Command shootSide = null;
 
 	private Command createShootSide() {
-		// TODO: get correct angle and speed
 		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_SIDE, 80);
 	}
 
@@ -118,7 +116,7 @@ public class AutoCommands {
 	private volatile Command shootAmp = null;
 
 	private Command createShootAmp() {
-		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.AMP, 22.5);
+		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.AMP, 75);
 	}
 
 	public Command shootAmp() {

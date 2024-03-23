@@ -14,8 +14,6 @@ import static com.team2813.Constants.FRONT_RIGHT_ENCODER_ID;
 import static com.team2813.Constants.FRONT_RIGHT_STEER_ID;
 import static com.team2813.Constants.PIGEON_ID;
 
-import java.util.OptionalLong;
-
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
@@ -43,7 +41,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -145,7 +142,7 @@ public class Drive extends SubsystemBase {
 			this::drive,
 			new HolonomicPathFollowerConfig(
 				new PIDConstants(2.1, 0, 0), // Translation PID
-				new PIDConstants(0.7, 0, 0), // Rotation PID
+				new PIDConstants(0.8, 0, 0), // Rotation PID
 				MAX_VELOCITY,
 				0.410178,
 				new ReplanningConfig()
@@ -274,19 +271,6 @@ public class Drive extends SubsystemBase {
 
 	Field2d field = new Field2d();
 
-	/**
-	 * Update position of robot
-	 * @param pose the position of the robot
-	 */
-	public void addMeasurement(Pose2d pose) {
-		double timestamp = Timer.getFPGATimestamp();
-		OptionalLong msDelay = limelight.getLocationalData().lastMSDelay();
-		if (msDelay.isPresent()) {
-			timestamp -= msDelay.getAsLong() / 1000.0;
-		}
-		drivetrain.addVisionMeasurement(pose, timestamp);
-	}
-
 	private static final Translation2d poseOffset = new Translation2d(8.310213, 4.157313);
 
 	private boolean useLimelightOffset = false;
@@ -310,12 +294,6 @@ public class Drive extends SubsystemBase {
 
 		SmartDashboard.putString("json", limelight.getJsonDump().map(Object::toString).orElse("NONE"));
 		// if we have a position from the robot, and we arx`e in teleop, update our pose
-		if (limelight.hasTarget()) {
-			limelight.getLocationalData().getBotpose()
-			.map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
-			useLimelightOffset = true;
-			correctRotation = true;
-		}
 		field.setRobotPose(getAutoPose());
 	}
 }

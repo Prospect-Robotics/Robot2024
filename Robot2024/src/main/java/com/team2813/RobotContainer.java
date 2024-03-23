@@ -65,6 +65,8 @@ public class RobotContainer {
 	private final Magazine mag = new Magazine();
 	private final IntakePivot intakePivot = new IntakePivot();
 	private final ShooterPivot shooterPivot = new ShooterPivot();
+	// needs to not be garbage collected; all work in periodic method of subsystem, and no buttons needed
+	@SuppressWarnings("unused")
 	private final LEDs leds = new LEDs(mag, intake);
 	private final Climber climber = new Climber();
 
