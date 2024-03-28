@@ -103,6 +103,7 @@ public class RobotSpecificConfigs {
 	private static SwerveConfig swerveConfig = new SwerveConfig();
 	private static final Path swerveConfigPath = Path.of("/home", "lvuser", "swerveConfig.txt");
 	private static boolean loadedSwerveConfig;
+	private static boolean debugInfo;
 
 	public static String swerveCanbus() {
 		checkLoaded();
@@ -127,6 +128,11 @@ public class RobotSpecificConfigs {
 	public static boolean loadedSwerveConfig() {
 		checkLoaded();
 		return loadedSwerveConfig;
+	}
+
+	public static boolean debug() {
+		checkLoaded();
+		return debugInfo;
 	}
 
 	private static void checkLoaded() {
@@ -183,5 +189,7 @@ public class RobotSpecificConfigs {
 			}
 			loadedSwerveConfig = true;
 		}
+
+		debugInfo = DriverStation.getEventName() == "";
 	}
 }

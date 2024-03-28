@@ -56,7 +56,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	@Override
 	public void periodic() {
-		super.periodic();
+		// super.periodic();
 		SmartDashboard.putNumber("Shoooter Pivot CANCoder Position", encoder.position());
 	}
 
@@ -68,7 +68,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 		PODIUM(0.054443),
 		TEST(0.067871),
 		FAR_SPEAKER(0.088135),
-		BOTTOM_HARD_STOP(0.111816);
+		BOTTOM_HARD_STOP(0.105713);
 
 		private final double pos;
 
