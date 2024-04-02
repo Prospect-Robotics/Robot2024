@@ -16,11 +16,9 @@ public class SaveSwerveOffsetsCommand extends Command {
 	@Override
 	public void initialize() {
 		if (!DriverStation.isEnabled()) {
-			if (RobotSpecificConfigs.loadedSwerveConfig()) {
-				RobotSpecificConfigs.resetSwerveConfig();
-			} else {
-				RobotSpecificConfigs.saveSwerveConfig(drive.getOffsets());
-			}
+			RobotSpecificConfigs.saveSwerveConfig(
+				RobotSpecificConfigs.swerveConfig().negate().add(drive.getOffsets()).negate()
+			);
 		}
 	}
 

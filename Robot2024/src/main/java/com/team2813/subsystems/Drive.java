@@ -262,10 +262,10 @@ public class Drive extends SubsystemBase {
 
 	public SwerveConfig getOffsets() {
 		return new SwerveConfig(
-			-getPosition(0),
-			-getPosition(1),
-			-getPosition(2),
-			-getPosition(3)
+			getPosition(0),
+			getPosition(1),
+			getPosition(2),
+			getPosition(3)
 			);
 	}
 

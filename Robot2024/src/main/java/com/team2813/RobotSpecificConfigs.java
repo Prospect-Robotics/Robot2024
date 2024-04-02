@@ -39,6 +39,16 @@ public class RobotSpecificConfigs {
 		public double backRightOffset() {
 			return backRight;
 		}
+		public SwerveConfig add(SwerveConfig other) {
+			double frontRight = other.frontRight + this.frontRight;
+			double frontLeft = other.frontLeft + this.frontLeft;
+			double backLeft = other.backLeft + this.backLeft;
+			double backRight = other.backRight + this.backRight;
+			return new SwerveConfig(frontLeft, frontRight, backLeft, backRight);
+		}
+		public SwerveConfig negate() {
+			return new SwerveConfig(-frontLeft, -frontRight, -backLeft, -backRight);
+		}
 		/**
 		 * Creates a new SwerveConfig with their module offsets
 		 * @param frontLeft front left offset

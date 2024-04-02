@@ -30,7 +30,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 		result.setNeutralMode(NeutralModeValue.Brake);
 		TalonFXConfigurator config = result.motor().getConfigurator();
 		ConfigUtils.phoenix6Config(
-				() -> config.apply(new FeedbackConfigs().withRotorToSensorRatio(-64/24)
+				() -> config.apply(new FeedbackConfigs().withRotorToSensorRatio(-640 / 7)
 						.withSensorToMechanismRatio(-20 / 1)
 						.withFeedbackRemoteSensorID(SHOOTER_ENCODER)
 						.withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)));
@@ -56,7 +56,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	@Override
 	public void periodic() {
-		// super.periodic();
+		super.periodic();
 		SmartDashboard.putNumber("Shoooter Pivot CANCoder Position", encoder.position());
 	}
 
@@ -68,7 +68,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 		PODIUM(0.054443),
 		TEST(0.067871),
 		FAR_SPEAKER(0.088135),
-		BOTTOM_HARD_STOP(0.105713);
+		BOTTOM_HARD_STOP(0.099854);
 
 		private final double pos;
 

@@ -67,7 +67,7 @@ public class RobotContainer {
 	private final ShooterPivot shooterPivot = new ShooterPivot();
 	// needs to not be garbage collected; all work in periodic method of subsystem, and no buttons needed
 	@SuppressWarnings("unused")
-	private final LEDs leds = new LEDs(mag, intake);
+	private final LEDs leds = new LEDs(mag);
 	private final Climber climber = new Climber();
 
 	private final XboxController driverController = new XboxController(driverControllerPort);
