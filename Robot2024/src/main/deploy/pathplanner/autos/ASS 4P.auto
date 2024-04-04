@@ -84,6 +84,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.0
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "shoot-auto"

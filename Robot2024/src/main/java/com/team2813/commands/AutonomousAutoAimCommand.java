@@ -85,7 +85,7 @@ public class AutonomousAutoAimCommand extends Command {
 		done = false;
 		Pose3d pose = getPose();
 		Transform3d diff = pose.minus(speakerPos);
-		double z = Math.abs(diff.getZ()) - 0.266586;
+		double z = Math.abs(diff.getZ()) - 0.266586 * 2.5;
 		double flatDistance = Math.hypot(diff.getX(), diff.getY());
 		useDistance(Math.hypot(z, flatDistance));
 		useShootingAngle(Math.atan2(z, flatDistance));
