@@ -18,6 +18,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "start-intake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "ASS P1"
@@ -26,7 +32,19 @@
         {
           "type": "named",
           "data": {
+            "name": "stop-intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "shoot-auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "start-intake"
           }
         },
         {
@@ -38,7 +56,19 @@
         {
           "type": "named",
           "data": {
+            "name": "stop-intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "shoot-auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "start-intake"
           }
         },
         {
@@ -48,9 +78,21 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "ASS P4"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "shoot-auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop-intake"
           }
         }
       ]

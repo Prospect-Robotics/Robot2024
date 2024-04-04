@@ -95,7 +95,7 @@ public class AutonomousAutoAimCommand extends Command {
 	public void execute() {
 		boolean shooterGood = shooterPivot.atPosition();
 		SmartDashboard.putBoolean("shooter at position", shooterGood);
-		if (!done && shooterGood && Timer.getFPGATimestamp() - shooterStart >= 0.5) {
+		if (!done && shooter.atVelocity() && (shooterGood  || Timer.getFPGATimestamp() - shooterStart >= 0.5)) {
 			mag.runMagKicker();
 			done = true;
 			magStart = Timer.getFPGATimestamp();

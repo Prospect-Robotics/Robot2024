@@ -4,30 +4,34 @@
 
 package com.team2813;
 
+import static com.team2813.Constants.DriverConstants.ampIntakeButton;
 import static com.team2813.Constants.DriverConstants.driverControllerPort;
 import static com.team2813.Constants.DriverConstants.orientButton;
 import static com.team2813.Constants.DriverConstants.slowmodeButton;
 import static com.team2813.Constants.DriverConstants.spoolAutoAimButton;
 import static com.team2813.Constants.OperatorConstants.altOuttakeButton;
 import static com.team2813.Constants.OperatorConstants.ampInButton;
-import static com.team2813.Constants.OperatorConstants.ampIntakeButton;
 import static com.team2813.Constants.OperatorConstants.ampOutButton;
+import static com.team2813.Constants.OperatorConstants.autoShootButton;
 import static com.team2813.Constants.OperatorConstants.climbDownButton;
 import static com.team2813.Constants.OperatorConstants.climbUpButton;
+import static com.team2813.Constants.OperatorConstants.farSpeaker;
 import static com.team2813.Constants.OperatorConstants.intakeButton;
 import static com.team2813.Constants.OperatorConstants.operatorControllerPort;
 import static com.team2813.Constants.OperatorConstants.outtakeButton;
+import static com.team2813.Constants.OperatorConstants.shootAmp;
 import static com.team2813.Constants.OperatorConstants.shootButton;
-import static com.team2813.Constants.OperatorConstants.spoolPodiumButton;
+import static com.team2813.Constants.OperatorConstants.shootPodium;
+import static com.team2813.Constants.OperatorConstants.shootWooferFront;
+import static com.team2813.Constants.OperatorConstants.shootWooferSide;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.team2813.commands.AutoAimCommand;
 import com.team2813.commands.AutonomousAutoAimCommand;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
+import com.team2813.commands.LockFunctionCommand;
 import com.team2813.commands.SaveSwerveOffsetsCommand;
-import com.team2813.commands.SpoolCommand;
 import com.team2813.subsystems.Amp;
 import com.team2813.subsystems.Climber;
 import com.team2813.subsystems.Drive;
@@ -39,6 +43,7 @@ import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
 import com.team2813.subsystems.ShooterPivot;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -46,6 +51,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -59,6 +65,8 @@ public class RobotContainer {
 	private final Magazine mag = new Magazine();
 	private final IntakePivot intakePivot = new IntakePivot();
 	private final ShooterPivot shooterPivot = new ShooterPivot();
+	// needs to not be garbage collected; all work in periodic method of subsystem, and no buttons needed
+	@SuppressWarnings("unused")
 	private final LEDs leds = new LEDs(mag);
 	private final Climber climber = new Climber();
 
@@ -94,14 +102,19 @@ public class RobotContainer {
 		slowmodeButton.whileTrue(new InstantCommand(() -> drive.enableSlowMode(true), drive));
 		slowmodeButton.onFalse(new InstantCommand(() -> drive.enableSlowMode(false), drive));
 
+		for (int i = 5800; i <= 5807; i++) {
+			PortForwarder.add(i, "limelight.local", i);
+		}
+
 		// intake & outtake buttons
-		intakeButton.whileTrue(autoCommands.startIntake());
+		intakeButton.onTrue(autoCommands.startIntake());
 		intakeButton.onFalse(autoCommands.stopIntake());
-		outtakeButton.whileTrue(new ParallelCommandGroup(
+
+		outtakeButton.onTrue(new ParallelCommandGroup(
 				new InstantCommand(intake::outtakeNote, intake),
 				new InstantCommand(mag::reverseMag, mag)));
 
-		altOuttakeButton.whileTrue(new SequentialCommandGroup(
+		altOuttakeButton.onTrue(new SequentialCommandGroup(
 				new InstantCommand(() -> intakePivot.setSetpoint(Rotations.INTAKE_DOWN), intakePivot),
 				new WaitCommand(0.2),
 				new ParallelCommandGroup(
@@ -153,20 +166,43 @@ public class RobotContainer {
 				new InstantCommand(drive::orientForward, drive));
 
 		shootButton.onTrue(new SequentialCommandGroup(
-				new InstantCommand(mag::runMagKicker, mag),
+			new ParallelRaceGroup(
 				new WaitCommand(1),
-				new ParallelCommandGroup(
-						new InstantCommand(shooter::stop, shooter),
-						new InstantCommand(mag::stop, mag))));
+				new LockFunctionCommand(shooter::atVelocity, () -> shooter.run(75), shooter)
+			),
+			new InstantCommand(mag::runMagKicker, mag),
+			new WaitCommand(0.5),
+			new ParallelCommandGroup(
+				new InstantCommand(mag::stop, mag),
+				new InstantCommand(shooter::stop, shooter)
+			)
+		));
 
 		spoolAutoAimButton.onTrue(
-				new AutoAimCommand(shooter, shooterPivot, mag, drive)
+				new AutonomousAutoAimCommand(shooter, shooterPivot, mag, drive::get3DPose)
 		// new LockFunctionCommand(shooterPivot::atPosition, () ->
 		// shooterPivot.setSetpoint(Position.TEST), shooterPivot, drive)
 		);
 
-		spoolPodiumButton.onTrue(
-				new SpoolCommand(shooter));
+		autoShootButton.onTrue(
+			new SequentialCommandGroup(
+				new ParallelRaceGroup(
+					new WaitCommand(0.5),
+					new LockFunctionCommand(shooter::atVelocity, () -> shooter.run(60), shooter)
+				),
+				new InstantCommand(mag::runMagKicker, mag),
+				new ParallelCommandGroup(
+					new InstantCommand(mag::stop, mag),
+					new InstantCommand(shooter::stop, shooter)
+				)
+			)
+		);
+
+		shootWooferFront.onTrue(autoCommands.shootFront());
+		shootWooferSide.onTrue(autoCommands.shootSide());
+		shootAmp.onTrue(autoCommands.shootAmp());
+		shootPodium.onTrue(autoCommands.shootPodium());
+		farSpeaker.onTrue(autoCommands.farSpeaker());
 	}
 
 	public Command getAutonomousCommand() {

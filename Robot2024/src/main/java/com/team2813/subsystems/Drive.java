@@ -14,8 +14,6 @@ import static com.team2813.Constants.FRONT_RIGHT_ENCODER_ID;
 import static com.team2813.Constants.FRONT_RIGHT_STEER_ID;
 import static com.team2813.Constants.PIGEON_ID;
 
-import java.util.OptionalLong;
-
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
@@ -43,7 +41,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -144,8 +141,8 @@ public class Drive extends SubsystemBase {
 			drivetrain::getChassisSpeeds,
 			this::drive,
 			new HolonomicPathFollowerConfig(
-				new PIDConstants(0.9, 0, 0), // Translation PID
-				new PIDConstants(0.2, 0, 0), // Rotation PID
+				new PIDConstants(2.1, 0, 0), // Translation PID
+				new PIDConstants(0.8, 0, 0), // Rotation PID
 				MAX_VELOCITY,
 				0.410178,
 				new ReplanningConfig()
@@ -162,14 +159,14 @@ public class Drive extends SubsystemBase {
 		facingRequest = new SwerveRequest.FieldCentricFacingAngle()
 		.withDriveRequestType(DriveRequestType.Velocity)
 		.withSteerRequestType(SteerRequestType.MotionMagic);
-		facingRequest.HeadingController = new PhoenixPIDController(3.5, 0, 1.2);
+		facingRequest.HeadingController = new PhoenixPIDController(3.5, 0, 0);
 		Shuffleboard.getTab("swerve").add("rotation PID", facingRequest.HeadingController);
 	}
 
 	private void setLimits(int module) {
 		drivetrain.getModule(0).getDriveMotor()
 		.getConfigurator().apply(new CurrentLimitsConfigs()
-		.withSupplyCurrentLimit(80)
+		.withSupplyCurrentLimit(40)
 		.withSupplyCurrentLimitEnable(true));
 	}
 
@@ -205,13 +202,13 @@ public class Drive extends SubsystemBase {
         if (useLimelightOffset) {
 			return drivetrain.getState().Pose;
 		} else {
-			return offsetAutoPose(drivetrain.getState().Pose);
+			return offsetTeleopPose(drivetrain.getState().Pose);
 		}
     }
 
 	public Pose2d getAutoPose() {
 		if (useLimelightOffset) {
-			return offsetTeleopPose(drivetrain.getState().Pose);
+			return offsetAutoPose(drivetrain.getState().Pose);
 		} else {
 			return drivetrain.getState().Pose;
 		}
@@ -226,7 +223,9 @@ public class Drive extends SubsystemBase {
 				.withDriveRequestType(DriveRequestType.OpenLoopVoltage)
 				.withSteerRequestType(SteerRequestType.MotionMagicExpo);
 
+	boolean correctRotation = false;
 	public void drive(double x, double y, double rotation) {
+		double multiplier = onRed() && correctRotation ? this.multiplier * -1 : this.multiplier;
 		drivetrain.setControl(
 			xyrRequest.withVelocityX(x * multiplier)
 				.withVelocityY(y * multiplier)
@@ -245,6 +244,7 @@ public class Drive extends SubsystemBase {
 
     public void resetOdometry(Pose2d currentPose) {
 		useLimelightOffset = false;
+		correctRotation = true;
 		drivetrain.seedFieldRelative(currentPose);
     }
 
@@ -262,27 +262,14 @@ public class Drive extends SubsystemBase {
 
 	public SwerveConfig getOffsets() {
 		return new SwerveConfig(
-			-getPosition(0),
-			-getPosition(1),
-			-getPosition(2),
-			-getPosition(3)
+			getPosition(0),
+			getPosition(1),
+			getPosition(2),
+			getPosition(3)
 			);
 	}
 
 	Field2d field = new Field2d();
-
-	/**
-	 * Update position of robot
-	 * @param pose the position of the robot
-	 */
-	public void addMeasurement(Pose2d pose) {
-		double timestamp = Timer.getFPGATimestamp();
-		OptionalLong msDelay = limelight.getLocationalData().lastMSDelay();
-		if (msDelay.isPresent()) {
-			timestamp -= msDelay.getAsLong() / 1000.0;
-		}
-		drivetrain.addVisionMeasurement(pose, timestamp);
-	}
 
 	private static final Translation2d poseOffset = new Translation2d(8.310213, 4.157313);
 
@@ -304,12 +291,9 @@ public class Drive extends SubsystemBase {
 	public void periodic() {
 		
 		SmartDashboard.putData(field);
+
+		SmartDashboard.putString("json", limelight.getJsonDump().map(Object::toString).orElse("NONE"));
 		// if we have a position from the robot, and we arx`e in teleop, update our pose
-		if (limelight.hasTarget() && DriverStation.isTeleopEnabled()) {
-			limelight.getLocationalData().getBotpose()
-			.map(Pose3d::toPose2d).ifPresent(this::addMeasurement);
-			useLimelightOffset = true;
-		}
 		field.setRobotPose(getAutoPose());
 	}
 }

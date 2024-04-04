@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.7873272078389397,
-        "y": 5.521627675509816
+        "x": 2.8899170019322185,
+        "y": 5.590661857476989
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.030609187334446,
-        "y": 5.892037405354574
+        "x": 0.6993664479916041,
+        "y": 4.773846396685573
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ASS P2 End"
     },
     {
       "anchor": {
-        "x": 2.5583510179297146,
-        "y": 4.181470370009192
+        "x": 2.493451195049712,
+        "y": 4.124262377989042
       },
       "prevControl": {
-        "x": 1.6330237654894955,
-        "y": 4.479384593999843
+        "x": 1.732327697494075,
+        "y": 4.040724433135375
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ASS P3 End"
     }
   ],
   "rotationTargets": [],
@@ -57,8 +57,8 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -13.904190170442819,
-    "rotateFast": false
+    "rotation": 1.0612355586922024,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "ASS 4P",

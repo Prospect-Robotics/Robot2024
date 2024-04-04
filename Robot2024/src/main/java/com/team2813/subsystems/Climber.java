@@ -1,7 +1,6 @@
 package com.team2813.subsystems;
 
 import static com.team2813.Constants.CLIMBER;
-import static java.util.stream.Collectors.toCollection;
 
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
@@ -26,22 +25,24 @@ public class Climber extends SubsystemBase {
 				() -> cnf.apply(
 					new SoftwareLimitSwitchConfigs()
 					.withForwardSoftLimitEnable(true)
-					.withForwardSoftLimitThreshold(52.632324)
+					.withForwardSoftLimitThreshold(72.926758)
+					.withReverseSoftLimitEnable(true)
+					.withReverseSoftLimitThreshold(0.556152)
 				)
 		);
 		this.climberMotor = climberMotor;
 	}
 
 	public void extend() {
-		climberMotor.set(ControlMode.DUTY_CYCLE, 0.7); // TODO: Find out proper demand value for extending
+		climberMotor.set(ControlMode.DUTY_CYCLE, 0.7);
 	}
 
 	public void retract() {
-		climberMotor.set(ControlMode.DUTY_CYCLE, -0.3); // TODO: Find out proper demand value for retracting
+		climberMotor.set(ControlMode.DUTY_CYCLE, -0.3);
 	}
 
 	public void stop() {
-		climberMotor.set(ControlMode.DUTY_CYCLE, 0);
+		climberMotor.set(ControlMode.DUTY_CYCLE, -0.01);
 	}
 
 	// @Override

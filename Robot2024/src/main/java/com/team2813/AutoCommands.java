@@ -1,5 +1,6 @@
 package com.team2813;
 
+import com.team2813.commands.LockFunctionCommand;
 import com.team2813.commands.ShootFromPosCommand;
 import com.team2813.subsystems.Intake;
 import com.team2813.subsystems.IntakePivot;
@@ -12,7 +13,7 @@ import com.team2813.subsystems.ShooterPivot.Position;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AutoCommands {
@@ -34,7 +35,10 @@ public class AutoCommands {
 
 	private Command createStartIntake() {
 		return new ParallelCommandGroup(
-			new InstantCommand(() -> intakePivot.setSetpoint(Rotations.INTAKE_DOWN), intakePivot),
+			new ParallelRaceGroup(
+				new LockFunctionCommand(intakePivot::atPosition, () -> intakePivot.setSetpoint(Rotations.INTAKE_DOWN), intakePivot),
+				new WaitCommand(0.5)
+			),
 			new InstantCommand(intake::intake, intake),
 			new InstantCommand(magazine::runOnlyMag, magazine)
 		);
@@ -55,7 +59,10 @@ public class AutoCommands {
 
 	private Command createStopIntake() {
 		return new ParallelCommandGroup(
-			new InstantCommand(() -> intakePivot.setSetpoint(Rotations.INTAKE_UP), intakePivot),
+			new ParallelRaceGroup(
+				new LockFunctionCommand(intakePivot::atPosition, () -> intakePivot.setSetpoint(Rotations.INTAKE_UP), intakePivot),
+				new WaitCommand(1.5)
+			),
 			new InstantCommand(intake::stopIntakeMotor, intake),
 			new InstantCommand(magazine::stop, magazine)
 		);
@@ -75,7 +82,6 @@ public class AutoCommands {
 	private volatile Command shootFront = null;
 
 	private Command createShootFront() {
-		// TODO: get correct angle and speed
 		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_FRONT, 75);
 	}
 
@@ -93,7 +99,6 @@ public class AutoCommands {
 	private volatile Command shootSide = null;
 
 	private Command createShootSide() {
-		// TODO: get correct angle and speed
 		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.SUBWOOFER_SIDE, 80);
 	}
 
@@ -111,16 +116,7 @@ public class AutoCommands {
 	private volatile Command shootAmp = null;
 
 	private Command createShootAmp() {
-		return new SequentialCommandGroup(
-			new InstantCommand(() -> shooter.run(22.5), shooter),
-			new WaitCommand(0.2),
-			new InstantCommand(magazine::runMagKicker, magazine),
-			new WaitCommand(1),
-			new ParallelCommandGroup(
-				new InstantCommand(shooter::stop, shooter),
-				new InstantCommand(magazine::stop, magazine)
-			)
-		);
+		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.AMP, 20);
 	}
 
 	public Command shootAmp() {
@@ -132,5 +128,35 @@ public class AutoCommands {
 			}
 		}
 		return shootAmp;
+	}
+
+	private volatile Command shootPodium = null;
+	private Command createShootPodium() {
+		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.PODIUM, 90);
+	}
+
+	public Command shootPodium() {
+		if (shootPodium == null) {
+			synchronized (this) {
+				if (shootPodium == null) {
+					shootPodium = createShootPodium();
+				}
+			}
+		}
+		return shootPodium;
+	}
+
+	private volatile Command farSpeaker = null;
+	private Command createFarSpeaker() {
+		return new ShootFromPosCommand(magazine, shooter, shooterPivot, Position.FAR_SPEAKER, 100);
+	}
+
+	public Command farSpeaker() {
+		if (farSpeaker == null) {
+			synchronized (this) {
+				farSpeaker = createFarSpeaker();
+			}
+		}
+		return farSpeaker;
 	}
 }

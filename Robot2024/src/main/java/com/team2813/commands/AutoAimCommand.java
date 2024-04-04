@@ -1,5 +1,6 @@
 package com.team2813.commands;
 
+import com.team2813.RobotSpecificConfigs;
 import com.team2813.lib2813.limelight.Limelight;
 import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Magazine;
@@ -52,7 +53,9 @@ public class AutoAimCommand extends Command {
 	private void useDistance(double distance) {
 		shooterStart = Timer.getFPGATimestamp();
 		distance *= 25;
-		SmartDashboard.putNumber("Auto-Aim Velocity", distance);
+		if (RobotSpecificConfigs.debug()) {
+			SmartDashboard.putNumber("Auto-Aim Velocity", distance);
+		}
 		shooter.run(distance);
 	}
 
@@ -66,11 +69,13 @@ public class AutoAimCommand extends Command {
 	}
 
 	private void useShootingAngle(double angle) {
-		SmartDashboard.putNumber("Auto-Aim Position (initial)", angle);
 		double posRad = top_rad - angle;
-		SmartDashboard.putNumber("Auto-Aim Position (Rad)", posRad);
 		double posRotations = posRad / (Math.PI * 2);
-		SmartDashboard.putNumber("Auto-Aim Position (Rotations)", posRotations);
+		if (RobotSpecificConfigs.debug()) {
+			SmartDashboard.putNumber("Auto-Aim Position (initial)", angle);
+			SmartDashboard.putNumber("Auto-Aim Position (Rad)", posRad);
+			SmartDashboard.putNumber("Auto-Aim Position (Rotations)", posRotations);
+		}
 		posRotations = MathUtil.clamp(
 				posRotations,
 				ShooterPivot.Position.TOP_HARD_STOP.getPos(),
@@ -108,8 +113,10 @@ public class AutoAimCommand extends Command {
 	public void execute() {
 		boolean drivetrainGood = atRotation();
 		boolean shooterGood = shooterPivot.atPosition();
-		SmartDashboard.putBoolean("drivetrain at position", drivetrainGood);
-		SmartDashboard.putBoolean("shooter at position", shooterGood);
+		if (RobotSpecificConfigs.debug()) {
+			SmartDashboard.putBoolean("drivetrain at position", drivetrainGood);
+			SmartDashboard.putBoolean("shooter at position", shooterGood);
+		}
 		if (!done && drivetrainGood && shooterGood && Timer.getFPGATimestamp() - shooterStart >= 0.5) {
 			mag.runMagKicker();
 			done = true;

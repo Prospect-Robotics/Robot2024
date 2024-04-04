@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3104826280826942,
-        "y": 7.595790280548532
+        "x": 2.1644097380721457,
+        "y": 7.157571610516887
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.9337269587943684,
-        "y": 6.7972584818242
+        "x": 3.4401129774976043,
+        "y": 6.5245890871378425
       },
       "prevControl": {
-        "x": 2.5149846740974624,
-        "y": 7.6055284732159025
+        "x": 3.245349124150206,
+        "y": 7.1380952251821475
       },
       "nextControl": {
-        "x": 3.2710988604838738,
-        "y": 6.146052252981667
+        "x": 3.6493404730865335,
+        "y": 5.865522476032715
       },
       "isLocked": false,
       "linkedName": null
@@ -36,28 +36,22 @@
         "y": 5.531293435066112
       },
       "prevControl": {
-        "x": 2.0680353248803462,
-        "y": 5.9054044831413846
+        "x": 2.0962423894005564,
+        "y": 5.774748251750359
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.45,
-      "rotationDegrees": -42.51088582857621,
-      "rotateFast": true
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.25,
-      "maxWaypointRelativePos": 1.4,
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.55,
       "constraints": {
-        "maxVelocity": 1.5,
+        "maxVelocity": 0.8,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0
@@ -66,8 +60,25 @@
   ],
   "eventMarkers": [
     {
+      "name": "Intake",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "start-intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
       "name": "stop intake",
-      "waypointRelativePos": 1.35,
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -76,23 +87,6 @@
               "type": "named",
               "data": {
                 "name": "stop-intake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "start intake",
-      "waypointRelativePos": 0.15,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "start-intake"
               }
             }
           ]
@@ -115,7 +109,7 @@
   "folder": "B1-2SL Stuff",
   "previewStartingState": {
     "rotation": -1.3971810272964642,
-    "velocity": 0
+    "velocity": 0.0
   },
   "useDefaultConstraints": true
 }

@@ -39,6 +39,16 @@ public class RobotSpecificConfigs {
 		public double backRightOffset() {
 			return backRight;
 		}
+		public SwerveConfig add(SwerveConfig other) {
+			double frontRight = other.frontRight + this.frontRight;
+			double frontLeft = other.frontLeft + this.frontLeft;
+			double backLeft = other.backLeft + this.backLeft;
+			double backRight = other.backRight + this.backRight;
+			return new SwerveConfig(frontLeft, frontRight, backLeft, backRight);
+		}
+		public SwerveConfig negate() {
+			return new SwerveConfig(-frontLeft, -frontRight, -backLeft, -backRight);
+		}
 		/**
 		 * Creates a new SwerveConfig with their module offsets
 		 * @param frontLeft front left offset
@@ -103,6 +113,7 @@ public class RobotSpecificConfigs {
 	private static SwerveConfig swerveConfig = new SwerveConfig();
 	private static final Path swerveConfigPath = Path.of("/home", "lvuser", "swerveConfig.txt");
 	private static boolean loadedSwerveConfig;
+	private static boolean debugInfo;
 
 	public static String swerveCanbus() {
 		checkLoaded();
@@ -127,6 +138,11 @@ public class RobotSpecificConfigs {
 	public static boolean loadedSwerveConfig() {
 		checkLoaded();
 		return loadedSwerveConfig;
+	}
+
+	public static boolean debug() {
+		checkLoaded();
+		return debugInfo;
 	}
 
 	private static void checkLoaded() {
@@ -183,5 +199,7 @@ public class RobotSpecificConfigs {
 			}
 			loadedSwerveConfig = true;
 		}
+
+		debugInfo = DriverStation.getEventName() == "";
 	}
 }

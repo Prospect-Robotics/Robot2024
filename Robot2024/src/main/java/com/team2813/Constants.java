@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
 	public static class OperatorConstants {
 		public static final int operatorControllerPort = 1;
 		public static final CommandPS4Controller operatorController = new CommandPS4Controller(operatorControllerPort);
@@ -28,12 +29,17 @@ public final class Constants {
 
 		public static final Trigger ampInButton = operatorController.povRight();
 		public static final Trigger ampOutButton = operatorController.povLeft();
+		public static final Trigger shootButton = operatorController.circle();
+		public static final Trigger shootWooferFront = operatorController.cross(); // circle
+		public static final Trigger shootWooferSide = operatorController.PS();
+		public static final Trigger shootPodium = operatorController.square(); // cross
+		public static final Trigger shootAmp = operatorController.triangle();
+		public static final Trigger farSpeaker = operatorController.circle().and(() -> false); // square
+		public static final Trigger autoShootButton = operatorController.circle().and(() -> false); // square
 
-		public static final Trigger ampIntakeButton = operatorController.triangle(); //R2
-		public static final Trigger ampOuttakeButton = operatorController.square(); //L2
-		public static final Trigger shootButton = operatorController.circle(); // actually maps to square
-		// public static final Trigger spoolAutoAimButton = operatorController.options();
-		public static final Trigger spoolPodiumButton = operatorController.cross(); // actually maps to circle
+
+		//square = cross, cross = circle, circle = square
+
 		public static final Trigger climbButton = operatorController.share();
 		public static final Trigger climbUpButton = operatorController.povUp();
 		public static final Trigger climbDownButton = operatorController.povDown();
@@ -45,7 +51,8 @@ public final class Constants {
 		public static final CommandPS4Controller DRIVER_CONTROLLER = new CommandPS4Controller(driverControllerPort);
 		public static final Trigger slowmodeButton = DRIVER_CONTROLLER.L1();
 		public static final Trigger orientButton = DRIVER_CONTROLLER.options();
-		public static final Trigger spoolAutoAimButton = DRIVER_CONTROLLER.square();
+		public static final Trigger spoolAutoAimButton = DRIVER_CONTROLLER.square(); // actually maps to cross
+		public static final Trigger ampIntakeButton = DRIVER_CONTROLLER.triangle(); //R2
 	}
 
 	// front right swerve module
