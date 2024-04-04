@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.493451195049712,
-        "y": 4.124262377989042
+        "x": 2.510036705341268,
+        "y": 4.189354496640541
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9225250494771824,
-        "y": 4.196998253557519
+        "x": 1.9391105597687386,
+        "y": 4.262090372209018
       },
       "isLocked": false,
       "linkedName": "ASS P3 End"
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -37.44999151244059,
+    "rotation": -32.28947176720686,
     "rotateFast": false
   },
   "reversed": false,
