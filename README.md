@@ -22,7 +22,7 @@ $ git clone --recurse-submodules https://github.com/Prospect-Robotics/Robot2024.
 
 > [!NOTE]
 > Passing the https URL to `git clone` tends to work better than cloning using
-> SLL, since the Prospect High School WiFi seems to block outgoing connections
+> SSL, since the Prospect High School WiFi seems to block outgoing connections
 > to github on the default SSL port.
 
 ## Development
