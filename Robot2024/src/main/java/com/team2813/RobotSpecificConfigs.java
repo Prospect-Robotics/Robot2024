@@ -200,6 +200,6 @@ public class RobotSpecificConfigs {
 			loadedSwerveConfig = true;
 		}
 
-		debugInfo = DriverStation.getEventName() == "";
+		debugInfo = DriverStation.getEventName().isBlank();
 	}
 }

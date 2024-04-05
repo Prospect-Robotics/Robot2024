@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3464015540130732,
-      "y": 5.52155524239874
+      "x": 2.895982088260473,
+      "y": 5.543357259554025
     },
     "rotation": 0
   },
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot-side"
+            "name": "shoot-auto"
           }
         }
       ]
