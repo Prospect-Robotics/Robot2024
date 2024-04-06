@@ -32,12 +32,14 @@ import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.commands.LockFunctionCommand;
 import com.team2813.commands.SaveSwerveOffsetsCommand;
+import com.team2813.commands.ShootFromPosCommand;
 import com.team2813.subsystems.Amp;
 import com.team2813.subsystems.Climber;
 import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Intake;
 import com.team2813.subsystems.IntakePivot;
 import com.team2813.subsystems.IntakePivot.Rotations;
+import com.team2813.subsystems.ShooterPivot.Position;
 import com.team2813.subsystems.LEDs;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
@@ -96,6 +98,12 @@ public class RobotContainer {
 		NamedCommands.registerCommand("shoot-side", autoCommands.shootSide());
 		NamedCommands.registerCommand("shoot-auto", new AutonomousAutoAimCommand(shooter, shooterPivot, mag, drive::get3DPose));
 		NamedCommands.registerCommand("shoot-amp", autoCommands.shootAmp());
+		
+		NamedCommands.registerCommand("ASS_P2", new ShootFromPosCommand(mag, shooter, shooterPivot, Position.P2, 80));
+		NamedCommands.registerCommand("ASS_P3", new ShootFromPosCommand(mag, shooter, shooterPivot, Position.P3, 80));
+		NamedCommands.registerCommand("ASS_P4", new ShootFromPosCommand(mag, shooter, shooterPivot, Position.P4, 80));
+		NamedCommands.registerCommand("Herd_Shot", new ShootFromPosCommand(mag, shooter, shooterPivot, Position.HERD, 80));
+
 	}
 
 	private void configureBindings(AutoCommands autoCommands) {
