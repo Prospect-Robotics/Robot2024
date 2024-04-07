@@ -18,15 +18,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "shoot-auto"
+            "pathName": "SS 3P P2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3P Herd"
+            "pathName": "SS 3P P3"
           }
         }
       ]

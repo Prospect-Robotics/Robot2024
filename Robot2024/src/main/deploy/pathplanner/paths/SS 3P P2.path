@@ -1,0 +1,130 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.9188111867744817,
+        "y": 2.711309774197334
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.482099592906184,
+        "y": 1.8405184141329138
+      },
+      "isLocked": false,
+      "linkedName": "OutNShoot End"
+    },
+    {
+      "anchor": {
+        "x": 5.864922951672713,
+        "y": 0.5453387893727161
+      },
+      "prevControl": {
+        "x": 3.508280326169194,
+        "y": 0.574553367374826
+      },
+      "nextControl": {
+        "x": 6.206983174532604,
+        "y": 0.5410983733868496
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.28973292584782,
+        "y": 0.8374845693938137
+      },
+      "prevControl": {
+        "x": 8.104707265167791,
+        "y": 0.2921457800210976
+      },
+      "nextControl": {
+        "x": 8.52221690004053,
+        "y": 1.5227004933302182
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.732258757518702,
+        "y": 2.8825050295414942
+      },
+      "prevControl": {
+        "x": 5.251416813628408,
+        "y": 1.2075358907538694
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SS 3P Shoot"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Start-Intake",
+      "waypointRelativePos": 1.6,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "start-intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Stop-Intake",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "stop-intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -37.87498365109811,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
