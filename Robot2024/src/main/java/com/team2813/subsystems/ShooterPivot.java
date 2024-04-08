@@ -29,9 +29,11 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 		TalonFXWrapper result = new TalonFXWrapper(SHOOTER_PIVOT, InvertType.CLOCKWISE);
 		result.setNeutralMode(NeutralModeValue.Brake);
 		TalonFXConfigurator config = result.motor().getConfigurator();
+		// rotor to sensor : 14:64
+		// sensor to mech : 10:200
 		ConfigUtils.phoenix6Config(
-				() -> config.apply(new FeedbackConfigs().withRotorToSensorRatio(-640 / 7)
-						.withSensorToMechanismRatio(-20 / 1)
+				() -> config.apply(new FeedbackConfigs().withRotorToSensorRatio(-64 / 14)
+						.withSensorToMechanismRatio(-200 / 10)
 						.withFeedbackRemoteSensorID(SHOOTER_ENCODER)
 						.withFeedbackSensorSource(FeedbackSensorSourceValue.RemoteCANcoder)));
 		ConfigUtils.phoenix6Config(
