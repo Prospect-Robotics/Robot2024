@@ -20,8 +20,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoAimCommand extends Command {
 	// Math.PI - 1.330223 = angle from plate to top hard stop
-	// other angle is from top plate of shooter to the output of shooter
-	private static final double top_rad = Math.PI - 1.330223 + 1.11450128096;
+	// then, offset from intended position to bottom of shooter
+	// Finally, the offset from bottom to top
+	private static final double top_rad = Math.PI - 1.330223 + 1.11450128096 - 1.820434;
 
 	private final Shooter shooter;
 	private final ShooterPivot shooterPivot;
@@ -69,9 +70,9 @@ public class AutoAimCommand extends Command {
 	}
 
 	private void useShootingAngle(double angle) {
-		// top_rad - (angle + b)
-		// top_rad - angle - b
-		// (top_rad - b) - angle
+		// top_rad - (angle + b) - shooter_size
+		// top_rad - angle - shooter_size - b
+		// (top_rad - b - shooter_size) - angle
 		double posRad = top_rad - angle;
 		double posRotations = posRad / (Math.PI * 2);
 		if (RobotSpecificConfigs.debug()) {
