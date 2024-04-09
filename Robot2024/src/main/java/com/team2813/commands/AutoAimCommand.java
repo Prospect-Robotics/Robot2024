@@ -22,7 +22,8 @@ public class AutoAimCommand extends Command {
 	// Math.PI - 1.330223 = angle from plate to top hard stop
 	// then, offset from intended position to bottom of shooter
 	// Finally, the offset from bottom to top
-	private static final double top_rad = Math.PI - 1.330223 + 1.11450128096 - 1.820434;
+	private static final double topRad = Math.PI - 1.330223 + 1.11450128096 - 1.820434;
+	private static final double forwardOffset = 0.064494;
 
 	private final Shooter shooter;
 	private final ShooterPivot shooterPivot;
@@ -73,7 +74,7 @@ public class AutoAimCommand extends Command {
 		// top_rad - (angle + b) - shooter_size
 		// top_rad - angle - shooter_size - b
 		// (top_rad - b - shooter_size) - angle
-		double posRad = top_rad - angle;
+		double posRad = topRad - angle;
 		double posRotations = posRad / (Math.PI * 2);
 		if (RobotSpecificConfigs.debug()) {
 			SmartDashboard.putNumber("Auto-Aim Position (initial)", angle);
@@ -101,6 +102,9 @@ public class AutoAimCommand extends Command {
 		done = false;
 		Pose3d pose = getPose();
 		Transform3d diff = pose.minus(speakerPos);
+		double angle = Math.atan2(diff.getY(), diff.getX());
+		Transform3d offset = new Transform3d(Math.sin(angle) * forwardOffset, Math.cos(angle) * forwardOffset, 0, new Rotation3d()).inverse();
+		diff = diff.plus(offset);
 		double z = Math.abs(diff.getZ()) - 0.266586;
 		useRotationAngle(new Rotation2d(Math.atan2(diff.getY(), diff.getX())));
 		double flatDistance = Math.hypot(diff.getX(), diff.getY());

@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class AutonomousAutoAimCommand extends Command {
 	// Math.PI - 1.330223 = angle from plate to top hard stop
 	// other angle is from top plate of shooter to the output of shooter`
-	private static final double top_rad = Math.PI - 1.55690 - 0.851438;
+	private static final double top_rad = Math.PI - 1.330223 + 1.11450128096 - 1.820434;
 	private static final double forwardOffset = 0.064494;
 
 	private final Shooter shooter;
@@ -55,7 +55,7 @@ public class AutonomousAutoAimCommand extends Command {
 
 	private void useDistance(double distance) {
 		shooterStart = Timer.getFPGATimestamp();
-		distance *= 25;
+		distance *= 35;
 		SmartDashboard.putNumber("Auto-Aim Velocity", distance);
 		shooter.run(distance);
 	}
@@ -88,9 +88,9 @@ public class AutonomousAutoAimCommand extends Command {
 		speakerPos = isBlue() ? blueSpeakerPos : redSpeakerPos;
 		done = false;
 		Pose3d pose = getPose();
+		double rotationAngle = pose.getRotation().getAngle();
 		Transform3d diff = pose.minus(speakerPos);
-		double angle = Math.atan2(diff.getY(), diff.getX());
-		Transform3d offset = new Transform3d(Math.sin(angle) * forwardOffset, Math.cos(angle) * forwardOffset, 0, new Rotation3d()).inverse();
+		Transform3d offset = new Transform3d(Math.sin(rotationAngle) * forwardOffset, Math.cos(rotationAngle) * forwardOffset, 0, new Rotation3d()).inverse();
 		diff = diff.plus(offset);
 		double z = Math.abs(diff.getZ()) - 0.266586;
 		double flatDistance = Math.hypot(diff.getX(), diff.getY());
@@ -102,7 +102,7 @@ public class AutonomousAutoAimCommand extends Command {
 	public void execute() {
 		boolean shooterGood = shooterPivot.atPosition();
 		SmartDashboard.putBoolean("shooter at position", shooterGood);
-		if (!done && shooter.atVelocity() && (shooterGood  || Timer.getFPGATimestamp() - shooterStart >= 0.5)) {
+		if (!done && shooter.atVelocity() && shooterGood && (shooterGood  || Timer.getFPGATimestamp() - shooterStart >= 0.5)) {
 			mag.runMagKicker();
 			done = true;
 			magStart = Timer.getFPGATimestamp();

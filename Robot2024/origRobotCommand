@@ -1,0 +1,1 @@
+/usr/local/frc/JRE/bin/java -XX:+UseSerialGC -Djava.lang.invoke.stringConcat=BC_SB -Djava.library.path=/usr/local/frc/third-party/lib -jar "/home/lvuser/Robot2024.jar" 
