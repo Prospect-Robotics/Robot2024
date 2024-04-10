@@ -21,8 +21,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutonomousAutoAimCommand extends Command {
 	// Math.PI - 1.330223 = angle from plate to top hard stop
-	// other angle is from top plate of shooter to the output of shooter`
-	private static final double top_rad = Math.PI - 1.330223 + 1.11450128096 - 1.820434;
+	private static final double top_rad = Math.PI - 1.330223 - 0.851435044127;
 	private static final double forwardOffset = 0.064494;
 
 	private final Shooter shooter;
