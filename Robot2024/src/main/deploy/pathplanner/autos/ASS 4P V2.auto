@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.69,
+      "y": 6.71
+    },
+    "rotation": 58.649737429415026
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ASS 4P V2 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ASS 4P V2 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ASS 4P V2 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ASS 4P V2 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ASS 4P V2 5"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

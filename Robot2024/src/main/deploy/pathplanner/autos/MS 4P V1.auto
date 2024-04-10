@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MS 4P V1 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MS 4P V1 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MS 4P V1 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MS 4P V1 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MS 4P V1 5"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

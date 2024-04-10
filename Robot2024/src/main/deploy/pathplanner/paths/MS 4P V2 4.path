@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.05,
+        "y": 5.46
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.727220864970004,
+        "y": 5.865164071287965
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.293139737321141,
+        "y": 2.436338169737351
+      },
+      "prevControl": {
+        "x": 6.906687224832784,
+        "y": 3.0700008107605496
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -28.839089530400432,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "MS 4P",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

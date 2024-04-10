@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.887753674502885,
+        "y": 6.99
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.760055367952998,
+        "y": 7.438720369442227
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.290784114120312,
+        "y": 7.4435277637296355
+      },
+      "prevControl": {
+        "x": 6.980769170801735,
+        "y": 7.959313096825599
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.09692981677546111,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "ASS 4P V2",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
