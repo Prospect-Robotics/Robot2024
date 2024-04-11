@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoAimCommand extends Command {
-	// Math.PI - 1.330223 = angle from plate to top hard stop
-	private static final double top_rad = Math.PI - 1.330223 - 0.851435044127;
+	// Math.PI - 1.155690 = angle from plate to top hard stop
+	private static final double top_rad = Math.PI - 1.155690 - 0.866410453899;
 	private static final double forwardOffset = 0.064494;
 
 	private final Shooter shooter;
@@ -98,9 +98,9 @@ public class AutoAimCommand extends Command {
 		Pose3d pose = getPose();
 		Transform3d diff = pose.minus(speakerPos);
 		double angle = Math.atan2(diff.getY(), diff.getX());
-		Transform3d offset = new Transform3d(Math.sin(angle) * forwardOffset, Math.cos(angle) * forwardOffset, 0, new Rotation3d()).inverse();
+		Transform3d offset = new Transform3d(Math.sin(angle) * forwardOffset, Math.cos(angle) * forwardOffset, 0.266586, new Rotation3d()).inverse();
 		diff = diff.plus(offset);
-		double z = Math.abs(diff.getZ()) - 0.266586;
+		double z = Math.abs(diff.getZ());
 		useRotationAngle(new Rotation2d(Math.atan2(diff.getY(), diff.getX())));
 		double flatDistance = Math.hypot(diff.getX(), diff.getY());
 		useDistance(Math.hypot(z, flatDistance));

@@ -39,6 +39,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -86,7 +87,7 @@ public class Drive extends SubsystemBase {
 		Slot0Configs driveGains = new Slot0Configs()
 			.withKP(2.5).withKI(0).withKD(0)
 			.withKS(0).withKV(0).withKA(0);
-
+			
 		SwerveDrivetrainConstants drivetrainConstants = new SwerveDrivetrainConstants()
 			.withPigeon2Id(PIGEON_ID)
 			.withCANbusName(RobotSpecificConfigs.swerveCanbus());
@@ -94,7 +95,7 @@ public class Drive extends SubsystemBase {
 			.withDriveMotorGearRatio(6.75)
 			.withSteerMotorGearRatio(150.0 / 7)
 			.withWheelRadius(1.75)
-			.withSlipCurrent(300) // tune :)
+			.withSlipCurrent(90) // tune :)
 			.withSteerMotorGains(steerGains)
 			.withDriveMotorGains(driveGains)
 			.withSteerMotorClosedLoopOutput(ClosedLoopOutputType.Voltage)
@@ -132,9 +133,9 @@ public class Drive extends SubsystemBase {
 		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
 		PublicisizedKinematics drivetrain = new PublicisizedKinematics(drivetrainConstants, constants);
 		this.drivetrain = drivetrain;
-		for (int i = 0; i < 4; i++) {
-			setLimits(i);
-		}
+		// for (int i = 0; i < 4; i++) {
+		// 	setLimits(i);
+		// }
 		AutoBuilder.configureHolonomic(
 			this::getAutoPose,
 			this::resetOdometry,

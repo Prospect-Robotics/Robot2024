@@ -16,6 +16,7 @@ import com.team2813.lib2813.control.PIDMotor;
 import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.util.ConfigUtils;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -63,6 +64,7 @@ public class Shooter extends SubsystemBase {
 	}
 
 	public void run(double demand) {
+		demand = MathUtil.clamp(demand, 0, 100);
 		targetVelocity = demand;
 		shooterMotor.set(ControlMode.VELOCITY, demand);
 	}

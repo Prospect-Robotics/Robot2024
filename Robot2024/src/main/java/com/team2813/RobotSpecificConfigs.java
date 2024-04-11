@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.ClosedLoopOutputType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class RobotSpecificConfigs {
@@ -58,16 +59,10 @@ public class RobotSpecificConfigs {
 		 * @throws IllegalArgumentException if an offset is larger than a full circle
 		 */
 		public SwerveConfig(double frontLeft, double frontRight, double backLeft, double backRight) {
-			String message = "%s offset cannot be larger than a full circle";
-			if (Math.abs(frontLeft) > 1) {
-				throw new IllegalArgumentException(String.format(message, "front left"));
-			} else if (Math.abs(frontRight) > 1) {
-				throw new IllegalArgumentException(String.format(message, "front right"));
-			} else if (Math.abs(backLeft) > 1) {
-				throw new IllegalArgumentException(String.format(message, "back left"));
-			} else if (Math.abs(backRight) > 1) {
-				throw new IllegalArgumentException(String.format(message, "back right"));
-			}
+			frontLeft = MathUtil.inputModulus(frontLeft, -1, 1);
+			frontRight = MathUtil.inputModulus(frontRight, -1, 1);
+			backLeft = MathUtil.inputModulus(backLeft, -1, 1);
+			backRight = MathUtil.inputModulus(backRight, -1, 1);
 			this.frontLeft = frontLeft;
 			this.frontRight = frontRight;
 			this.backLeft = backLeft;

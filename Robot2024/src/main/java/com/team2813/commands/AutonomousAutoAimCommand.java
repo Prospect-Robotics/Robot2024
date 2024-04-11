@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutonomousAutoAimCommand extends Command {
-	// Math.PI - 1.330223 = angle from plate to top hard stop
-	private static final double top_rad = Math.PI - 1.330223 - 0.851435044127;
+	// Math.PI - 1.155690 = angle from plate to top hard stop
+	private static final double top_rad = Math.PI - 1.155690 - 0.841437697717;
 	private static final double forwardOffset = 0.064494;
 
 	private final Shooter shooter;
@@ -89,9 +89,9 @@ public class AutonomousAutoAimCommand extends Command {
 		Pose3d pose = getPose();
 		double rotationAngle = pose.getRotation().getAngle();
 		Transform3d diff = pose.minus(speakerPos);
-		Transform3d offset = new Transform3d(Math.sin(rotationAngle) * forwardOffset, Math.cos(rotationAngle) * forwardOffset, 0, new Rotation3d()).inverse();
+		Transform3d offset = new Transform3d(Math.sin(rotationAngle) * forwardOffset, Math.cos(rotationAngle) * forwardOffset, 0.266586, new Rotation3d()).inverse();
 		diff = diff.plus(offset);
-		double z = Math.abs(diff.getZ()) - 0.266586;
+		double z = Math.abs(diff.getZ());
 		double flatDistance = Math.hypot(diff.getX(), diff.getY());
 		useDistance(Math.hypot(z, flatDistance));
 		useShootingAngle(Math.atan2(z, flatDistance));
@@ -101,7 +101,7 @@ public class AutonomousAutoAimCommand extends Command {
 	public void execute() {
 		boolean shooterGood = shooterPivot.atPosition();
 		SmartDashboard.putBoolean("shooter at position", shooterGood);
-		if (!done && shooter.atVelocity() && shooterGood && (shooterGood  || Timer.getFPGATimestamp() - shooterStart >= 0.5)) {
+		if (!done && shooter.atVelocity() && (shooterGood  || Timer.getFPGATimestamp() - shooterStart >= 0.5)) {
 			mag.runMagKicker();
 			done = true;
 			magStart = Timer.getFPGATimestamp();
