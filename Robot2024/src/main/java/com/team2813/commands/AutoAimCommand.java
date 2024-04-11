@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoAimCommand extends Command {
 	// Math.PI - 1.155690 = angle from plate to top hard stop
-	private static final double top_rad = Math.PI - 1.155690 - 0.866410453899;
+	private static final double top_rad = Math.PI - 1.155690 - 0.811437697717;
 	private static final double forwardOffset = 0.064494;
 
 	private final Shooter shooter;
@@ -120,7 +120,7 @@ public class AutoAimCommand extends Command {
 			SmartDashboard.putBoolean("drivetrain at position", drivetrainGood);
 			SmartDashboard.putBoolean("shooter at position", shooterGood);
 		}
-		if (!done && drivetrainGood && shooterGood && Timer.getFPGATimestamp() - shooterStart >= 0.5) {
+		if (!done && shooter.atVelocity() && (shooterGood  || Timer.getFPGATimestamp() - shooterStart >= 0.5) && (drivetrainGood || Timer.getFPGATimestamp() - shooterStart >= 1.5)) {
 			mag.runMagKicker();
 			done = true;
 			magStart = Timer.getFPGATimestamp();

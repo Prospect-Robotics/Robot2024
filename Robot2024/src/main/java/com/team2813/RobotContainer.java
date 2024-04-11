@@ -12,6 +12,7 @@ import static com.team2813.Constants.DriverConstants.spoolAutoAimButton;
 import static com.team2813.Constants.OperatorConstants.altOuttakeButton;
 import static com.team2813.Constants.OperatorConstants.ampInButton;
 import static com.team2813.Constants.OperatorConstants.ampOutButton;
+import static com.team2813.Constants.OperatorConstants.autoAimButton;
 import static com.team2813.Constants.OperatorConstants.autoShootButton;
 import static com.team2813.Constants.OperatorConstants.climbDownButton;
 import static com.team2813.Constants.OperatorConstants.climbUpButton;
@@ -27,6 +28,7 @@ import static com.team2813.Constants.OperatorConstants.shootWooferSide;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.team2813.commands.AutoAimCommand;
 import com.team2813.commands.AutonomousAutoAimCommand;
 import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
@@ -203,6 +205,7 @@ public class RobotContainer {
 		shootAmp.onTrue(autoCommands.shootAmp());
 		shootPodium.onTrue(autoCommands.shootPodium());
 		farSpeaker.onTrue(autoCommands.farSpeaker());
+		autoAimButton.onTrue(new AutoAimCommand(shooter, shooterPivot, mag, drive));
 	}
 
 	public Command getAutonomousCommand() {

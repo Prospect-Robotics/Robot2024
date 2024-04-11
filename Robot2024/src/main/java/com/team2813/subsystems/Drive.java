@@ -39,7 +39,6 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.units.Measure;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -288,13 +287,24 @@ public class Drive extends SubsystemBase {
 		return new Pose2d(x, y, pose.getRotation());
 	}
 
+	private void updatePosition(Pose3d pose) {
+		if (!useLimelightOffset) {
+			drivetrain.seedFieldRelative(pose.toPose2d());
+		} else {
+			drivetrain.addVisionMeasurement(pose.toPose2d(), limelight.getCaptureLatency().orElse(0));
+		}
+		useLimelightOffset = true;
+		correctRotation = true;
+	}
+
 	@Override
 	public void periodic() {
 		
 		SmartDashboard.putData(field);
-
 		SmartDashboard.putString("json", limelight.getJsonDump().map(Object::toString).orElse("NONE"));
+		limelight.getLocationalData().getBotpose().ifPresent(this::updatePosition);
 		// if we have a position from the robot, and we arx`e in teleop, update our pose
+
 		field.setRobotPose(getAutoPose());
 	}
 }
