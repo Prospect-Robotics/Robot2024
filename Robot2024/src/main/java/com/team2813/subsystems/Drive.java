@@ -86,7 +86,7 @@ public class Drive extends SubsystemBase {
 		Slot0Configs driveGains = new Slot0Configs()
 			.withKP(2.5).withKI(0).withKD(0)
 			.withKS(0).withKV(0).withKA(0);
-
+			
 		SwerveDrivetrainConstants drivetrainConstants = new SwerveDrivetrainConstants()
 			.withPigeon2Id(PIGEON_ID)
 			.withCANbusName(RobotSpecificConfigs.swerveCanbus());
@@ -94,7 +94,7 @@ public class Drive extends SubsystemBase {
 			.withDriveMotorGearRatio(6.75)
 			.withSteerMotorGearRatio(150.0 / 7)
 			.withWheelRadius(1.75)
-			.withSlipCurrent(300) // tune :)
+			.withSlipCurrent(90) // tune :)
 			.withSteerMotorGains(steerGains)
 			.withDriveMotorGains(driveGains)
 			.withSteerMotorClosedLoopOutput(ClosedLoopOutputType.Voltage)
@@ -132,9 +132,9 @@ public class Drive extends SubsystemBase {
 		SwerveModuleConstants[] constants = new SwerveModuleConstants[]{frontLeft, frontRight, backLeft, backRight};
 		PublicisizedKinematics drivetrain = new PublicisizedKinematics(drivetrainConstants, constants);
 		this.drivetrain = drivetrain;
-		for (int i = 0; i < 4; i++) {
-			setLimits(i);
-		}
+		// for (int i = 0; i < 4; i++) {
+		// 	setLimits(i);
+		// }
 		AutoBuilder.configureHolonomic(
 			this::getAutoPose,
 			this::resetOdometry,
@@ -287,13 +287,24 @@ public class Drive extends SubsystemBase {
 		return new Pose2d(x, y, pose.getRotation());
 	}
 
+	private void updatePosition(Pose3d pose) {
+		if (!useLimelightOffset) {
+			drivetrain.seedFieldRelative(pose.toPose2d());
+		} else {
+			drivetrain.addVisionMeasurement(pose.toPose2d(), limelight.getCaptureLatency().orElse(0));
+		}
+		useLimelightOffset = true;
+		correctRotation = true;
+	}
+
 	@Override
 	public void periodic() {
 		
 		SmartDashboard.putData(field);
-
 		SmartDashboard.putString("json", limelight.getJsonDump().map(Object::toString).orElse("NONE"));
+		limelight.getLocationalData().getBotpose().ifPresent(this::updatePosition);
 		// if we have a position from the robot, and we arx`e in teleop, update our pose
+
 		field.setRobotPose(getAutoPose());
 	}
 }

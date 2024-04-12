@@ -2,6 +2,7 @@ package com.team2813.commands;
 
 import java.util.function.Supplier;
 
+import com.team2813.RobotSpecificConfigs;
 import com.team2813.lib2813.limelight.Limelight;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
@@ -19,9 +20,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutonomousAutoAimCommand extends Command {
-	// Math.PI - 1.330223 = angle from plate to top hard stop
-	// other angle is from top plate of shooter to the output of shooter`
-	private static final double top_rad = Math.PI - 1.330223 - 0.851438245792;
+	// Math.PI - 1.155690 = angle from plate to top hard stop
+	private static final double top_rad = Math.PI - 1.155690 - 0.811437697717;
+	private static final double forwardOffset = 0.064494;
 
 	private final Shooter shooter;
 	private final ShooterPivot shooterPivot;
@@ -53,17 +54,19 @@ public class AutonomousAutoAimCommand extends Command {
 
 	private void useDistance(double distance) {
 		shooterStart = Timer.getFPGATimestamp();
-		distance *= 25;
+		distance *= 35;
 		SmartDashboard.putNumber("Auto-Aim Velocity", distance);
 		shooter.run(distance);
 	}
 
 	private void useShootingAngle(double angle) {
-		SmartDashboard.putNumber("Auto-Aim Position (initial)", angle);
 		double posRad = top_rad - angle;
-		SmartDashboard.putNumber("Auto-Aim Position (Rad)", posRad);
 		double posRotations = posRad / (Math.PI * 2);
-		SmartDashboard.putNumber("Auto-Aim Position (Rotations)", posRotations);
+		if (RobotSpecificConfigs.debug()) {
+			SmartDashboard.putNumber("Auto-Aim Position (initial)", angle);
+			SmartDashboard.putNumber("Auto-Aim Position (Rad)", posRad);
+			SmartDashboard.putNumber("Auto-Aim Position (Rotations)", posRotations);
+		}
 		posRotations = MathUtil.clamp(
 				posRotations,
 				ShooterPivot.Position.TOP_HARD_STOP.getPos(),
@@ -84,8 +87,11 @@ public class AutonomousAutoAimCommand extends Command {
 		speakerPos = isBlue() ? blueSpeakerPos : redSpeakerPos;
 		done = false;
 		Pose3d pose = getPose();
+		double rotationAngle = pose.getRotation().getAngle();
 		Transform3d diff = pose.minus(speakerPos);
-		double z = Math.abs(diff.getZ()) - 0.266586 * 2.5;
+		Transform3d offset = new Transform3d(Math.sin(rotationAngle) * forwardOffset, Math.cos(rotationAngle) * forwardOffset, 0.266586, new Rotation3d()).inverse();
+		diff = diff.plus(offset);
+		double z = Math.abs(diff.getZ());
 		double flatDistance = Math.hypot(diff.getX(), diff.getY());
 		useDistance(Math.hypot(z, flatDistance));
 		useShootingAngle(Math.atan2(z, flatDistance));

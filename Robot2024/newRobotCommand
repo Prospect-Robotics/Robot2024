@@ -1,0 +1,1 @@
+/usr/local/frc/JRE/bin/java -XX:+UseSerialGC -Djava.lang.invoke.stringConcat=BC_SB -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=10.28.13.2:8000 -Djava.library.path=/usr/local/frc/third-party/lib -jar "/home/lvuser/Robot2024.jar" 
