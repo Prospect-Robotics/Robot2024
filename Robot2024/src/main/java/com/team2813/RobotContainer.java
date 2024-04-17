@@ -9,6 +9,7 @@ import static com.team2813.Constants.DriverConstants.autoAimButton;
 import static com.team2813.Constants.DriverConstants.driverControllerPort;
 import static com.team2813.Constants.DriverConstants.orientButton;
 import static com.team2813.Constants.DriverConstants.slowmodeButton;
+import static com.team2813.Constants.DriverConstants.sourceIntake;
 import static com.team2813.Constants.DriverConstants.spoolAutoAimButton;
 import static com.team2813.Constants.OperatorConstants.altOuttakeButton;
 import static com.team2813.Constants.OperatorConstants.ampInButton;
@@ -40,6 +41,7 @@ import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Intake;
 import com.team2813.subsystems.IntakePivot;
 import com.team2813.subsystems.IntakePivot.Rotations;
+import com.team2813.subsystems.ShooterPivot.Position;
 import com.team2813.subsystems.LEDs;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
@@ -206,6 +208,24 @@ public class RobotContainer {
 		shootPodium.onTrue(autoCommands.shootPodium());
 		farSpeaker.onTrue(autoCommands.farSpeaker());
 		autoAimButton.onTrue(new AutoAimCommand(shooter, shooterPivot, mag, drive));
+
+		sourceIntake.onTrue(
+			new ParallelCommandGroup(
+				new InstantCommand(() -> shooterPivot.setSetpoint(Position.SOURCE_INTAKE), shooterPivot),
+				new InstantCommand(shooter::reverse, shooter)
+			)
+		);
+		sourceIntake.onFalse(
+			new SequentialCommandGroup(
+				new InstantCommand(mag::reverseMag, mag),
+				new WaitCommand(0.5),
+				new ParallelCommandGroup(
+					new InstantCommand(shooter::stop, shooter),
+					new InstantCommand(mag::stop, mag),
+					new InstantCommand(shooterPivot::disable, shooterPivot)
+				)
+			)
+		);
 	}
 
 	public Command getAutonomousCommand() {

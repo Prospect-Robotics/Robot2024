@@ -58,6 +58,11 @@ public class Shooter extends SubsystemBase {
 		return shooterMotor.getVelocity() - targetVelocity > -1;
 	}
 
+	public void reverse() {
+		targetVelocity = 0;
+		shooterMotor.set(ControlMode.DUTY_CYCLE, -0.2);
+	}
+
 	public void stop() {
 		targetVelocity = 0;
 		shooterMotor.set(ControlMode.VELOCITY, 0);

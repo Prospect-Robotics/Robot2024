@@ -53,6 +53,7 @@ public final class Constants {
 		public static final Trigger spoolAutoAimButton = DRIVER_CONTROLLER.square(); // actually maps to cross
 		public static final Trigger ampIntakeButton = DRIVER_CONTROLLER.triangle(); //R2
 		public static final Trigger autoAimButton = DRIVER_CONTROLLER.R1();
+		public static final Trigger sourceIntake = DRIVER_CONTROLLER.L2(); //share
 	}
 
 	// front right swerve module
