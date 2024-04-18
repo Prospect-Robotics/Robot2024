@@ -210,19 +210,27 @@ public class RobotContainer {
 		autoAimButton.onTrue(new AutoAimCommand(shooter, shooterPivot, mag, drive));
 
 		sourceIntake.onTrue(
-			new ParallelCommandGroup(
-				new InstantCommand(() -> shooterPivot.setSetpoint(Position.SOURCE_INTAKE), shooterPivot),
+			new SequentialCommandGroup(
+				new LockFunctionCommand(shooterPivot::atPosition, () -> shooterPivot.setSetpoint(Position.SOURCE_INTAKE), shooterPivot),
 				new InstantCommand(shooter::reverse, shooter)
 			)
 		);
 		sourceIntake.onFalse(
 			new SequentialCommandGroup(
-				new InstantCommand(mag::reverseMag, mag),
-				new WaitCommand(0.5),
+				new ParallelCommandGroup(
+					new InstantCommand(mag::reverseMag, mag),
+					new InstantCommand(intake::outtakeNote, intake)
+				),
+				new WaitCommand(0.1),
 				new ParallelCommandGroup(
 					new InstantCommand(shooter::stop, shooter),
-					new InstantCommand(mag::stop, mag),
-					new InstantCommand(shooterPivot::disable, shooterPivot)
+					new InstantCommand(intake::intake, intake),
+					new InstantCommand(mag::runOnlyMag, mag)
+				),
+				new WaitCommand(0.1),
+				new ParallelCommandGroup(
+					new InstantCommand(intake::stopIntakeMotor, intake),
+					new InstantCommand(mag::stop, mag)
 				)
 			)
 		);

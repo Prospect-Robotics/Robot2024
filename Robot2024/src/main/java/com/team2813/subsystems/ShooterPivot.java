@@ -20,7 +20,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	public ShooterPivot() {
 		super(new MotorSubsystemConfiguration(
-				pivotMotor()).acceptableError(0.004)
+				pivotMotor())
 				.PID(3.4, 0, 0).startingPosition(Position.TOP_HARD_STOP));
 		SmartDashboard.putData("Shooter Pivot PID", m_controller);
 	}
@@ -57,6 +57,11 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 	}
 
 	@Override
+	public boolean atPosition() {
+		return Math.abs(getMeasurement() - getSetpoint()) < 0.004;
+	}
+
+	@Override
 	public void periodic() {
 		super.periodic();
 		SmartDashboard.putNumber("Shoooter Pivot CANCoder Position", encoder.position());
@@ -70,7 +75,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 		PODIUM(0.076660),
 		TEST(0.067871),
 		FAR_SPEAKER(0.088135),
-		SOURCE_INTAKE(0),
+		SOURCE_INTAKE(0.048096),
 		BOTTOM_HARD_STOP(0.099854);
 
 		private final double pos;
