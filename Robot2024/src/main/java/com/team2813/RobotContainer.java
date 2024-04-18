@@ -9,7 +9,6 @@ import static com.team2813.Constants.DriverConstants.autoAimButton;
 import static com.team2813.Constants.DriverConstants.driverControllerPort;
 import static com.team2813.Constants.DriverConstants.orientButton;
 import static com.team2813.Constants.DriverConstants.slowmodeButton;
-import static com.team2813.Constants.DriverConstants.sourceIntake;
 import static com.team2813.Constants.DriverConstants.spoolAutoAimButton;
 import static com.team2813.Constants.OperatorConstants.altOuttakeButton;
 import static com.team2813.Constants.OperatorConstants.ampInButton;
@@ -26,6 +25,7 @@ import static com.team2813.Constants.OperatorConstants.shootButton;
 import static com.team2813.Constants.OperatorConstants.shootPodium;
 import static com.team2813.Constants.OperatorConstants.shootWooferFront;
 import static com.team2813.Constants.OperatorConstants.shootWooferSide;
+import static com.team2813.Constants.OperatorConstants.sourceIntake;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -41,11 +41,11 @@ import com.team2813.subsystems.Drive;
 import com.team2813.subsystems.Intake;
 import com.team2813.subsystems.IntakePivot;
 import com.team2813.subsystems.IntakePivot.Rotations;
-import com.team2813.subsystems.ShooterPivot.Position;
 import com.team2813.subsystems.LEDs;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
 import com.team2813.subsystems.ShooterPivot;
+import com.team2813.subsystems.ShooterPivot.Position;
 
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.XboxController;
