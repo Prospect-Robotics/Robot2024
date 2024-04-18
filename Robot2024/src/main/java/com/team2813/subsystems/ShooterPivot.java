@@ -20,7 +20,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	public ShooterPivot() {
 		super(new MotorSubsystemConfiguration(
-				pivotMotor())
+				pivotMotor()).acceptableError(0.004)
 				.PID(3.4, 0, 0).startingPosition(Position.TOP_HARD_STOP));
 		SmartDashboard.putData("Shooter Pivot PID", m_controller);
 	}
@@ -54,11 +54,6 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 			output -= 0.15;
 		}
 		super.useOutput(output, setpoint);
-	}
-
-	@Override
-	public boolean atPosition() {
-		return Math.abs(getMeasurement() - getSetpoint()) < 0.004;
 	}
 
 	@Override
