@@ -25,6 +25,7 @@ import static com.team2813.Constants.OperatorConstants.shootButton;
 import static com.team2813.Constants.OperatorConstants.shootPodium;
 import static com.team2813.Constants.OperatorConstants.shootWooferFront;
 import static com.team2813.Constants.OperatorConstants.shootWooferSide;
+import static com.team2813.Constants.OperatorConstants.sourceIntake;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -44,6 +45,7 @@ import com.team2813.subsystems.LEDs;
 import com.team2813.subsystems.Magazine;
 import com.team2813.subsystems.Shooter;
 import com.team2813.subsystems.ShooterPivot;
+import com.team2813.subsystems.ShooterPivot.Position;
 
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.XboxController;
@@ -206,6 +208,32 @@ public class RobotContainer {
 		shootPodium.onTrue(autoCommands.shootPodium());
 		farSpeaker.onTrue(autoCommands.farSpeaker());
 		autoAimButton.onTrue(new AutoAimCommand(shooter, shooterPivot, mag, drive));
+
+		sourceIntake.onTrue(
+			new SequentialCommandGroup(
+				new LockFunctionCommand(shooterPivot::atPosition, () -> shooterPivot.setSetpoint(Position.SOURCE_INTAKE), shooterPivot),
+				new InstantCommand(shooter::reverse, shooter)
+			)
+		);
+		sourceIntake.onFalse(
+			new SequentialCommandGroup(
+				new ParallelCommandGroup(
+					new InstantCommand(mag::reverseMag, mag),
+					new InstantCommand(intake::outtakeNote, intake)
+				),
+				new WaitCommand(0.1),
+				new ParallelCommandGroup(
+					new InstantCommand(shooter::stop, shooter),
+					new InstantCommand(intake::intake, intake),
+					new InstantCommand(mag::runOnlyMag, mag)
+				),
+				new WaitCommand(0.1),
+				new ParallelCommandGroup(
+					new InstantCommand(intake::stopIntakeMotor, intake),
+					new InstantCommand(mag::stop, mag)
+				)
+			)
+		);
 	}
 
 	public Command getAutonomousCommand() {

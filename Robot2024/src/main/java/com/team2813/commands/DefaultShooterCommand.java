@@ -48,7 +48,7 @@ public final class DefaultShooterCommand extends Command {
 		double val = control.getAsDouble();
 		if (Math.abs(val) > DEADZONE) {
 			shooterPivot.set(ControlMode.DUTY_CYCLE, val * MULTIPLIER);
-		} else {
+		} else if (!shooterPivot.isEnabled()) {
 			shooterPivot.set(ControlMode.DUTY_CYCLE, 0);
 		}
 	}

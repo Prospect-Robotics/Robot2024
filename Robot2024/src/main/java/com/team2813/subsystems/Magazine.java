@@ -48,5 +48,6 @@ public class Magazine extends SubsystemBase {
 
 	public void reverseMag() {
 		magMotor.set(ControlMode.DUTY_CYCLE, -0.6);
+		kickerMotor.set(ControlMode.DUTY_CYCLE, -0.6);
 	}
 }

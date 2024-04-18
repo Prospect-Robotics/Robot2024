@@ -163,13 +163,6 @@ public class Drive extends SubsystemBase {
 		Shuffleboard.getTab("swerve").add("rotation PID", facingRequest.HeadingController);
 	}
 
-	private void setLimits(int module) {
-		drivetrain.getModule(0).getDriveMotor()
-		.getConfigurator().apply(new CurrentLimitsConfigs()
-		.withSupplyCurrentLimit(40)
-		.withSupplyCurrentLimitEnable(true));
-	}
-
 	final SwerveRequest.FieldCentricFacingAngle facingRequest;
 
 	public void turnToFace(Rotation2d rotation) {
