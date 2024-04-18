@@ -43,14 +43,14 @@ public final class Constants {
 		public static final Trigger climbUpButton = operatorController.povUp().and(() -> false);
 		public static final Trigger climbDownButton = operatorController.povDown();
 		public static final Trigger altOuttakeButton = new Trigger(() -> operatorXboxController.getLeftTriggerAxis() >= 0.5).and(() -> false);
-		public static final Trigger sourceIntake = operatorController.povUp(); //share
+		public static final Trigger sourceIntake = operatorController.povUp();
 
 	}
 	public static class DriverConstants {
 		public static final int driverControllerPort = 0;
 		public static final CommandPS4Controller DRIVER_CONTROLLER = new CommandPS4Controller(driverControllerPort);
 		public static final Trigger slowmodeButton = DRIVER_CONTROLLER.L1();
-		public static final Trigger orientButton = DRIVER_CONTROLLER.R2();
+		public static final Trigger orientButton = DRIVER_CONTROLLER.R2(); // options
 		public static final Trigger spoolAutoAimButton = DRIVER_CONTROLLER.square(); // actually maps to cross
 		public static final Trigger ampIntakeButton = DRIVER_CONTROLLER.triangle(); //R2
 		public static final Trigger autoAimButton = DRIVER_CONTROLLER.R1();
