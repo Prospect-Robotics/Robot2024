@@ -20,7 +20,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	public ShooterPivot() {
 		super(new MotorSubsystemConfiguration(
-				pivotMotor()).acceptableError(0.004)
+				pivotMotor()).acceptableError(0.002)
 				.PID(3.4, 0, 0).startingPosition(Position.TOP_HARD_STOP));
 		SmartDashboard.putData("Shooter Pivot PID", m_controller);
 	}
@@ -50,9 +50,6 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	@Override
 	protected void useOutput(double output, double setpoint) {
-		if (output < 0) {
-			output -= 0.15;
-		}
 		super.useOutput(output, setpoint);
 	}
 
@@ -66,12 +63,12 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 		TOP_HARD_STOP(0),
 		SUBWOOFER_FRONT(0.023926),
 		SUBWOOFER_SIDE(0.023926),
-		AMP(0.022217),
+		AMP(0.0307), 
 		PODIUM(0.076660),
 		TEST(0.067871),
 		FAR_SPEAKER(0.088135),
 		SOURCE_INTAKE(0.048096),
-		BOTTOM_HARD_STOP(0.099854);
+		BOTTOM_HARD_STOP(0.099854); //use Phoenix Tuner motor feedback position value
 
 		private final double pos;
 
