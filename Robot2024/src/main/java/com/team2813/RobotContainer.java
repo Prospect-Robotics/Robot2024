@@ -20,7 +20,7 @@ import static com.team2813.Constants.OperatorConstants.farSpeaker;
 import static com.team2813.Constants.OperatorConstants.intakeButton;
 import static com.team2813.Constants.OperatorConstants.operatorControllerPort;
 import static com.team2813.Constants.OperatorConstants.outtakeButton;
-import static com.team2813.Constants.OperatorConstants.shootAmp;
+import static com.team2813.Constants.OperatorConstants.herdButton;
 import static com.team2813.Constants.OperatorConstants.shootButton;
 import static com.team2813.Constants.OperatorConstants.shootPodium;
 import static com.team2813.Constants.OperatorConstants.shootWooferFront;
@@ -35,6 +35,7 @@ import com.team2813.commands.DefaultDriveCommand;
 import com.team2813.commands.DefaultShooterCommand;
 import com.team2813.commands.LockFunctionCommand;
 import com.team2813.commands.SaveSwerveOffsetsCommand;
+import com.team2813.commands.ShootFromPosCommand;
 import com.team2813.subsystems.Amp;
 import com.team2813.subsystems.Climber;
 import com.team2813.subsystems.Drive;
@@ -91,6 +92,7 @@ public class RobotContainer {
 		SmartDashboard.putData("Auto", autoChooser);
 		Shuffleboard.getTab("swerve").add(new SaveSwerveOffsetsCommand(drive));
 		Shuffleboard.getTab("swerve").addBoolean("offsets loaded", RobotSpecificConfigs::loadedSwerveConfig);
+		Shuffleboard.getTab("swerve").addBoolean("debug", RobotSpecificConfigs::debug);
 	}
 
 	private void addAutoCommands(AutoCommands autoCommands) {
@@ -192,7 +194,7 @@ public class RobotContainer {
 			new SequentialCommandGroup(
 				new ParallelRaceGroup(
 					new WaitCommand(0.5),
-					new LockFunctionCommand(shooter::atVelocity, () -> shooter.run(60), shooter)
+					new LockFunctionCommand(shooter::atVelocity, () -> shooter.run(90), shooter)
 				),
 				new InstantCommand(mag::runMagKicker, mag),
 				new ParallelCommandGroup(
@@ -204,7 +206,7 @@ public class RobotContainer {
 
 		shootWooferFront.onTrue(autoCommands.shootFront());
 		shootWooferSide.onTrue(autoCommands.shootSide());
-		shootAmp.onTrue(autoCommands.shootAmp());
+		herdButton.onTrue(new ShootFromPosCommand(mag, shooter, shooterPivot, Position.HERD, 65));
 		shootPodium.onTrue(autoCommands.shootPodium());
 		farSpeaker.onTrue(autoCommands.farSpeaker());
 		autoAimButton.onTrue(new AutoAimCommand(shooter, shooterPivot, mag, drive));

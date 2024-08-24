@@ -59,10 +59,10 @@ public class RobotSpecificConfigs {
 		 * @throws IllegalArgumentException if an offset is larger than a full circle
 		 */
 		public SwerveConfig(double frontLeft, double frontRight, double backLeft, double backRight) {
-			frontLeft = MathUtil.inputModulus(frontLeft, -1, 1);
-			frontRight = MathUtil.inputModulus(frontRight, -1, 1);
-			backLeft = MathUtil.inputModulus(backLeft, -1, 1);
-			backRight = MathUtil.inputModulus(backRight, -1, 1);
+			frontLeft = MathUtil.inputModulus(frontLeft, -0.5, 0.5);
+			frontRight = MathUtil.inputModulus(frontRight, -0.5, 0.5);
+			backLeft = MathUtil.inputModulus(backLeft, -0.5, 0.5);
+			backRight = MathUtil.inputModulus(backRight, -0.5, 0.5);
 			this.frontLeft = frontLeft;
 			this.frontRight = frontRight;
 			this.backLeft = backLeft;

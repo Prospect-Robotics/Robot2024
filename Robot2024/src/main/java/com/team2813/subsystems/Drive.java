@@ -14,7 +14,6 @@ import static com.team2813.Constants.FRONT_RIGHT_ENCODER_ID;
 import static com.team2813.Constants.FRONT_RIGHT_STEER_ID;
 import static com.team2813.Constants.PIGEON_ID;
 
-import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -39,6 +38,10 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -289,6 +292,15 @@ public class Drive extends SubsystemBase {
 		useLimelightOffset = true;
 		correctRotation = true;
 	}
+	
+	StructArrayPublisher<SwerveModuleState> expextedState = 
+		NetworkTableInstance.getDefault().getStructArrayTopic("expected state", SwerveModuleState.struct).publish();
+	StructArrayPublisher<SwerveModuleState> actualState = 
+		NetworkTableInstance.getDefault().getStructArrayTopic("actual state", SwerveModuleState.struct).publish();
+	StructPublisher<Rotation2d> rotation = 
+		NetworkTableInstance.getDefault().getStructTopic("rotation", Rotation2d.struct).publish();
+	StructPublisher<Pose2d> currentPose =
+		NetworkTableInstance.getDefault().getStructTopic("current pose", Pose2d.struct).publish();
 
 	@Override
 	public void periodic() {
@@ -297,7 +309,16 @@ public class Drive extends SubsystemBase {
 		SmartDashboard.putString("json", limelight.getJsonDump().map(Object::toString).orElse("NONE"));
 		limelight.getLocationalData().getBotpose().ifPresent(this::updatePosition);
 		// if we have a position from the robot, and we arx`e in teleop, update our pose
+		expextedState.set(drivetrain.getState().ModuleTargets);
+		actualState.set(drivetrain.getState().ModuleStates);
+		rotation.set(getRotation());
+		currentPose.set(getAutoPose());
 
 		field.setRobotPose(getAutoPose());
+
+		for (int i = 0; i < 4; i++) {
+			double temp = drivetrain.getModule(i).getDriveMotor().getDeviceTemp().getValueAsDouble();
+			SmartDashboard.putNumber(String.format("Swerve module number %d", i), temp);
+		}
 	}
 }

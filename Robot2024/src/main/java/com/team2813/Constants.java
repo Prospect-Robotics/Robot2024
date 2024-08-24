@@ -33,7 +33,7 @@ public final class Constants {
 		public static final Trigger shootWooferFront = operatorController.cross(); // circle
 		public static final Trigger shootWooferSide = operatorController.PS();
 		public static final Trigger shootPodium = operatorController.square(); // cross
-		public static final Trigger shootAmp = operatorController.triangle();
+		public static final Trigger herdButton = operatorController.triangle();
 		public static final Trigger farSpeaker = operatorController.circle().and(() -> false); // square
 		public static final Trigger autoShootButton = operatorController.circle().and(() -> false); // square
 
