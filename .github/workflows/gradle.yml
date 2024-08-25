@@ -23,10 +23,11 @@ jobs:
       uses: gradle/gradle-build-action@v2
     - name: Ensure LF
       working-directory: Robot2024
-      run: set -o xtrace
-         \ tr -d '\015' < "gradlew">"gradlew.temp"
-         \ rm -f "gradlew"
-         \ mv "gradlew.temp" "gradlew"
+      run: |
+        set -o xtrace
+        tr -d '\015' < "gradlew">"gradlew.temp"
+        m -f "gradlew"
+        mv "gradlew.temp" "gradlew"
     - name: Run build with Gradle Wrapper
       working-directory: Robot2024
       run: ./gradlew build
