@@ -26,7 +26,7 @@ jobs:
       run: |
         set -o xtrace
         tr -d '\015' < "gradlew">"gradlew.temp"
-        m -f "gradlew"
+        rm -f "gradlew"
         mv "gradlew.temp" "gradlew"
     - name: Run build with Gradle Wrapper
       working-directory: Robot2024
