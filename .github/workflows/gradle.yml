@@ -28,6 +28,7 @@ jobs:
         tr -d '\015' < "gradlew">"gradlew.temp"
         rm -f "gradlew"
         mv "gradlew.temp" "gradlew"
+        chmod +x "gradlew"
     - name: Run build with Gradle Wrapper
       working-directory: Robot2024
       run: ./gradlew build
