@@ -50,6 +50,9 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
 	@Override
 	protected void useOutput(double output, double setpoint) {
+		if (setpoint - getMeasurement() < -0.03) {
+			output -= 0.1;
+		}
 		super.useOutput(output, setpoint);
 	}
 
