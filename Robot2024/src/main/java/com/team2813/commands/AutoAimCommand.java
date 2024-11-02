@@ -101,7 +101,7 @@ public class AutoAimCommand extends Command {
 		Transform3d offset = new Transform3d(Math.sin(angle) * forwardOffset, Math.cos(angle) * forwardOffset, 0.266586, new Rotation3d()).inverse();
 		diff = diff.plus(offset);
 		double z = Math.abs(diff.getZ());
-		useRotationAngle(new Rotation2d(Math.atan2(diff.getY(), diff.getX())));
+		useRotationAngle(new Rotation2d(angle));
 		double flatDistance = Math.hypot(diff.getX(), diff.getY());
 		useDistance(Math.hypot(z, flatDistance));
 		useShootingAngle(Math.atan2(z, flatDistance));

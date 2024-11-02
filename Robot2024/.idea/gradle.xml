@@ -4,11 +4,28 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/lib2813" name="lib2813">
+                <projects>
+                  <project path="$PROJECT_DIR$/lib2813" />
+                  <project path="$PROJECT_DIR$/lib2813/lib" />
+                  <project path="$PROJECT_DIR$/lib2813/limelight" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../../Gradle/gradle-8.4" />
+        <option name="gradleJvm" value="#GRADLE_JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/lib" />
+            <option value="$PROJECT_DIR$/lib2813" />
+            <option value="$PROJECT_DIR$/lib2813/lib" />
+            <option value="$PROJECT_DIR$/lib2813/limelight" />
           </set>
         </option>
       </GradleProjectSettings>
