@@ -14,7 +14,12 @@ import com.team2813.lib2813.control.motors.TalonFXWrapper;
 import com.team2813.lib2813.subsystems.MotorSubsystem;
 import com.team2813.lib2813.util.ConfigUtils;
 
+import edu.wpi.first.units.Angle;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import java.util.function.Supplier;
 
 public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 
@@ -62,7 +67,7 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 		SmartDashboard.putNumber("Shoooter Pivot CANCoder Position", encoder.position());
 	}
 
-	public static enum Position implements MotorSubsystem.Position {
+	public static enum Position implements Supplier<Measure<Angle>> {
 		TOP_HARD_STOP(0),
 		SUBWOOFER_FRONT(0.023926),
 		SUBWOOFER_SIDE(0.023926),
@@ -80,9 +85,14 @@ public class ShooterPivot extends MotorSubsystem<ShooterPivot.Position> {
 			this.pos = pos;
 		}
 
-		@Override
+		@Deprecated
 		public double getPos() {
 			return pos;
+		}
+
+		@Override
+		public Measure<Angle> get() {
+			return Units.Rotations.of(pos);
 		}
 	}
 }
